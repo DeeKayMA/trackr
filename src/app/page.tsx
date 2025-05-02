@@ -1,3 +1,6 @@
+// Landing page (redirects to /dashboard or /login)
+
+
 import Image from "next/image";
 
 export default function Home() {

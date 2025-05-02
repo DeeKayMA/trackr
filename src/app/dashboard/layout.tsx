@@ -1,0 +1,1 @@
+// Auth layout (e.g., sidebar, header)
