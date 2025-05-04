@@ -9,9 +9,12 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarHeader,
+  SidebarFooter
 } from "@/components/ui/sidebar"
 
 // import Link from 'next/link';
+import NavUser from "./NavUser"
 
 // Menu items.
 const items = [
@@ -30,11 +33,11 @@ const items = [
     url: "/dashboard/analytics",
     icon: ChartColumnIncreasing,
   },
-  // {
-  //   title: "Search",
-  //   url: "#",
-  //   icon: Search,
-  // },
+  {
+    title: "Search",
+    url: "#",
+    icon: Search,
+  },
   {
     title: "Settings",
     url: "#",
@@ -42,12 +45,37 @@ const items = [
   },
 ]
 
+const footerItems = [
+
+  
+]
+
+
+
 export default function AppSidebar() {
   return (
     <Sidebar>
+      {/* Sidebar Header */}
+      <SidebarHeader>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="data-[slot=sidebar-menu-button]:!p-1.5"
+            >
+              <a href="/dashboard">
+                {/* <ArrowUpCircleIcon className="h-5 w-5" /> */}
+                <span className="text-base font-semibold">Trackr </span>
+              </a>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarHeader>
+
+      {/* Sidebar Content */}
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -64,6 +92,18 @@ export default function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      {/* Sidebar Footer */}
+      <SidebarFooter>
+        <NavUser 
+          user={{
+            name: "John Doe",
+            email: "john.doe@gmail.com",
+            avatar: "/globe.svg"
+          }}
+        />
+      </SidebarFooter>
+        
     </Sidebar>
   )
 }
