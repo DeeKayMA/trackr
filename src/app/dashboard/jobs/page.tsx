@@ -16,7 +16,7 @@ async function getData(): Promise<Job[]> {
       company: "Pixar",
       position: "Front End Developer",
       status: "applied",
-      applicationDate: "2023-10-01",
+      applicationDate: "02-01-2024",
       location: "Los Angeles, CA",
       jobType: "full-time",
       link: "https://www.pixar.com",
@@ -28,6 +28,23 @@ async function getData(): Promise<Job[]> {
       // interviewRounds: 2,
       // lastUpdated: '2023-10-05',
     },
+    {
+        id: "728ed52f",
+        company: "Apple",
+        position: "Front End Engineer",
+        status: "applied",
+        applicationDate: "01-01-2024",
+        location: "Los Angeles, CA",
+        jobType: "contract",
+        link: "https://www.apple.com",
+        notes: "It's Apple",
+        salary: 145000,
+        // source: 'LinkedIn',
+        // contact: 'John Doe',
+        // followUpDate: '2023-10-15',
+        // interviewRounds: 2,
+        // lastUpdated: '2023-10-05',
+      },
     // ...
   ];
 }
@@ -47,7 +64,7 @@ export default async function Jobs() {
   return (
     <div className="flex flex-col w-full">
       <Header title="Jobs" />
-      <div className="container mx-auto p-10">
+      <div className="container mx-auto p-4">
         <DataTable columns={columns} data={data} />
       </div>
     </div>
