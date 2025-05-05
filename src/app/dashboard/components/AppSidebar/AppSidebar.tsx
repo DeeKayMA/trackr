@@ -14,7 +14,7 @@ import {
 } from "@/components/ui/sidebar"
 
 // import Link from 'next/link';
-import NavUser from "./NavUser"
+import NavUser from "../NavUser/NavUser"
 
 // Menu items.
 const items = [

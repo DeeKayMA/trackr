@@ -1,5 +1,5 @@
 // Main dashboard (stats, charts, data table)
-import Header from "./components/Header";
+import Header from "./components/Header/Header";
 
 export default function Dashboard() {
     return (

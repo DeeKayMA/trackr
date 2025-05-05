@@ -1,6 +1,6 @@
 // Auth layout (e.g., sidebar, header)
 
-import AppSidebar from "./components/AppSidebar";
+import AppSidebar from "./components/AppSidebar/AppSidebar";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
 
 
