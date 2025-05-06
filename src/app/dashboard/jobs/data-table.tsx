@@ -41,6 +41,10 @@ interface DataTableProps<TData, TValue> {
   data: TData[];
 }
 
+function formatColumnId(id: string): string {
+  return id.replace(/([a-z])([A-Z])/g, "$1 $2"); // Adds a space before uppercase letters
+}
+
 export function DataTable<TData, TValue>({
   columns,
   data,
@@ -49,8 +53,18 @@ export function DataTable<TData, TValue>({
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
     []
   );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({});
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
+    company: true, 
+    position: true, 
+    location: false,
+    jobType: false,
+    salary: false, 
+    status: true, 
+    dateApplied: false, 
+    link: true, 
+    notes: false, 
+  });
+
   const [rowSelection, setRowSelection] = React.useState({});
 
   const [globalFilter, setGlobalFilter] = React.useState<any>([]);
@@ -104,19 +118,22 @@ export function DataTable<TData, TValue>({
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
-                return (
-                  <DropdownMenuCheckboxItem
-                    key={column.id}
-                    className="capitalize"
-                    checked={column.getIsVisible()}
-                    onCheckedChange={(value) =>
-                      column.toggleVisibility(!!value)
-                    }
-                  >
-                    {column.id}
-                  
-                  </DropdownMenuCheckboxItem>
-                );
+                if(column.id !== "actions" && column.id !== "link"){
+                  return (
+                    <DropdownMenuCheckboxItem
+                      key={column.id}
+                      className="capitalize"
+                      checked={column.getIsVisible()}
+                      onCheckedChange={(value) =>
+                        column.toggleVisibility(!!value)
+                      }
+                    >
+                      {formatColumnId(column.id)}
+                    
+                    </DropdownMenuCheckboxItem>
+                  );
+                } 
+                return null
               })}
           </DropdownMenuContent>
         </DropdownMenu>

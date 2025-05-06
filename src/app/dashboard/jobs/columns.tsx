@@ -14,7 +14,11 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { ArrowUpDown } from "lucide-react";
+import { 
+  ArrowUpDown,  
+  ExternalLink,
+} from "lucide-react";
+
 import { Checkbox } from "@/components/ui/checkbox"
 
 export type JobStatus =
@@ -37,7 +41,7 @@ export type Job = {
   company: string;
   position: string;
   status: JobStatus;
-  date: string;
+  dateApplied: string;
   location: string | null 
   jobType: JobType;
   //   source: string;
@@ -136,6 +140,7 @@ export const columns: ColumnDef<Job>[] = [
   //Salary
   {
     accessorKey: "salary",
+    
     header: ({ column }) => {
       return (
         <Button
@@ -149,9 +154,9 @@ export const columns: ColumnDef<Job>[] = [
     },
     cell: ({ row }) => {
       const amount = parseFloat(row.getValue("salary"));
-      const formatted = new Intl.NumberFormat("en-US", {
+      const formatted = new Intl.NumberFormat("en-GB", {
         style: "currency",
-        currency: "USD",
+        currency: "GBP",
       }).format(amount);
 
       return <div className=" font-medium">{formatted}</div>; //can add text centre class here
@@ -172,9 +177,22 @@ export const columns: ColumnDef<Job>[] = [
       );
     },
   },
+   //Notes
+   {
+    accessorKey: "notes",
+    header: "Notes",
+      cell: ({ row }) => {
+        const notes = row.getValue<string>("notes");
+        return notes ? (
+          <span>{notes}</span>
+        ) : (
+          <span>No Notes</span>
+        );
+      },
+  },
   //Application Date
   {
-    accessorKey: "date",
+    accessorKey: "dateApplied",
     header: ({ column }) => {
         return (
           <Button
@@ -190,18 +208,7 @@ export const columns: ColumnDef<Job>[] = [
    //Link
    {
     accessorKey: "link",
-    // header: ({ column }) => {
-    //     return (
-    //       <Button
-    //         variant="ghost"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Link
-    //         <ArrowUpDown className="ml-2 h-4 w-4" />
-    //       </Button>
-    //     );
-    //   },
-    header: "Link",
+    header: "URL",
       cell: ({ row }) => {
         const link = row.getValue<string>("link");
         return link ? (
@@ -209,36 +216,13 @@ export const columns: ColumnDef<Job>[] = [
             href={link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-blue-500"
+            className="hover:text-blue-700 flex flex-row items-center"
           >
-            Go to Job
+            Apply
+            <ExternalLink className="ml-2 h-4 w-4" />
           </a>
         ) : (
           <span>No Link</span>
-        );
-      },
-  },
-   //Notes
-   {
-    accessorKey: "notes",
-    // header: ({ column }) => {
-    //     return (
-    //       <Button
-    //         variant="ghost"
-    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-    //       >
-    //         Notes
-    //         <ArrowUpDown className="ml-2 h-4 w-4" />
-    //       </Button>
-    //     );
-    //   },
-    header: "Notes",
-      cell: ({ row }) => {
-        const notes = row.getValue<string>("notes");
-        return notes ? (
-          <span>{notes}</span>
-        ) : (
-          <span>No Notes</span>
         );
       },
   },
