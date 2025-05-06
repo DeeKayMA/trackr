@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/table";
 
 import { Button } from "@/components/ui/button";
+
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
@@ -32,6 +33,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
+
+import { Columns2 } from 'lucide-react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,6 +53,8 @@ export function DataTable<TData, TValue>({
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
+  const [globalFilter, setGlobalFilter] = React.useState<any>([])
+
   const table = useReactTable({
     data,
     columns,
@@ -61,24 +66,32 @@ export function DataTable<TData, TValue>({
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
     onRowSelectionChange: setRowSelection,
+    onGlobalFilterChange: setGlobalFilter,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
       rowSelection,
+      globalFilter,
     },
+    
   });
 
   return (
     <div>
-      <div className="flex items-center py-4">
+      <div className="flex items-center justify-between gap-4 py-4">
         {/* Searchbar */}
         <Input
           placeholder="Filter jobs..."
-          value={(table.getColumn("job")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("job")?.setFilterValue(event.target.value)
-          }
+          // value={(table.getColumn("company")?.getFilterValue() as string) ?? ""}
+          // onChange={(event) =>
+          //   table.getColumn("company")?.setFilterValue(event.target.value)
+          // }
+
+          value={globalFilter || ""}
+          onChange={e => table.setGlobalFilter(String(e.target.value))}
+
+
           className="max-w-sm"
         />
 
@@ -86,7 +99,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              Columns
+            <Columns2 /> Customise Columns
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -110,8 +123,8 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
-      <div className="rounded-md border">
-        <Table>
+      <div className=" rounded-md border relative flex flex-col gap-4 overflow-auto px-4">
+        <Table className="w-full">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>

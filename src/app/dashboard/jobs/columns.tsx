@@ -38,16 +38,16 @@ export type Job = {
   position: string;
   status: JobStatus;
   applicationDate: string;
-  location: string;
+  location: string | null 
   jobType: JobType;
   //   source: string;
-  link: string;
-  notes: string;
-  salary: number;
-  //   contact: string;
-  //   followUpDate: string;
-  //   interviewRounds: number;
-  //   lastUpdated: string;
+  link: string | null ;
+  notes: string | null 
+  salary: number | null 
+  //   contact: string | null 
+  //   followUpDate: string | null 
+  //   interviewRounds: number | null 
+  //   lastUpdated: string | null 
 };
 
 export const columns: ColumnDef<Job>[] = [
@@ -188,35 +188,50 @@ export const columns: ColumnDef<Job>[] = [
       },
   },
    //Link
-//    {
-//     accessorKey: "link",
-//     header: ({ column }) => {
-//         return (
-//           <Button
-//             variant="ghost"
-//             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-//           >
-//             Link
-//             <ArrowUpDown className="ml-2 h-4 w-4" />
-//           </Button>
-//         );
-//       },
-//   },
+   {
+    accessorKey: "link",
+    header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Link
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+      cell: ({ row }) => {
+        const link = row.getValue<string>("link");
+        return link ? (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500"
+          >
+            Go to Job
+          </a>
+        ) : (
+          <span>No Link</span>
+        );
+      },
+  },
    //Notes
-//    {
-//     accessorKey: "notes",
-//     header: ({ column }) => {
-//         return (
-//           <Button
-//             variant="ghost"
-//             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-//           >
-//             Notes
-//             <ArrowUpDown className="ml-2 h-4 w-4" />
-//           </Button>
-//         );
-//       },
-//   },
+   {
+    accessorKey: "notes",
+    header: ({ column }) => {
+        return (
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            Notes
+            <ArrowUpDown className="ml-2 h-4 w-4" />
+          </Button>
+        );
+      },
+  },
   //Actions
   {
     id: "actions",
