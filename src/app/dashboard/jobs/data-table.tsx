@@ -34,7 +34,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 
-import { Columns2 } from 'lucide-react';
+import { Columns2 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -53,7 +53,7 @@ export function DataTable<TData, TValue>({
     React.useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const [globalFilter, setGlobalFilter] = React.useState<any>([])
+  const [globalFilter, setGlobalFilter] = React.useState<any>([]);
 
   const table = useReactTable({
     data,
@@ -74,7 +74,6 @@ export function DataTable<TData, TValue>({
       rowSelection,
       globalFilter,
     },
-    
   });
 
   return (
@@ -82,16 +81,14 @@ export function DataTable<TData, TValue>({
       <div className="flex items-center justify-between gap-4 py-4">
         {/* Searchbar */}
         <Input
-          placeholder="Filter jobs..."
+          placeholder="Search..."
           // value={(table.getColumn("company")?.getFilterValue() as string) ?? ""}
           // onChange={(event) =>
           //   table.getColumn("company")?.setFilterValue(event.target.value)
           // }
 
           value={globalFilter || ""}
-          onChange={e => table.setGlobalFilter(String(e.target.value))}
-
-
+          onChange={(e) => table.setGlobalFilter(String(e.target.value))}
           className="max-w-sm"
         />
 
@@ -99,7 +96,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-            <Columns2 /> Customise Columns
+              <Columns2 /> Customise Columns
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -117,6 +114,7 @@ export function DataTable<TData, TValue>({
                     }
                   >
                     {column.id}
+                  
                   </DropdownMenuCheckboxItem>
                 );
               })}

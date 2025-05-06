@@ -37,7 +37,7 @@ export type Job = {
   company: string;
   position: string;
   status: JobStatus;
-  applicationDate: string;
+  date: string;
   location: string | null 
   jobType: JobType;
   //   source: string;
@@ -174,7 +174,7 @@ export const columns: ColumnDef<Job>[] = [
   },
   //Application Date
   {
-    accessorKey: "applicationDate",
+    accessorKey: "date",
     header: ({ column }) => {
         return (
           <Button
@@ -190,17 +190,18 @@ export const columns: ColumnDef<Job>[] = [
    //Link
    {
     accessorKey: "link",
-    header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Link
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
-        );
-      },
+    // header: ({ column }) => {
+    //     return (
+    //       <Button
+    //         variant="ghost"
+    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    //       >
+    //         Link
+    //         <ArrowUpDown className="ml-2 h-4 w-4" />
+    //       </Button>
+    //     );
+    //   },
+    header: "Link",
       cell: ({ row }) => {
         const link = row.getValue<string>("link");
         return link ? (
@@ -220,15 +221,24 @@ export const columns: ColumnDef<Job>[] = [
    //Notes
    {
     accessorKey: "notes",
-    header: ({ column }) => {
-        return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Notes
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+    // header: ({ column }) => {
+    //     return (
+    //       <Button
+    //         variant="ghost"
+    //         onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+    //       >
+    //         Notes
+    //         <ArrowUpDown className="ml-2 h-4 w-4" />
+    //       </Button>
+    //     );
+    //   },
+    header: "Notes",
+      cell: ({ row }) => {
+        const notes = row.getValue<string>("notes");
+        return notes ? (
+          <span>{notes}</span>
+        ) : (
+          <span>No Notes</span>
         );
       },
   },
