@@ -190,7 +190,6 @@ export const columns: ColumnDef<Job>[] = [
         );
       },
   },
-  //Application Date
   {
     accessorKey: "dateApplied",
     header: ({ column }) => {
