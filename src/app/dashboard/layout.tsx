@@ -1,7 +1,7 @@
 // Auth layout (e.g., sidebar, header)
 
-import AppSidebar from "./components/AppSidebar/AppSidebar";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar"
+import AppSidebar from "../../components/AppSidebar/AppSidebar";
+import { SidebarProvider} from "@/components/ui/sidebar"
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {

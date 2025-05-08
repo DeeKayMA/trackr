@@ -1,5 +1,15 @@
-import { Calendar, Home, Inbox, Search, Settings, LayoutDashboardIcon, BriefcaseBusiness, ChartColumnIncreasing } from "lucide-react"
-import Link from 'next/link'
+import {
+  Calendar,
+  Home,
+  Inbox,
+  Crosshair,
+  Search,
+  Settings,
+  LayoutDashboardIcon,
+  BriefcaseBusiness,
+  ChartColumnIncreasing,
+} from "lucide-react";
+import Link from "next/link";
 
 import {
   Sidebar,
@@ -11,17 +21,17 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarHeader,
-  SidebarFooter
-} from "@/components/ui/sidebar"
+  SidebarFooter,
+} from "@/components/ui/sidebar";
 
 // import Link from 'next/link';
-import NavUser from "../NavUser/NavUser"
+import NavUser from "../NavUser/NavUser";
 
 // Menu items.
 const items = [
   {
     title: "Dashboard",
-    url: "/dashboard",  
+    url: "/dashboard",
     icon: LayoutDashboardIcon,
   },
   {
@@ -44,14 +54,7 @@ const items = [
     url: "#",
     icon: Settings,
   },
-]
-
-const footerItems = [
-
-  
-]
-
-
+];
 
 export default function AppSidebar() {
   return (
@@ -65,8 +68,12 @@ export default function AppSidebar() {
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href="/dashboard">
-                {/* <ArrowUpCircleIcon className="h-5 w-5" /> */}
+
+                {/* <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
+                  <Crosshair className="size-4" />
+                </div> */}
                 <span className="text-base font-semibold">Trackr </span>
+
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -96,15 +103,14 @@ export default function AppSidebar() {
 
       {/* Sidebar Footer */}
       <SidebarFooter>
-        <NavUser 
+        <NavUser
           user={{
             name: "John Doe",
             email: "john.doe@gmail.com",
-            avatar: "/globe.svg"
+            avatar: "/globe.svg",
           }}
         />
       </SidebarFooter>
-        
     </Sidebar>
-  )
+  );
 }

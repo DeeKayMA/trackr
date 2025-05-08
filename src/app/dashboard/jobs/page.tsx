@@ -4,7 +4,7 @@
 
 // (server component) is where we'll fetch data and render our table.
 
-import Header from "../components/Header/Header";
+import Header from "../../../components/Header/Header";
 import { Job, columns } from "./columns";
 import { DataTable } from "./data-table";
 
