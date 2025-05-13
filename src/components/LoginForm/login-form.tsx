@@ -1,6 +1,12 @@
 "use client";
 import { useForm } from "react-hook-form";
-import Link from "next/link";
+import { toast } from "sonner"
+import Router from "next/router";
+import { signInWithEmail } from "@/lib/supabase/supabase-auth";
+
+
+
+
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -22,13 +28,25 @@ export function LoginForm({
     const {
         register,
         handleSubmit,
-        watch,
         formState: { errors },
-      } = useForm({ mode: "onChange" });
+      } = useForm({ mode: "onBlur" });
 
-      const onSubmit = (data: any) => {
-        console.log(data);
-        // Pass data.email & data.password to Supabase here
+
+      const onSubmit = async (data: any) => {
+        try {
+          const { error } = await signInWithEmail(data.email, data.password);
+      
+          if (error) {
+            toast.error(error.message); // Display Supabase error to user
+            return;
+          }
+      
+          // Redirect to dashboard on success
+          Router.push("/dashboard");
+        } catch (err: any) {
+          console.error(err);
+          toast.error(err.message || "Something went wrong. Please try again.");
+        }
       };
 
 
@@ -78,9 +96,17 @@ export function LoginForm({
                     id="email"
                     type="email"
                     placeholder="joe.bloggs@mail.com"
-                    {...register("email", { required: "Email is required" })}
+                    {...register("email", { 
+                        required: "Email is required",
+                        validate: (value) => value.includes('@') || "Email must include '@'"
+                    })}
                   />
                 </div>
+                {errors.email && (
+                    <p className="text-sm text-destructive">
+                      {errors.email.message as string}
+                    </p>
+                  )}
                 <div className="grid gap-2">
                   <div className="flex items-center">
                     <Label htmlFor="password">Password</Label>
@@ -101,12 +127,12 @@ export function LoginForm({
                   Login
                 </Button>
               </div>
-              <div className="text-center text-sm">
+              {/* <div className="text-center text-sm">
                 Don&apos;t have an account?{" "}
                 <Link href="/signup" className="underline underline-offset-4 hover:text-blue-500">
                   Sign up
                 </Link>
-              </div>
+              </div> */}
             </div>
           </form>
         </CardContent>

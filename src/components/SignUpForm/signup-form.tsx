@@ -1,5 +1,5 @@
 "use client";
-
+import {useRouter} from "next/navigation";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
@@ -13,19 +13,40 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { toast } from "sonner"
+
+import { signUpWithEmail } from "@/lib/supabase/supabase-auth";
+
+
 
 export function SignupForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
+    const router = useRouter()
+
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm({ mode: "onChange" });
+  } = useForm({ mode: "onBlur" });
 
-  const password = watch("password") || ""; //This is for the password strength meter
+  const onSubmit = async (data: any) => {
+    try {
+      const { error } = await signUpWithEmail(data.email, data.password);
+      if (error) throw new Error(error.message);
+  
+      router.push("/dashboard"); // Only runs if no error
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || "Something went wrong. Please try again.");
+    }
+  };
+
+  //PASSWORD STRENGTH
+  const password = watch("password") || ""; //checks the value of password
 
   const getPasswordStrength = (password: string) => {
     let score = 0;
@@ -49,11 +70,6 @@ export function SignupForm({
   ];
 
   const score = getPasswordStrength(password);
-
-  const onSubmit = (data: any) => {
-    console.log(data);
-    // Pass data.email & data.password to Supabase here
-  };
 
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
@@ -101,8 +117,17 @@ export function SignupForm({
                     id="email"
                     type="email"
                     placeholder="joe.bloggs@mail.com"
-                    {...register("email", { required: "Email is required" })}
+                    {...register("email", {
+                      required: true,
+                      validate: (value) =>
+                        value.includes("@") || "Please enter a valid email",
+                    })}
                   />
+                  {errors.email && (
+                    <p className="text-sm text-destructive">
+                      {errors.email.message as string}
+                    </p>
+                  )}
                 </div>
                 <div className="grid gap-2">
                   <Label htmlFor="password">Password</Label>
@@ -157,7 +182,7 @@ export function SignupForm({
                     id="confirmPassword"
                     type="password"
                     {...register("confirmPassword", {
-                      required: "Password must match",
+                      required: "Passwords must match",
                       validate: (value) =>
                         value === watch("password") || "Passwords do not match",
                     })}
@@ -175,12 +200,15 @@ export function SignupForm({
                   Join
                 </Button>
               </div>
-              <div className="text-center text-sm">
+              {/* <div className="text-center text-sm">
                 Already have an account?{" "}
-                <Link href="/login" className="underline underline-offset-4 hover:text-blue-500">
+                <Link
+                  href="/login"
+                  className="underline underline-offset-4 hover:text-blue-500"
+                >
                   Login
                 </Link>
-              </div>
+              </div> */}
             </div>
           </form>
         </CardContent>
