@@ -2,7 +2,7 @@
 "use client";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { MoreHorizontal } from "lucide-react";
+// import { MoreHorizontal } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -14,27 +14,38 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
+import { Badge } from "@/components/ui/badge"
+
+
 import { 
   ArrowUpDown,  
   ExternalLink,
+  CheckCircle2Icon,
+  LoaderIcon,
+   PhoneCallIcon,
+   HandshakeIcon,
+   XCircleIcon,
+   BookmarkIcon,
+   MoreHorizontal
 } from "lucide-react";
+
 
 import { Checkbox } from "@/components/ui/checkbox"
 
 export type JobStatus =
-  | "saved"
-  | "applied"
-  | "interviewing"
-  | "offer"
-  | "rejected";
+  | "Saved"
+  | "Applied"
+  | "Interview"
+  | "Offer"
+  | "Rejected";
 
 export type JobType =
-  | "full-time"
-  | "part-time"
-  | "contract"
-  | "internship"
-  | "freelance"
-  | "other";
+  | "Full-time"
+  | "Part-time"
+  | "Contract"
+  | "Internship"
+  | "Freelance"
+  | "Other";
 
 export type Job = {
   id: string;
@@ -45,14 +56,38 @@ export type Job = {
   location: string | null 
   jobType: JobType;
   //   source: string;
-  link: string | null ;
+  URL: string | null ;
   notes: string | null 
-  salary: number | null 
+  salaryMin: number | null
+  salaryMax: number | null 
   //   contact: string | null 
   //   followUpDate: string | null 
   //   interviewRounds: number | null 
   //   lastUpdated: string | null 
 };
+
+
+const statusMap = {
+  Saved: {
+    icon: <BookmarkIcon className="text-slate-500 dark:text-slate-400" />,
+  },
+  Applied: {
+    icon: <CheckCircle2Icon className="text-blue-500 dark:text-blue-400" />,
+  },
+  Interview: {
+    icon: <PhoneCallIcon className="text-yellow-500 dark:text-yellow-400" />,
+  },
+  Offer: {
+    icon: <HandshakeIcon className="text-green-500 dark:text-green-400" />,
+  },
+  Rejected: {
+    icon: <XCircleIcon className="text-red-500 dark:text-red-400" />,
+  },
+}
+
+function toPascalCase(str: string) {
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
 
 export const columns: ColumnDef<Job>[] = [
     {
@@ -82,13 +117,16 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "company",
     header: ({ column }) => {
       return (
+        <div className="flex items-center">
+        <p>Company</p>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Company
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
+        </div>
       );
     },
   },
@@ -97,13 +135,16 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "position",
     header: ({ column }) => {
       return (
+        <div className="flex items-center">
+        <p>Position</p>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Position
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
+        </div>
       );
     },
   },
@@ -112,13 +153,16 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "jobType",
     header: ({ column }) => {
       return (
+        <div className="flex items-center">
+        <p>Job Type</p>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Job Type
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
+        </div>
       );
     },
   },
@@ -127,39 +171,43 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "location",
     header: ({ column }) => {
       return (
+        <div className="flex items-center">
+        <p>Location</p>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Location
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
+        </div>
       );
     },
   },
   //Salary
   {
-    accessorKey: "salary",
+    accessorKey: "salaryMin",
     
     header: ({ column }) => {
       return (
+        <div className="flex items-center">
+        <p>Salary</p>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Salary
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
+        </div>
       );
     },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue("salary"));
-      const formatted = new Intl.NumberFormat("en-GB", {
-        style: "currency",
-        currency: "GBP",
-      }).format(amount);
+      const salaryMin = Math.round(parseFloat(row.getValue("salaryMin"))/1000);
+      const salaryMax = row.original.salaryMax ? Math.round(row.original.salaryMax / 1000) : null;
 
-      return <div className=" font-medium">{formatted}</div>; //can add text centre class here
+
+      return <div>{salaryMax ? `£${salaryMin}–${salaryMax}k` : `£${salaryMin}k`}</div>; //can add text centre class here
     },
   },
   //Status
@@ -167,15 +215,27 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "status",
     header: ({ column }) => {
       return (
+        <div className="flex items-center">
+        <p>Status</p>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
-          Status
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          
+          <ArrowUpDown className="h-4 w-4" />
         </Button>
+        </div>
       );
     },
+    cell: ({ row }) => (
+      <Badge
+        variant="outline"
+        className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-4"
+      >
+        {statusMap[row.original.status]?.icon || <LoaderIcon />}
+        {row.original.status}
+      </Badge>
+    ),
   },
    //Notes
    {
@@ -194,25 +254,28 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "dateApplied",
     header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-          >
-            Applied On
-            <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+        <div className="flex items-center">
+        <p>Date Applied</p>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          
+          <ArrowUpDown className="h-4 w-4" />
+        </Button>
+        </div>
         );
       },
   },
    //Link
    {
-    accessorKey: "link",
+    accessorKey: "URL",
     header: "URL",
       cell: ({ row }) => {
-        const link = row.getValue<string>("link");
-        return link ? (
+        const URL = row.getValue<string>("URL");
+        return URL ? (
           <a
-            href={link}
+            href={URL}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-700 flex flex-row items-center"
@@ -245,8 +308,8 @@ export const columns: ColumnDef<Job>[] = [
                   onClick={() => navigator.clipboard.writeText(payment.id)}
                 >
                   Copy payment ID
-                </DropdownMenuItem> */}
-            {/* <DropdownMenuSeparator /> */}
+                </DropdownMenuItem>
+            <DropdownMenuSeparator /> */}
             <DropdownMenuItem>Edit</DropdownMenuItem>
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>

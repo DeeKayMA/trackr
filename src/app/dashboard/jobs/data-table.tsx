@@ -61,7 +61,7 @@ export function DataTable<TData, TValue>({
     salary: false, 
     status: true, 
     dateApplied: false, 
-    link: true, 
+    URL: true, 
     notes: false, 
   });
 
@@ -118,7 +118,7 @@ export function DataTable<TData, TValue>({
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
-                if(column.id !== "actions" && column.id !== "link"){
+                if(column.id !== "actions"){
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}
@@ -138,6 +138,7 @@ export function DataTable<TData, TValue>({
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
+      {/*Table*/} 
       <div className=" rounded-md border relative flex flex-col gap-4 overflow-auto px-4">
         <Table className="w-full">
           <TableHeader>
