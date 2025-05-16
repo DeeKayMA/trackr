@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Trackr
 
-## Getting Started
+**Trackr** is a minimal, modern job application tracker built with Next.js, Supabase, and ShadCN/UI.  
+I'm currently building this as part of my front-end developer portfolio.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**In progress** — Trackr aims to include:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Authentication** (sign up, log in, log out)
+- **Add/Edit/Delete Job Applications**
+- **Filter by status, job type, location, and more**
+- **Search and sort functionality**
+- **Responsive design for desktop and mobile**
+- **Light and dark mode support**
+- **Analytics dashboard with charts and job stats**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Tech Stack
 
-To learn more about Next.js, take a look at the following resources:
+- **Framework**: Next.js 14 (App Router)
+- **UI**: Tailwind CSS, ShadCN/UI, Lucide Icons
+- **Database**: Supabase (PostgreSQL + Auth)
+- **State Management**: React Hook Form, TanStack Table
+- **Hosting**: Vercel (planned)
+- **Version Control**: Git + GitHub
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Current Progress
 
-## Deploy on Vercel
+Trackr is in active development. Here's what's done and what’s next:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### ✅ Completed
+- Set up project with Next.js + Tailwind
+- Built login/signup forms with validation
+- Connected Supabase authentication
+- Created initial dashboard layout and job table
+- Form handling with React Hook Form
+- Filtering, sorting, and search
+- Mobile responsiveness
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### 🚧 In Progress
+- CRUD operations for job entries
+
+### ⏭ Up Next
+- Dashboard stats & charts
+- Public deployment via Vercel
+- README + live demo link
+
+---
+
+## Getting Started (Coming Soon)
+
+Instructions for cloning and running locally will be added once the project is stable.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](https://opensource.org/license/mit).
