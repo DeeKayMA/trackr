@@ -218,7 +218,7 @@ export default async function Jobs() {
 
   return (
     <div className="flex flex-col flex-1">
-      <Header title="Jobs" />
+      <Header title="Jobs"/>
       <div
         data-orientation="horizontal"
         className="container mx-auto flex w-full flex-col justify-start gap-6 p-4"
