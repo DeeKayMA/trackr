@@ -1,13 +1,24 @@
-// Landing page (redirects to /dashboard or /login)
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
 
-import Image from "next/image";
+export default async function HomePage() {
+  const supabase = await createClient()
+  const {
+    data: { user },
+  } = await supabase.auth.getUser()
 
-export default function Home() {
+  // ✅ Redirect logged-in users to /dashboard
+  if (user) {
+    redirect('/dashboard')
+  }
+
+  // ✅ Show homepage for guests
   return (
-    <div className="flex items-center justify-center">
-      <h1 className="text-3xl  font-bold underline">Trackr</h1>
-      <p>Job application tracker</p>
-      <p> Landing Page</p>
-    </div>
-  );
+    <main className="flex min-h-screen flex-col items-center justify-center p-8">
+      <h1 className="text-4xl font-bold mb-4">Welcome to Trackr</h1>
+      <p className="text-muted-foreground text-center max-w-md">
+        Track your job applications with ease. Log in or sign up to get started.
+      </p>
+    </main>
+  )
 }

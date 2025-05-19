@@ -1,4 +1,4 @@
-import { login } from '@/app/login/actions'
+import { signup } from '@/app/login/actions'
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -12,7 +12,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
-export function LoginForm({
+export function SignUpForm({
   className,
   ...props
 }: React.ComponentPropsWithoutRef<"div">) {
@@ -20,9 +20,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome</CardTitle>
+          <CardTitle className="text-xl">Create an account</CardTitle>
           <CardDescription>
-            Login with your email
+            Sign up with your email
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -55,8 +55,8 @@ export function LoginForm({
                   <Input id="password" type="password" name="password" required />
                 </div>
                 {/* BUTTON */}
-                <Button formAction={login} className="w-full">
-                  Login
+                <Button formAction={signup} className="w-full">
+                  Sign up
                 </Button>
               </div>
             </div>

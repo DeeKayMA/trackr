@@ -35,15 +35,15 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-
-
 import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+
 import { Input } from "@/components/ui/input";
+
 
 import { 
   Columns2,
@@ -51,7 +51,6 @@ import {
   ChevronsRightIcon,
   ChevronLeftIcon,
   ChevronsLeftIcon,
-
  } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
@@ -155,6 +154,8 @@ export function DataTable<TData, TValue>({
               })}
           </DropdownMenuContent>
         </DropdownMenu>
+        {/* Add new job */}
+
       </div>
       {/*Table*/} 
       <div className=" rounded-md border relative flex flex-col gap-4 overflow-auto px-4">
