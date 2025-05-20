@@ -1,13 +1,21 @@
 // Modal / Sidebar form to add/edit a job
-"use client"
+"use client";
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { cn } from "@/lib/utils"
-import { format } from "date-fns"
-import { CalendarIcon } from "lucide-react"
-import { Button } from "@/components/ui/button"
+import { zodResolver } from "@hookform/resolvers/zod";
+import { format, sub } from "date-fns";
+import { CalendarIcon } from "lucide-react";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
+import { cn } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { Calendar } from "@/components/ui/calendar";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+
+import { useState } from "react";
+
+import { DialogClose } from "@/components/ui/dialog";
 
 import {
   Form,
@@ -17,18 +25,16 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form"
+} from "@/components/ui/form";
 
 
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Calendar } from "@/components/ui/calendar"
+
 
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@/components/ui/popover"
+} from "@/components/ui/popover";
 
 import {
   Select,
@@ -36,59 +42,69 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"
+} from "@/components/ui/select";
 
 const formSchema = z.object({
-  position: z.string({ required_error: "Please input a job position", }).min(2).max(50),
-  company: z.string({ required_error: "Please input a company name", }).min(2).max(50),
-  location: z.string({ required_error: "Please input a location", }).min(2).max(50),
-  job_type: z
-    .string({
-      required_error: "Please select a status for this position",
-    }), 
-  salary_min: z.number().min(0),
+  position: z
+    .string({ required_error: "Please input a job position" })
+    .min(1, "Please input a job position")
+    .max(50),
+  company: z
+    .string({ required_error: "Please input a company name" })
+    .min(1, "Please input a company name")
+    .max(50),
+  location: z.string().min(0).max(50).optional(),
+  job_type: z.string({
+    required_error: "Please select a status for this position",
+  }),
+  salary_min: z.number().min(0).optional(),
   salary_max: z.number().min(0).optional(),
-  status: z
-    .string({
-      required_error: "Please select a status for this position",
-    }),
+  status: z.string({
+    required_error: "Please select a status for this position",
+  }),
   date_applied: z.date().optional(),
   url: z.string().optional(),
   notes: z.string().optional(),
+});
 
-})
+type JobFormProps = {
+  submitName?: string;
+};
 
+export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
 
-export const JobForm = () => {
-
-    const form = useForm<z.infer<typeof formSchema>>({
-        resolver: zodResolver(formSchema),
-        defaultValues: {
-        position: "",
-        company: "",
-        location: "",
-        job_type: "Full-time",
-        salary_min: 0,
-        salary_max: 0,
-        status: "Saved",
-        // date_applied: "",
-        url: "",
-        notes: "",
-        },
-    })
+    // const [date, setDate] = useState<Date>()
 
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        console.log(values)
-       //Put a toast here to confirm the submission
-    }
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      position: "",
+      company: "",
+      location: "",
+      job_type: "Full-time",
+      salary_min: 0,
+      salary_max: 0,
+      status: "Saved",
+      date_applied: undefined,
+      url: "",
+      notes: "",
+    },
+  });
 
-    return (
-        <Form {...form}>
+  function onSubmit(values: z.infer<typeof formSchema>) {
+    console.log(values);
+    //Put a toast here to confirm the submission
+  }
+
+  return (
+    <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-
-    {/* POSITION */}
-        <FormField control={form.control} name="position" render={({ field }) => (
+        {/* POSITION */}
+        <FormField
+          control={form.control}
+          name="position"
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Position</FormLabel>
               <FormControl>
@@ -99,34 +115,46 @@ export const JobForm = () => {
               </FormDescription> */}
               <FormMessage />
             </FormItem>
-          )}/>
-    {/* COMPANY */}
-        <FormField control={form.control} name="company" render={({ field }) => (
+          )}
+        />
+        {/* COMPANY */}
+        <FormField
+          control={form.control}
+          name="company"
+          render={({ field }) => (
             <FormItem>
-                <FormLabel>Company</FormLabel>
-                <FormControl>
+              <FormLabel>Company</FormLabel>
+              <FormControl>
                 <Input placeholder="e.g. Trackr Inc" {...field} />
-                </FormControl>
-                <FormMessage />
+              </FormControl>
+              <FormMessage />
             </FormItem>
-            )} />
-    {/* LOCATION */}
-        <FormField control={form.control} name="location" render={({ field }) => (
+          )}
+        />
+        {/* LOCATION */}
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
             <FormItem>
-                <FormLabel>Location</FormLabel>
-                <FormControl>
+              <FormLabel>Location</FormLabel>
+              <FormControl>
                 <Input placeholder="e.g. London" {...field} />
-                </FormControl>
-                <FormMessage />
+              </FormControl>
+              <FormMessage />
             </FormItem>
-            )} />
-    {/* JOB TYPE */}
-        <FormField control={form.control} name="job_type" render={({ field }) => (
+          )}
+        />
+        {/* JOB TYPE */}
+        <FormField
+          control={form.control}
+          name="job_type"
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Job Type</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select a job type" />
                   </SelectTrigger>
                 </FormControl>
@@ -145,34 +173,46 @@ export const JobForm = () => {
               </FormDescription> */}
               <FormMessage />
             </FormItem>
-            )} />
-    {/* SALARY MIN */}
-        <FormField control={form.control} name="salary_min" render={({ field }) => (
+          )}
+        />
+        {/* SALARY MIN */}
+        <FormField
+          control={form.control}
+          name="salary_min"
+          render={({ field }) => (
             <FormItem>
-                <FormLabel>Salary Min</FormLabel>
-                <FormControl>
+              <FormLabel>Salary Min</FormLabel>
+              <FormControl>
                 <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
+              </FormControl>
+              <FormMessage />
             </FormItem>
-            )} />
-    {/* SALARY MAX */}
-        <FormField control={form.control} name="salary_max" render={({ field }) => (
+          )}
+        />
+        {/* SALARY MAX */}
+        <FormField
+          control={form.control}
+          name="salary_max"
+          render={({ field }) => (
             <FormItem>
-                <FormLabel>Salary Max</FormLabel>
-                <FormControl>
+              <FormLabel>Salary Max</FormLabel>
+              <FormControl>
                 <Input type="number" {...field} />
-                </FormControl>
-                <FormMessage />
+              </FormControl>
+              <FormMessage />
             </FormItem>
-            )} />
-    {/* STATUS */}
-        <FormField control={form.control} name="status" render={({ field }) => (
+          )}
+        />
+        {/* STATUS */}
+        <FormField
+          control={form.control}
+          name="status"
+          render={({ field }) => (
             <FormItem>
               <FormLabel>Status</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
-                  <SelectTrigger>
+                  <SelectTrigger className="w-full">
                     <SelectValue placeholder="Select the application status" />
                   </SelectTrigger>
                 </FormControl>
@@ -190,26 +230,26 @@ export const JobForm = () => {
               </FormDescription> */}
               <FormMessage />
             </FormItem>
-            )} />
-    {/* DATE */}
-        <FormField control={form.control} name="date_applied" render={({ field }) => (
-            <FormItem className="flex flex-col">
+          )}
+        />
+        {/* DATE */}
+        <FormField
+          control={form.control}
+          name="date_applied"
+          render={({ field }) => (
+            <FormItem className="flex flex-col ">
               <FormLabel>Application Date</FormLabel>
               <Popover>
-                <PopoverTrigger asChild>
+                <PopoverTrigger asChild >
                   <FormControl>
                     <Button
                       variant={"outline"}
                       className={cn(
-                        "w-[240px] pl-3 text-left font-normal",
+                        "w-full pl-3 text-left font-normal",
                         !field.value && "text-muted-foreground"
                       )}
                     >
-                      {field.value ? (
-                        format(field.value, "PPP")
-                      ) : (
-                        <span>Pick a date</span>
-                      )}
+                      {field.value ? ( format(field.value, "PPP")) : ( <span>Pick a date</span> )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -219,11 +259,10 @@ export const JobForm = () => {
                     mode="single"
                     selected={field.value}
                     onSelect={field.onChange}
-                    disabled={(date) =>
-                      date > new Date() || date < new Date("1900-01-01")
-                    }
-                    initialFocus
+                    disabled={(date) => date < new Date("1900-01-01")}
+                    // initialFocus
                   />
+                  
                 </PopoverContent>
               </Popover>
               {/* <FormDescription>
@@ -231,9 +270,14 @@ export const JobForm = () => {
               </FormDescription> */}
               <FormMessage />
             </FormItem>
-            )} />
-    {/* URL */}
-        <FormField control={form.control} name="url" render={({ field }) => (
+            
+          )}
+        />
+        {/* URL */}
+        <FormField
+          control={form.control}
+          name="url"
+          render={({ field }) => (
             <FormItem>
               <FormLabel>URL</FormLabel>
               <FormControl>
@@ -244,27 +288,37 @@ export const JobForm = () => {
               </FormDescription> */}
               <FormMessage />
             </FormItem>
-          )}/>
-    {/* NOTES */}
-        <FormField control={form.control} name="notes" render={({ field }) => (
+          )}
+        />
+        {/* NOTES */}
+        <FormField
+          control={form.control}
+          name="notes"
+          render={({ field }) => (
             <FormItem>
-                <FormLabel>Notes</FormLabel>
-                <FormControl>
+              <FormLabel>Notes</FormLabel>
+              <FormControl>
                 <Textarea
-                  placeholder="Tell us a little bit about yourself"
-                  className="resize-none"
+                  placeholder="Anything you want to add about this job"
+                  className="resize-none h-32"
                   {...field}
                 />
-                </FormControl>
-                <FormMessage />
+              </FormControl>
+              <FormMessage />
             </FormItem>
-            )} />
-        <Button type="submit" className="w-full">Submit</Button>
+          )}
+        />
+        <div className="flex flex-col gap-4">
+          <Button type="submit" className="w-full">
+            {submitName}
+          </Button>
+          <DialogClose asChild>
+            <Button type="button" variant="secondary" className="w-full hover:bg-primary/10">
+              Cancel
+            </Button>
+          </DialogClose>
+        </div>
       </form>
     </Form>
-
-    )
-
-
-
-}
+  );
+};

@@ -37,21 +37,24 @@ export default function Header({ title }: HeaderProps) {
         <DialogTrigger asChild>
           <Button variant="outline">Add Job</Button>
         </DialogTrigger>
-        <DialogContent className="sm:max-w-md w-full lg:m-4 oveflow-y-scroll">
+        <DialogContent className="sm:max-w-md max-h-[90vh] w-full max-w-2xl overflow-auto">
           <DialogHeader>
             <DialogTitle>Add Job</DialogTitle>
             <DialogDescription>
-              Add jobs to your dashboard
+              Add job applications to your dashboard
             </DialogDescription>
           </DialogHeader>
-          <JobForm/>
-          <DialogFooter className="sm:justify-start">
+          <div className="mt-4">
+            <JobForm submitName="Add Job"/>
+          </div>
+          
+          {/* <DialogFooter className="sm:justify-start">
             <DialogClose asChild>
               <Button type="button" variant="secondary">
                 Close
               </Button>
             </DialogClose>
-          </DialogFooter>
+          </DialogFooter> */}
         </DialogContent>
       </Dialog>
       </div>

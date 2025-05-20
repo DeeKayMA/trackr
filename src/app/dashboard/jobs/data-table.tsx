@@ -59,7 +59,17 @@ interface DataTableProps<TData, TValue> {
 }
 
 function formatColumnId(id: string): string {
-  return id.replace(/([a-z])([A-Z])/g, "$1 $2"); // Adds a space before uppercase letters
+  if (id.toLowerCase() === "url") return "URL";
+  return id
+    .replace(/[_-]/g, " ") // underscores/hyphens to spaces
+    .replace(/([a-z])([A-Z])/g, "$1 $2") // space before uppercase
+    .split(" ")
+    .map(word =>
+      word.toLowerCase() === "url"
+        ? "URL"
+        : word.charAt(0).toUpperCase() + word.slice(1)
+    )
+    .join(" ");
 }
 
 export function DataTable<TData, TValue>({
@@ -73,13 +83,13 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
     company: true, 
     position: true, 
-    location: false,
-    jobType: false,
-    salary: false, 
+    location: true,
+    jobType: true,
+    salary: true, 
     status: true, 
-    dateApplied: false, 
+    dateApplied: true, 
     URL: true, 
-    notes: false, 
+    notes: true, 
   });
 
   const [rowSelection, setRowSelection] = React.useState({});
