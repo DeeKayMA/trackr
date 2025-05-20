@@ -1,230 +1,62 @@
-// Jobs page on the dashboard - this is where users can view and manage their job applications
-//Data table with job applications
-//kanban board with job applications
-
-// (server component) is where we'll fetch data and render our table.
+'use client'
 
 import Header from "../../../components/Header/Header";
 import { Job, columns } from "./columns";
 import { DataTable } from "./data-table";
-
-async function getData(): Promise<Job[]> {
-  // Fetch data from your API here.
-  return [
-    {
-      id: "728ed52f",
-      company: "Pixar",
-      position: "Front End Developer",
-      status: "Saved",
-      dateApplied: "02-01-2024",
-      location: "Los Angeles, CA",
-      jobType: "Full-time",
-      URL: "https://www.pixar.com",
-      notes: "Great company culture",
-      salaryMin: 120000,
-      salaryMax: 130000,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Apple",
-      position: "Front End Engineer",
-      status: "Applied",
-      dateApplied: "01-01-2024",
-      location: "Silicon Valley, CA",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 145000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Micrrsoft",
-      position: "Front End Engineer",
-      status: "Interview",
-      dateApplied: "01-01-2024",
-      location: "Silicon Valley, CA",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 135000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Apple",
-      position: "Front End Engineer",
-      status: "Offer",
-      dateApplied: "01-01-2024",
-      location: "Manchester UK",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 95000,
-      salaryMax: 100000,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Netflix",
-      position: "Front End Engineer",
-      status: "Rejected",
-      dateApplied: "01-01-2024",
-      location: "London, UK",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 135000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Google",
-      position: "Front End Developer",
-      status: "Applied",
-      dateApplied: "01-01-2024",
-      location: "Silicon Valley, CA",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 115000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Meta",
-      position: "Front End Engineer",
-      status: "Applied",
-      dateApplied: "01-01-2024",
-      location: "Los Angeles, CA",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 125000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Amazon",
-      position: "Front End Developer",
-      status: "Applied",
-      dateApplied: "01-01-2024",
-      location: "Hong Kong",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 145000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Nvidia",
-      position: "Front End Developer",
-      status: "Offer",
-      dateApplied: "01-01-2024",
-      location: "Remote",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 100000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "AirBnb",
-      position: "Front End Engineer",
-      status: "Saved",
-      dateApplied: "01-01-2024",
-      location: "Los Angeles, CA",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 145000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-    {
-      id: "728ed52f",
-      company: "Adobe",
-      position: "Front End Developer",
-      status: "Offer",
-      dateApplied: "01-01-2024",
-      location: "Los Angeles, CA",
-      jobType: "Contract",
-      URL: "https://www.apple.com",
-      notes: "It's Apple",
-      salaryMin: 145000,
-      salaryMax: null,
-      // source: 'LinkedIn',
-      // contact: 'John Doe',
-      // followUpDate: '2023-10-15',
-      // interviewRounds: 2,
-      // lastUpdated: '2023-10-05',
-    },
-  ];
-}
+import { supabase } from "@/lib/supabase/supabase";
+import { useEffect, useState } from "react";
 
 
-export default async function Jobs() {
-  const data = await getData();
+
+export default function Jobs() {
+
+  const [error, setError] = useState<string | null>(null);
+  const [jobs, setJobs] = useState<Job[] | null>(null);
+
+  useEffect(() => {
+    const fetchJobs = async () => {
+      const { data, error } = await supabase
+      .from("Job Applications")
+      .select()
+
+      if(error) {
+        setError('Could not fetch jobs')
+        setJobs(null)
+        console.log(error)
+      }
+
+      if (data){
+        setJobs(data as Job[]);
+        setError(null)
+      }
+    }
+
+    fetchJobs()
+
+  }, [])
+
 
   return (
     <div className="flex flex-col flex-1">
       <Header title="Jobs"/>
-      <div
-        data-orientation="horizontal"
-        className="container mx-auto flex w-full flex-col justify-start gap-6 p-4"
-      >
-        <DataTable columns={columns} data={data} />
+      {error && (
+
+        <div className=" w-full flex flex-col items-center jusstify-center gap-4 mt-10">
+          <h1 className="font-bold text-2xl">Opps we had an error:</h1>
+          <p className="text-red-500">{error}</p>
+          <p>Please try again later</p>
+        </div>
+        
+        )}
+      {jobs && (
+        <div data-orientation="horizontal" 
+        className="container mx-auto flex w-full flex-col justify-start gap-6 p-4" >
+
+        <DataTable columns={columns} data={jobs ?? []} />
+
       </div>
+      )}
+      
     </div>
   );
 }

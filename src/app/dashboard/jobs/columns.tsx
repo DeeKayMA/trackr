@@ -39,27 +39,20 @@ export type JobStatus =
   | "Offer"
   | "Rejected";
 
-export type JobType =
-  | "Full-time"
-  | "Part-time"
-  | "Contract"
-  | "Internship"
-  | "Freelance"
-  | "Other";
 
 export type Job = {
   id: string;
   company: string;
   position: string;
-  status: JobStatus;
-  dateApplied: string;
+  status: string;
+  date_applied: string;
   location: string | null 
-  jobType: JobType;
+  job_type: string;
   //   source: string;
-  URL: string | null ;
+  url: string | null ;
   notes: string | null 
-  salaryMin: number | null
-  salaryMax: number | null 
+  salary_min: number | null
+  salary_max: number | null 
   //   contact: string | null 
   //   followUpDate: string | null 
   //   interviewRounds: number | null 
@@ -68,21 +61,17 @@ export type Job = {
 
 
 const statusMap = {
-  Saved: {
-    icon: <BookmarkIcon className="text-slate-500 dark:text-slate-400" />,
-  },
-  Applied: {
-    icon: <CheckCircle2Icon className="text-blue-500 dark:text-blue-400" />,
-  },
-  Interview: {
-    icon: <PhoneCallIcon className="text-yellow-500 dark:text-yellow-400" />,
-  },
-  Offer: {
-    icon: <HandshakeIcon className="text-green-500 dark:text-green-400" />,
-  },
-  Rejected: {
-    icon: <XCircleIcon className="text-red-500 dark:text-red-400" />,
-  },
+  Saved: {icon: <BookmarkIcon className="text-slate-500 dark:text-slate-400" />},
+  Applied: { icon: <CheckCircle2Icon className="text-blue-500 dark:text-blue-400" /> },
+  Interview: { icon: <PhoneCallIcon className="text-yellow-500 dark:text-yellow-400" /> },
+  Offer: { icon: <HandshakeIcon className="text-green-500 dark:text-green-400" /> },
+  Rejected: { icon: <XCircleIcon className="text-red-500 dark:text-red-400" /> },
+}
+
+type StatusKey = keyof typeof statusMap;
+
+function isStatusKey(status: string): status is StatusKey {
+  return status in statusMap;
 }
 
 function toPascalCase(str: string) {
@@ -150,7 +139,7 @@ export const columns: ColumnDef<Job>[] = [
   },
   //Job Type
   {
-    accessorKey: "jobType",
+    accessorKey: "job_type",
     header: ({ column }) => {
       return (
         <div className="flex items-center">
@@ -186,7 +175,7 @@ export const columns: ColumnDef<Job>[] = [
   },
   //Salary
   {
-    accessorKey: "salaryMin",
+    accessorKey: "salary_min",
     
     header: ({ column }) => {
       return (
@@ -203,8 +192,8 @@ export const columns: ColumnDef<Job>[] = [
       );
     },
     cell: ({ row }) => {
-      const salaryMin = Math.round(parseFloat(row.getValue("salaryMin"))/1000);
-      const salaryMax = row.original.salaryMax ? Math.round(row.original.salaryMax / 1000) : null;
+      const salaryMin = Math.round(parseFloat(row.getValue("salary_min"))/1000);
+      const salaryMax = row.original.salary_min && row.original.salary_max !== null ? Math.round(row.original.salary_max / 1000) : null;
 
 
       return <div>{salaryMax ? `£${salaryMin}–${salaryMax}k` : `£${salaryMin}k`}</div>; //can add text centre class here
@@ -232,7 +221,8 @@ export const columns: ColumnDef<Job>[] = [
         variant="outline"
         className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-4"
       >
-        {statusMap[row.original.status]?.icon || <LoaderIcon />}
+        {isStatusKey(row.original.status) ?
+        statusMap[row.original.status]?.icon : <LoaderIcon />}
         {row.original.status}
       </Badge>
     ),
@@ -251,7 +241,7 @@ export const columns: ColumnDef<Job>[] = [
       },
   },
   {
-    accessorKey: "dateApplied",
+    accessorKey: "date_applied",
     header: ({ column }) => {
         return (
         <div className="flex items-center">
@@ -269,10 +259,10 @@ export const columns: ColumnDef<Job>[] = [
   },
    //Link
    {
-    accessorKey: "URL",
+    accessorKey: "url",
     header: "URL",
       cell: ({ row }) => {
-        const URL = row.getValue<string>("URL");
+        const URL = row.getValue<string>("url");
         return URL ? (
           <a
             href={URL}
@@ -280,8 +270,8 @@ export const columns: ColumnDef<Job>[] = [
             rel="noopener noreferrer"
             className="hover:text-blue-700 flex flex-row items-center"
           >
-            Apply
-            <ExternalLink className="ml-2 h-4 w-4" />
+            View ↗ 
+            {/* <ExternalLink className="ml-2 h-4 w-4" /> */}
           </a>
         ) : (
           <span>No Link</span>
