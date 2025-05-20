@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 
 
 
+
 export default function Jobs() {
 
   const [error, setError] = useState<string | null>(null);
