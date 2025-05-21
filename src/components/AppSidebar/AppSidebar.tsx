@@ -3,6 +3,7 @@ import {
   Home,
   Inbox,
   Crosshair,
+  Book,
   Search,
   Settings,
   LayoutDashboardIcon,
@@ -45,14 +46,9 @@ const items = [
     icon: ChartColumnIncreasing,
   },
   {
-    title: "Search",
-    url: "#",
-    icon: Search,
-  },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
+    title: "Resources",
+    url: "/dashboard/resources",
+    icon: Book,
   },
 ];
 

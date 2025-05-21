@@ -13,12 +13,15 @@ export default function Jobs() {
 
   const [error, setError] = useState<string | null>(null);
   const [jobs, setJobs] = useState<Job[] | null>(null);
+  const [refreshFlag, setRefreshFlag] = useState(false);
 
   useEffect(() => {
+
     const fetchJobs = async () => {
       const { data, error } = await supabase
       .from("Job Applications")
       .select()
+      setRefreshFlag(false);
 
       if(error) {
         setError('Could not fetch jobs')
@@ -34,12 +37,13 @@ export default function Jobs() {
 
     fetchJobs()
 
-  }, [])
+  }, [refreshFlag])
+
 
 
   return (
     <div className="flex flex-col flex-1">
-      <Header title="Jobs"/>
+      <Header title="Jobs" onJobAdded={() => setRefreshFlag(true)}/>
       {error && (
 
         <div className=" w-full flex flex-col items-center jusstify-center gap-4 mt-10">

@@ -283,10 +283,16 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "url",
     header: "URL",
       cell: ({ row }) => {
-        const URL = row.getValue<string>("url");
-        return URL ? (
+        let url = row.getValue<string>("url");
+        if (!url) return <span>No Link</span>
+
+        if (!/^https?:\/\//i.test(url)) {
+          url = `https://${url}`;
+        }
+
+        return(
           <a
-            href={URL}
+            href={url}
             target="_blank"
             rel="noopener noreferrer"
             className="hover:text-blue-700 flex flex-row items-center"
@@ -294,9 +300,7 @@ export const columns: ColumnDef<Job>[] = [
             View ↗ 
             {/* <ExternalLink className="ml-2 h-4 w-4" /> */}
           </a>
-        ) : (
-          <span>No Link</span>
-        );
+          )
       },
   },
   //Actions

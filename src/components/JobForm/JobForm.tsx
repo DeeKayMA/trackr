@@ -51,9 +51,7 @@ const formSchema = z.object({
     .min(1, "Please input a company name")
     .max(50),
   location: z.string().min(0).max(50).optional(),
-  work_model: z.string({
-    required_error: "Please select a status for this position",
-  }),
+  work_model: z.string().optional(),
   job_type: z.string({
     required_error: "Please select a status for this position",
   }),
@@ -69,10 +67,10 @@ const formSchema = z.object({
 
 type JobFormProps = {
   submitName?: string;
+  onSubmit?: (values: z.infer<typeof formSchema>) => void;
 };
 
-export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
-  // const [date, setDate] = useState<Date>()
+export const JobForm = ({ submitName = "Submit", onSubmit }: JobFormProps) => {
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -80,8 +78,8 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
       position: "",
       company: "",
       location: "",
-      work_model: undefined,
-      job_type: "Full-time",
+      work_model: "",
+      job_type: "",
       salary_min: "",
       salary_max: "",
       status: "Saved",
@@ -91,14 +89,14 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    //Put a toast here to confirm the submission
-  }
+//   function onSubmit(values: z.infer<typeof formSchema>) {
+//     console.log(values);
+//     //Put a toast here to confirm the submission
+//   }
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit ?? (()=> {}))} className="space-y-8">
         {/* POSITION */}
         <FormField
           control={form.control}
@@ -271,7 +269,7 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
           render={({ field }) => (
             <FormItem className="flex flex-col ">
               <FormLabel>Application Date</FormLabel>
-              <Popover>
+              <Popover modal>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <Button
@@ -296,7 +294,7 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
                     selected={field.value}
                     onSelect={field.onChange}
                     disabled={(date) => date < new Date("1900-01-01")}
-                    // initialFocus
+                    initialFocus
                   />
                 </PopoverContent>
               </Popover>

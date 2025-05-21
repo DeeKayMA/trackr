@@ -47,6 +47,7 @@ import { Input } from "@/components/ui/input";
 
 import { 
   Columns2,
+  Eye,
   ChevronRightIcon,
   ChevronsRightIcon,
   ChevronLeftIcon,
@@ -83,13 +84,14 @@ export function DataTable<TData, TValue>({
   const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>({
     company: true, 
     position: true, 
-    location: true,
-    jobType: true,
+    location: false,
+    job_type: false,
+    work_model: false,
     salary: true, 
     status: true, 
-    dateApplied: true, 
-    URL: true, 
-    notes: true, 
+    date_applied: true, 
+    url: false, 
+    notes: false, 
   });
 
   const [rowSelection, setRowSelection] = React.useState({});
@@ -137,7 +139,7 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              <Columns2 /> Customise Columns
+             <Eye/> Column Visibility
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
