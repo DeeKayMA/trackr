@@ -45,9 +45,10 @@ export type Job = {
   company: string;
   position: string;
   status: string;
-  date_applied: string;
-  location: string | null 
-  job_type: string;
+  date_applied: string | null;
+  location: string | null
+  work_model: string | null;
+  job_type: string | null;
   //   source: string;
   url: string | null ;
   notes: string | null 
@@ -146,6 +147,24 @@ export const columns: ColumnDef<Job>[] = [
       return (
         <div className="flex items-center">
         <p>Job Type</p>
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+        >
+          
+          <ArrowUpDown className={arrowUpDown} />
+        </Button>
+        </div>
+      );
+    },
+  },
+  //Work Model
+  {
+    accessorKey: "work_model",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center">
+        <p>Work Model</p>
         <Button
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}

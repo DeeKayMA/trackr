@@ -27,9 +27,6 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 
-
-
-
 import {
   Popover,
   PopoverContent,
@@ -54,11 +51,14 @@ const formSchema = z.object({
     .min(1, "Please input a company name")
     .max(50),
   location: z.string().min(0).max(50).optional(),
+  work_model: z.string({
+    required_error: "Please select a status for this position",
+  }),
   job_type: z.string({
     required_error: "Please select a status for this position",
   }),
-  salary_min: z.number().min(0).optional(),
-  salary_max: z.number().min(0).optional(),
+  salary_min: z.string().min(0).optional(),
+  salary_max: z.string().min(0).optional(),
   status: z.string({
     required_error: "Please select a status for this position",
   }),
@@ -72,9 +72,7 @@ type JobFormProps = {
 };
 
 export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
-
-    // const [date, setDate] = useState<Date>()
-
+  // const [date, setDate] = useState<Date>()
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -82,9 +80,10 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
       position: "",
       company: "",
       location: "",
+      work_model: undefined,
       job_type: "Full-time",
-      salary_min: 0,
-      salary_max: 0,
+      salary_min: "",
+      salary_max: "",
       status: "Saved",
       date_applied: undefined,
       url: "",
@@ -106,13 +105,15 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
           name="position"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Position</FormLabel>
+              <div className="flex items-center justify-between">
+                <FormLabel>Position</FormLabel>
+                <p className="text-xs text-muted-foreground"> Required</p>
+              </div>
+
               <FormControl>
                 <Input placeholder="e.g. Software Engineer" {...field} />
               </FormControl>
-              {/* <FormDescription>
-                This is the job position
-              </FormDescription> */}
+              {/* <FormDescription>Required</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}
@@ -123,10 +124,14 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
           name="company"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Company</FormLabel>
+              <div className="flex items-center justify-between">
+                <FormLabel>Company</FormLabel>
+                <p className="text-xs text-muted-foreground"> Required</p>
+              </div>
               <FormControl>
                 <Input placeholder="e.g. Trackr Inc" {...field} />
               </FormControl>
+              <FormDescription>Required</FormDescription>
               <FormMessage />
             </FormItem>
           )}
@@ -165,6 +170,33 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
                   <SelectItem value="Internship">Internship</SelectItem>
                   <SelectItem value="Freelance">Freelance</SelectItem>
                   <SelectItem value="Other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              {/* <FormDescription>
+                You can manage email addresses in your{" "}
+                <Link href="/examples/forms">email settings</Link>.
+              </FormDescription> */}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* WORK Model */}
+        <FormField
+          control={form.control}
+          name="work_model"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Work Model</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select a work model" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="On-site">On-site</SelectItem>
+                  <SelectItem value="Hybrid">Hybrid</SelectItem>
+                  <SelectItem value="Remote">Remote</SelectItem>
                 </SelectContent>
               </Select>
               {/* <FormDescription>
@@ -240,7 +272,7 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
             <FormItem className="flex flex-col ">
               <FormLabel>Application Date</FormLabel>
               <Popover>
-                <PopoverTrigger asChild >
+                <PopoverTrigger asChild>
                   <FormControl>
                     <Button
                       variant={"outline"}
@@ -249,7 +281,11 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
                         !field.value && "text-muted-foreground"
                       )}
                     >
-                      {field.value ? ( format(field.value, "PPP")) : ( <span>Pick a date</span> )}
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
                       <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
                     </Button>
                   </FormControl>
@@ -262,7 +298,6 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
                     disabled={(date) => date < new Date("1900-01-01")}
                     // initialFocus
                   />
-                  
                 </PopoverContent>
               </Popover>
               {/* <FormDescription>
@@ -270,7 +305,6 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
               </FormDescription> */}
               <FormMessage />
             </FormItem>
-            
           )}
         />
         {/* URL */}
@@ -313,7 +347,11 @@ export const JobForm = ({ submitName = "Submit" }: JobFormProps) => {
             {submitName}
           </Button>
           <DialogClose asChild>
-            <Button type="button" variant="secondary" className="w-full hover:bg-primary/10">
+            <Button
+              type="button"
+              variant="secondary"
+              className="w-full hover:bg-primary/10"
+            >
               Cancel
             </Button>
           </DialogClose>
