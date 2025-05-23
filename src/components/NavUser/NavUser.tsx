@@ -1,5 +1,7 @@
 "use client"
 
+import { logout } from "@/app/logout/action"
+
 import {
   BellIcon,
   CreditCardIcon,
@@ -98,12 +100,14 @@ export default function NavUser({
               </DropdownMenuItem> */}
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>
+            
+            <DropdownMenuItem onClick={logout}>
               <LogOutIcon />
               Log out
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+       
       </SidebarMenuItem>
     </SidebarMenu>
   )

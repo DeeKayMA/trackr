@@ -60,6 +60,7 @@ interface DataTableProps<TData, TValue> {
 
 function formatColumnId(id: string): string {
   if (id.toLowerCase() === "url") return "URL";
+  if (id.toLowerCase() === "salary_min") return "Salary";
   return id
     .replace(/[_-]/g, " ") // underscores/hyphens to spaces
     .replace(/([a-z])([A-Z])/g, "$1 $2") // space before uppercase
@@ -142,7 +143,7 @@ export function DataTable<TData, TValue>({
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
-                if (column.id !== "actions") {
+                if (column.id !== "actions" && column.id !== "id" && column.id !== "salary_max" ) {
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}

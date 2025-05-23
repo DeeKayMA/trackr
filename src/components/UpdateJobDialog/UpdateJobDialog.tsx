@@ -7,6 +7,8 @@ import { useRef, useEffect, useState, use } from "react";
 import { useParams } from "next/navigation";
 import { toast } from "sonner"
 
+import { useRouter } from "next/navigation";
+
 
 
 import {
@@ -23,39 +25,52 @@ import {
 
 
 type UpdateJobDialogProps = {
-  onJobUpdated?: () => void;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  id: string;
+  company: string;
+  position: string;
+  status: string;
+  date_applied: string;
+  location: string;
+  work_model: string;
+  job_type: string;
+  salary_min: number;
+  salary_max: number;
+  notes: string;
+  url: string;
+  onJobUpdated?: () => void;
 };
 
 
 
-export const UpdateJobDialog = ({ onJobUpdated, open, onOpenChange }: UpdateJobDialogProps) => {
+export const UpdateJobDialog = ({ onJobUpdated, open, onOpenChange, id, company, position, status, date_applied, location, work_model, job_type, salary_min, salary_max, notes, url }: UpdateJobDialogProps) => {
     const closeRef = useRef<HTMLButtonElement>(null);
-    const { id } = useParams();
+    const router = useRouter();
+    // const { id } = useParams();
     // const [job, setJob] = useState<Job | null>(null);
 
-      useEffect(() => {
-        if (!open || !id) return; // Only fetch when dialog is open and id is available
-        const fetchJobs = async () => {
-          const { data, error } = await supabase
-          .from("Job Applications")
-          .select()
-          .eq("id", id)
-          .single()
+      // useEffect(() => {
+      //   if (!open || !id) return; // Only fetch when dialog is open and id is available
+      //   const fetchJobs = async () => {
+      //     const { data, error } = await supabase
+      //     .from("Job Applications")
+      //     .select()
+      //     .eq("id", id)
+      //     .single()
     
-          if(error) {
-            console.log(error)
-          }
+      //     if(error) {
+      //       console.log(error)
+      //     }
     
-          if (data){
-            // setJob(data as Job);
-          }
-        }
+      //     if (data){
+      //       // setJob(data as Job);
+      //     }
+      //   }
     
-        fetchJobs()
+      //   fetchJobs()
     
-      }, [open, id])
+      // }, [open, id])
 
 
 
@@ -74,6 +89,19 @@ export const UpdateJobDialog = ({ onJobUpdated, open, onOpenChange }: UpdateJobD
           <div className="mt-4">
             <JobForm 
             submitName="Update Job"
+            id={id}
+            company={company}
+            position={position}
+            status={status}
+            date_applied={date_applied}
+            location={location}
+            work_model={work_model}
+            job_type={job_type}
+            salary_min={salary_min?.toString() ?? ""}
+            salary_max={salary_max?.toString() ?? ""}
+            notes={notes}
+            url={url}
+            
             onSubmit={ async values => {
                 console.log(values);
                 //Must push to supabase
@@ -89,8 +117,9 @@ export const UpdateJobDialog = ({ onJobUpdated, open, onOpenChange }: UpdateJobD
                     closeRef.current?.click(); // Close the dialog
                     toast("Job Updated", {
                         description: values.position + " at " + values.company,
-                    }) // Success message
-                    onJobUpdated?.(); //Refresh the datatable
+                    }) 
+                    //Refresh the datatable
+                    router.refresh();
                     onOpenChange(false);
                 }
 

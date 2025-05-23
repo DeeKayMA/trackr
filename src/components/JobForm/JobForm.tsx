@@ -66,26 +66,54 @@ const formSchema = z.object({
 
 type JobFormProps = {
   submitName?: string;
-  onSubmit?: (values: z.infer<typeof formSchema>) => void;
+  onSubmit?: (values: any) => void;
+  id?: string;
+  company?: string;
+  position?: string;
+  status?: string;
+  date_applied?: string | Date;
+  location?: string;
+  work_model?: string;
+  job_type?: string;
+  salary_min?: string | number;
+  salary_max?: string | number;
+  notes?: string;
+  url?: string;
 };
 
-export const JobForm = ({ submitName = "Submit", onSubmit }: JobFormProps) => {
+export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position, status, date_applied, location, work_model, job_type, salary_min, salary_max, notes, url }: JobFormProps) => {
 
+  
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
-    defaultValues: {
-      position: "",
-      company: "",
-      location: "",
-      work_model: "",
-      job_type: "",
-      salary_min: "",
-      salary_max: "",
-      status: "Saved",
-      date_applied: undefined,
-      url: "",
-      notes: "",
-    },
+    defaultValues: 
+    
+    // id?{
+    //   position: "",
+    //   company: "",
+    //   location: "",
+    //   work_model: "",
+    //   job_type: "",
+    //   salary_min: "",
+    //   salary_max: "",
+    //   status: "Saved",
+    //   date_applied: undefined,
+    //   url: "",
+    //   notes: "",
+    // } : 
+    {
+      position: position ?? "",
+      company: company ?? "",
+      location: location ?? "",
+      work_model: work_model ?? "",
+      job_type: job_type ?? "",
+      salary_min: salary_min !== undefined && salary_min !== null ? String(salary_min) : "",
+      salary_max: salary_max !== undefined && salary_max !== null ? String(salary_max) : "",
+      status: status ?? "",
+      date_applied: date_applied ? new Date(date_applied) : undefined,
+      url: url ?? "",
+      notes: notes ?? "",
+    }
   });
 
 //   function onSubmit(values: z.infer<typeof formSchema>) {
@@ -267,7 +295,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit }: JobFormProps) => {
           name="date_applied"
           render={({ field }) => (
             <FormItem className="flex flex-col ">
-              <FormLabel>Application Date</FormLabel>
+              <FormLabel>Date Applied</FormLabel>
               <Popover modal>
                 <PopoverTrigger asChild>
                   <FormControl>

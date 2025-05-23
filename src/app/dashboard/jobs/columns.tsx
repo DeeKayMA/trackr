@@ -16,24 +16,21 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-import { Badge } from "@/components/ui/badge"
+import { Badge } from "@/components/ui/badge";
 
-import { 
-  ArrowUpDown,  
+import {
+  ArrowUpDown,
   ExternalLink,
   CheckCircle2Icon,
   LoaderIcon,
-   PhoneCallIcon,
-   HandshakeIcon,
-   XCircleIcon,
-   BookmarkIcon,
-   MoreHorizontal
+  PhoneCallIcon,
+  HandshakeIcon,
+  XCircleIcon,
+  BookmarkIcon,
+  MoreHorizontal,
 } from "lucide-react";
 
-
-import { Checkbox } from "@/components/ui/checkbox"
-
-
+import { Checkbox } from "@/components/ui/checkbox";
 
 export type Job = {
   id: string;
@@ -41,25 +38,35 @@ export type Job = {
   position: string;
   status: string;
   date_applied: string | null;
-  location: string | null
+  location: string | null;
   work_model: string | null;
   job_type: string | null;
-  url: string | null ;
-  notes: string | null 
-  salary_min: number | null
-  salary_max: number | null 
+  url: string | null;
+  notes: string | null;
+  salary_min: number | null;
+  salary_max: number | null;
+  onJobUpdated?: () => void;
 };
 
-const arrowUpDown = "h-2 w-2"
-
+const arrowUpDown = "h-2 w-2";
 
 const statusMap = {
-  Saved: {icon: <BookmarkIcon className="text-slate-500 dark:text-slate-400" />},
-  Applied: { icon: <CheckCircle2Icon className="text-blue-500 dark:text-blue-400" /> },
-  Interview: { icon: <PhoneCallIcon className="text-yellow-500 dark:text-yellow-400" /> },
-  Offer: { icon: <HandshakeIcon className="text-green-500 dark:text-green-400" /> },
-  Rejected: { icon: <XCircleIcon className="text-red-500 dark:text-red-400" /> },
-}
+  Saved: {
+    icon: <BookmarkIcon className="text-slate-500 dark:text-slate-400" />,
+  },
+  Applied: {
+    icon: <CheckCircle2Icon className="text-blue-500 dark:text-blue-400" />,
+  },
+  Interview: {
+    icon: <PhoneCallIcon className="text-yellow-500 dark:text-yellow-400" />,
+  },
+  Offer: {
+    icon: <HandshakeIcon className="text-green-500 dark:text-green-400" />,
+  },
+  Rejected: {
+    icon: <XCircleIcon className="text-red-500 dark:text-red-400" />,
+  },
+};
 
 type StatusKey = keyof typeof statusMap;
 
@@ -68,49 +75,31 @@ function isStatusKey(status: string): status is StatusKey {
 }
 
 function toPascalCase(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1)
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 export const columns: ColumnDef<Job>[] = [
-    {
-        id: "select",
-        header: ({ table }) => (
-          <Checkbox
-            checked={
-              table.getIsAllPageRowsSelected() ||
-              (table.getIsSomePageRowsSelected() && "indeterminate")
-            }
-            onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
-            aria-label="Select all"
-          />
-        ),
-        cell: ({ row }) => (
-          <Checkbox
-            checked={row.getIsSelected()}
-            onCheckedChange={(value) => row.toggleSelected(!!value)}
-            aria-label="Select row"
-          />
-        ),
-        enableSorting: false,
-        enableHiding: false,
-      },
-  // Company
   {
-    accessorKey: "company",
-    header: ({ column }) => {
-      return (
-        <div className="flex items-center">
-        <p>Company</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
-        </div>
-      );
-    },
+    id: "select",
+    header: ({ table }) => (
+      <Checkbox
+        checked={
+          table.getIsAllPageRowsSelected() ||
+          (table.getIsSomePageRowsSelected() && "indeterminate")
+        }
+        onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+        aria-label="Select all"
+      />
+    ),
+    cell: ({ row }) => (
+      <Checkbox
+        checked={row.getIsSelected()}
+        onCheckedChange={(value) => row.toggleSelected(!!value)}
+        aria-label="Select row"
+      />
+    ),
+    enableSorting: false,
+    enableHiding: false,
   },
   //Position
   {
@@ -118,14 +107,30 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <div className="flex items-center">
-        <p>Position</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
+          <p>Position</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
+        </div>
+      );
+    },
+  },
+  // Company
+  {
+    accessorKey: "company",
+    header: ({ column }) => {
+      return (
+        <div className="flex items-center">
+          <p>Company</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
         </div>
       );
     },
@@ -136,14 +141,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <div className="flex items-center">
-        <p>Job Type</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
+          <p>Job Type</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
         </div>
       );
     },
@@ -154,14 +158,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <div className="flex items-center">
-        <p>Work Model</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
+          <p>Work Model</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
         </div>
       );
     },
@@ -172,14 +175,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <div className="flex items-center">
-        <p>Location</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
+          <p>Location</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
         </div>
       );
     },
@@ -187,27 +189,34 @@ export const columns: ColumnDef<Job>[] = [
   //Salary
   {
     accessorKey: "salary_min",
-    
+
     header: ({ column }) => {
       return (
         <div className="flex items-center">
-        <p>Salary</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
+          <p>Salary</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
         </div>
       );
     },
     cell: ({ row }) => {
-      const salaryMin = Math.round(parseFloat(row.getValue("salary_min"))/1000);
-      const salaryMax = row.original.salary_min && row.original.salary_max !== null ? Math.round(row.original.salary_max / 1000) : null;
+      const salaryMin = Math.round(
+        parseFloat(row.getValue("salary_min")) / 1000
+      );
+      const salaryMax =
+        row.original.salary_min && row.original.salary_max !== null
+          ? Math.round(row.original.salary_max / 1000)
+          : null;
 
-
-      return <div>{salaryMax ? `£${salaryMin}–${salaryMax}k` : `£${salaryMin}k`}</div>; //can add text centre class here
+      return (
+        <div>
+          {salaryMax ? `£${salaryMin}–${salaryMax}k` : `£${salaryMin}k`}
+        </div>
+      ); //can add text centre class here
     },
   },
   //Status
@@ -216,14 +225,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <div className="flex items-center">
-        <p>Status</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
+          <p>Status</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
         </div>
       );
     },
@@ -232,67 +240,81 @@ export const columns: ColumnDef<Job>[] = [
         variant="outline"
         className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-4"
       >
-        {isStatusKey(row.original.status) ?
-        statusMap[row.original.status]?.icon : <LoaderIcon />}
+        {isStatusKey(row.original.status) ? (
+          statusMap[row.original.status]?.icon
+        ) : (
+          <LoaderIcon />
+        )}
         {row.original.status}
       </Badge>
     ),
-  },
-   //Notes
-   {
-    accessorKey: "notes",
-    header: "Notes",
-      cell: ({ row }) => {
-        const notes = row.getValue<string>("notes");
-        return notes ? (
-          <span>{notes}</span>
-        ) : (
-          <span></span>
-        );
-      },
   },
   //Date Applied
   {
     accessorKey: "date_applied",
     header: ({ column }) => {
-        return (
+      return (
         <div className="flex items-center">
-        <p>Date Applied</p>
-        <Button
-          variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-        >
-          
-          <ArrowUpDown className={arrowUpDown} />
-        </Button>
+          <p>Date Applied</p>
+          <Button
+            variant="ghost"
+            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          >
+            <ArrowUpDown className={arrowUpDown} />
+          </Button>
         </div>
-        );
-      },
+      );
+    },
   },
-   //Link
-   {
+  //Notes
+  {
+    accessorKey: "notes",
+    header: "Notes",
+    cell: ({ row }) => {
+      const notes = row.getValue<string>("notes");
+      return notes ? <span>{notes}</span> : <span></span>;
+    },
+  },
+  //Link
+  {
     accessorKey: "url",
     header: "URL",
-      cell: ({ row }) => {
-        let url = row.getValue<string>("url");
-        if (!url) return <span>No Link</span>
+    cell: ({ row }) => {
+      let url = row.getValue<string>("url");
+      if (!url) return <span>No Link</span>;
 
-        if (!/^https?:\/\//i.test(url)) {
-          url = `https://${url}`;
-        }
+      if (!/^https?:\/\//i.test(url)) {
+        url = `https://${url}`;
+      }
 
-        return(
-          <a
-            href={url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-700 flex flex-row items-center"
-          >
-            View ↗ 
-            {/* <ExternalLink className="ml-2 h-4 w-4" /> */}
-          </a>
-          )
-      },
+      return (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="hover:text-blue-700 flex flex-row items-center"
+        >
+          View ↗{/* <ExternalLink className="ml-2 h-4 w-4" /> */}
+        </a>
+      );
+    },
+  },
+  //ID
+  {
+    accessorKey: "id",
+    header: () => null,       
+    cell: () => null,
+    enableHiding: true,
+    enableColumnFilter: false,
+    enableSorting: false,// or undefined
+  },
+  {
+    accessorKey: "salary_max",
+    header: () => null,       
+    cell: () => null,
+    enableHiding: true,
+    enableColumnFilter: false,
+    enableSorting: false,
   },
   //Actions
   {
@@ -316,39 +338,53 @@ export const columns: ColumnDef<Job>[] = [
 
       return (
         <>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal className={arrowUpDown} />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem  onClick={() => {
-              setOpen(true)
-              
-              }}>
-              Edit
-              {/* Open the edit dialog for the specific job */}
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              Delete
-              {/* Delete the specific job with an onclick function 
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className={arrowUpDown} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpen(true);
+                }}
+              >
+                Edit
+                {/* Open the edit dialog for the specific job */}
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                Delete
+                {/* Delete the specific job with an onclick function 
                it must call remove on supabase 
                it must do toast sonner to say that the job has been deleted
                it must refresh the datatable
               */}
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-        <div className="hidden">
-          <UpdateJobDialog
-          open={open}
-          onOpenChange={setOpen}
-          />
-        </div>
-        
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <div className="hidden">
+            <UpdateJobDialog open={open} onOpenChange={setOpen}
+            id={id}
+            company={company}
+            position={position}
+            status={status}
+            date_applied={date_applied}
+            location={location}
+            work_model={work_model}
+            job_type={job_type}
+            salary_min={salary_min}
+            salary_max={salary_max}
+            notes={notes}
+            url={url}
+
+            // Pass the value down to updateJobDialog and then to JobFrom
+            //Minimal prop drilling
+
+            />
+          </div>
         </>
       );
     },
