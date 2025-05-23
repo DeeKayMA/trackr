@@ -7,13 +7,12 @@ import { supabase } from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
 
 
-
-
 export default function Jobs() {
 
   const [error, setError] = useState<string | null>(null);
   const [jobs, setJobs] = useState<Job[] | null>(null);
   const [refreshFlag, setRefreshFlag] = useState(false);
+
 
   useEffect(() => {
 
@@ -41,6 +40,7 @@ export default function Jobs() {
 
 
 
+
   return (
     <div className="flex flex-col flex-1">
       <Header title="Jobs" onJobAdded={() => setRefreshFlag(true)}/>
@@ -57,7 +57,10 @@ export default function Jobs() {
         <div data-orientation="horizontal" 
         className="container mx-auto flex w-full flex-col justify-start gap-6 p-4" >
 
-        <DataTable columns={columns} data={jobs ?? []} />
+        <DataTable 
+        columns={columns} 
+        data={jobs ?? []}
+        />
 
       </div>
       )}

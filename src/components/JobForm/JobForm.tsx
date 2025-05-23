@@ -13,7 +13,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 
-import { useState } from "react";
 
 import { DialogClose } from "@/components/ui/dialog";
 
@@ -129,7 +128,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit }: JobFormProps) => {
               <FormControl>
                 <Input placeholder="e.g. Trackr Inc" {...field} />
               </FormControl>
-              <FormDescription>Required</FormDescription>
+              {/* <FormDescription>Required</FormDescription> */}
               <FormMessage />
             </FormItem>
           )}

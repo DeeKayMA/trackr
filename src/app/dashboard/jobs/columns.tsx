@@ -1,8 +1,10 @@
 // (client component) will contain our column definitions.
 "use client";
 
+import { useState } from "react";
+
 import { ColumnDef } from "@tanstack/react-table";
-// import { MoreHorizontal } from "lucide-react";
+import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -15,7 +17,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 import { Badge } from "@/components/ui/badge"
-
 
 import { 
   ArrowUpDown,  
@@ -32,12 +33,6 @@ import {
 
 import { Checkbox } from "@/components/ui/checkbox"
 
-export type JobStatus =
-  | "Saved"
-  | "Applied"
-  | "Interview"
-  | "Offer"
-  | "Rejected";
 
 
 export type Job = {
@@ -49,15 +44,10 @@ export type Job = {
   location: string | null
   work_model: string | null;
   job_type: string | null;
-  //   source: string;
   url: string | null ;
   notes: string | null 
   salary_min: number | null
   salary_max: number | null 
-  //   contact: string | null 
-  //   followUpDate: string | null 
-  //   interviewRounds: number | null 
-  //   lastUpdated: string | null 
 };
 
 const arrowUpDown = "h-2 w-2"
@@ -261,6 +251,7 @@ export const columns: ColumnDef<Job>[] = [
         );
       },
   },
+  //Date Applied
   {
     accessorKey: "date_applied",
     header: ({ column }) => {
@@ -307,9 +298,24 @@ export const columns: ColumnDef<Job>[] = [
   {
     id: "actions",
     cell: ({ row }) => {
-      const payment = row.original;
+      //Pass these into the UpdateJob Dialog, then pass them into JobForm as default values if the ID is the same
+      const id = row.getValue<string>("id");
+      const company = row.getValue<string>("company");
+      const position = row.getValue<string>("position");
+      const status = row.getValue<string>("status");
+      const date_applied = row.getValue<string>("date_applied");
+      const location = row.getValue<string>("location");
+      const work_model = row.getValue<string>("work_model");
+      const job_type = row.getValue<string>("job_type");
+      const salary_min = row.getValue<number>("salary_min");
+      const salary_max = row.getValue<number>("salary_max");
+      const notes = row.getValue<string>("notes");
+      const url = row.getValue<string>("url");
+
+      const [open, setOpen] = useState(false);
 
       return (
+        <>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -319,16 +325,31 @@ export const columns: ColumnDef<Job>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            {/* <DropdownMenuItem
-                  onClick={() => navigator.clipboard.writeText(payment.id)}
-                >
-                  Copy payment ID
-                </DropdownMenuItem>
-            <DropdownMenuSeparator /> */}
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem  onClick={() => {
+              setOpen(true)
+              
+              }}>
+              Edit
+              {/* Open the edit dialog for the specific job */}
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Delete
+              {/* Delete the specific job with an onclick function 
+               it must call remove on supabase 
+               it must do toast sonner to say that the job has been deleted
+               it must refresh the datatable
+              */}
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+        <div className="hidden">
+          <UpdateJobDialog
+          open={open}
+          onOpenChange={setOpen}
+          />
+        </div>
+        
+        </>
       );
     },
   },
