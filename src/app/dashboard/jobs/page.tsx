@@ -5,13 +5,17 @@ import { Job, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { supabase } from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
 
 export default function Jobs() {
 
   const [error, setError] = useState<string | null>(null);
   const [jobs, setJobs] = useState<Job[] | null>(null);
-  const [refreshFlag, setRefreshFlag] = useState(false);
+  const { refresh, setRefresh } = useRefreshStore();
+
+
+  
 
 
   useEffect(() => {
@@ -20,7 +24,7 @@ export default function Jobs() {
       const { data, error } = await supabase
       .from("Job Applications")
       .select()
-      setRefreshFlag(false);
+      setRefresh(false);
 
       if(error) {
         setError('Could not fetch jobs')
@@ -36,14 +40,14 @@ export default function Jobs() {
 
     fetchJobs()
 
-  }, [refreshFlag])
+  }, [refresh])
 
 
 
 
   return (
     <div className="flex flex-col flex-1">
-      <Header title="Jobs" onJobAdded={() => setRefreshFlag(true)}/>
+      <Header title="Jobs"/>
       {error && (
 
         <div className=" w-full flex flex-col items-center jusstify-center gap-4 mt-10">
@@ -56,7 +60,6 @@ export default function Jobs() {
       {jobs && (
         <div data-orientation="horizontal" 
         className="container mx-auto flex w-full flex-col justify-start gap-6 p-4" >
-
         <DataTable 
         columns={columns} 
         data={jobs ?? []}

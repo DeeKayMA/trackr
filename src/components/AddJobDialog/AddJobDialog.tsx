@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase/supabase";
 import { useRef } from "react";
 import { toast } from "sonner"
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
 
 
@@ -20,13 +21,13 @@ import {
 } from "@/components/ui/dialog";
 
 type AddJobDialogProps = {
-  onJobAdded?: () => void;
 };
 
 
 
-export const AddJobDialog = ({ onJobAdded }: AddJobDialogProps) => {
+export const AddJobDialog = ({  }: AddJobDialogProps) => {
     const closeRef = useRef<HTMLButtonElement>(null);
+     const { refresh, setRefresh } = useRefreshStore();
 
     return(
         <div className="px-4 lg:px-6">
@@ -59,7 +60,8 @@ export const AddJobDialog = ({ onJobAdded }: AddJobDialogProps) => {
                     toast("Job Added", {
                         description: values.position + " at " + values.company,
                     }) // Success message
-                    onJobAdded?.(); //Refresh the datatable 
+                    // onJobAdded?.(); //Refresh the datatable 
+                    setRefresh(true)
                 }
             }}/>
           </div>

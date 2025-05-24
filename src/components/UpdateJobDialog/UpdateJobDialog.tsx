@@ -6,8 +6,8 @@ import { supabase } from "@/lib/supabase/supabase";
 import { useRef, useEffect, useState, use } from "react";
 import { useParams } from "next/navigation";
 import { toast } from "sonner"
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
-import { useRouter } from "next/navigation";
 
 
 
@@ -39,42 +39,13 @@ type UpdateJobDialogProps = {
   salary_max: number;
   notes: string;
   url: string;
-  onJobUpdated?: () => void;
 };
 
 
 
-export const UpdateJobDialog = ({ onJobUpdated, open, onOpenChange, id, company, position, status, date_applied, location, work_model, job_type, salary_min, salary_max, notes, url }: UpdateJobDialogProps) => {
+export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, status, date_applied, location, work_model, job_type, salary_min, salary_max, notes, url }: UpdateJobDialogProps) => {
     const closeRef = useRef<HTMLButtonElement>(null);
-    const router = useRouter();
-    // const { id } = useParams();
-    // const [job, setJob] = useState<Job | null>(null);
-
-      // useEffect(() => {
-      //   if (!open || !id) return; // Only fetch when dialog is open and id is available
-      //   const fetchJobs = async () => {
-      //     const { data, error } = await supabase
-      //     .from("Job Applications")
-      //     .select()
-      //     .eq("id", id)
-      //     .single()
-    
-      //     if(error) {
-      //       console.log(error)
-      //     }
-    
-      //     if (data){
-      //       // setJob(data as Job);
-      //     }
-      //   }
-    
-      //   fetchJobs()
-    
-      // }, [open, id])
-
-
-
-
+    const { refresh, setRefresh } = useRefreshStore();
 
     return(
         <div className="px-4 lg:px-6">
@@ -97,17 +68,24 @@ export const UpdateJobDialog = ({ onJobUpdated, open, onOpenChange, id, company,
             location={location}
             work_model={work_model}
             job_type={job_type}
-            salary_min={salary_min?.toString() ?? ""}
-            salary_max={salary_max?.toString() ?? ""}
+            // salary_min={salary_min?.toString() ?? ""}
+            // salary_max={salary_max?.toString() ?? ""}
+            salary_min={salary_min}
+            salary_max={salary_max}
             notes={notes}
             url={url}
             
             onSubmit={ async values => {
                 console.log(values);
+                const patch = {
+                  ...values,
+                  salary_min: values.salary_min === "" ? null : Number(values.salary_min),
+                  salary_max: values.salary_max === "" ? null : Number(values.salary_max),
+                };
                 //Must push to supabase
                 const { data, error } = await supabase
                 .from ("Job Applications")
-                .update([values])
+                .update([patch])
                 .eq("id", id);
 
                 if(error){
@@ -119,7 +97,7 @@ export const UpdateJobDialog = ({ onJobUpdated, open, onOpenChange, id, company,
                         description: values.position + " at " + values.company,
                     }) 
                     //Refresh the datatable
-                    router.refresh();
+                    setRefresh(true)
                     onOpenChange(false);
                 }
 

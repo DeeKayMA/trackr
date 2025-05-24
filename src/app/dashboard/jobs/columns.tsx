@@ -5,6 +5,9 @@ import { useState } from "react";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
+import { DeleteJobDialog } from "@/components/DeleteJobDialog/DeleteJobDialog";
+import { supabase } from "@/lib/supabase/supabase";
+
 
 import { Button } from "@/components/ui/button";
 import {
@@ -334,7 +337,8 @@ export const columns: ColumnDef<Job>[] = [
       const notes = row.getValue<string>("notes");
       const url = row.getValue<string>("url");
 
-      const [open, setOpen] = useState(false);
+      const [openEdit, setOpenEdit] = useState(false);
+      const [openDelete, setOpenDelete] = useState(false);
 
       return (
         <>
@@ -349,13 +353,16 @@ export const columns: ColumnDef<Job>[] = [
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
               <DropdownMenuItem
                 onClick={() => {
-                  setOpen(true);
+                  setOpenEdit(true);
                 }}
               >
                 Edit
                 {/* Open the edit dialog for the specific job */}
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem
+              onClick={() => {
+                  setOpenDelete(true);
+                }}>
                 Delete
                 {/* Delete the specific job with an onclick function 
                it must call remove on supabase 
@@ -366,7 +373,7 @@ export const columns: ColumnDef<Job>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="hidden">
-            <UpdateJobDialog open={open} onOpenChange={setOpen}
+            <UpdateJobDialog open={openEdit} onOpenChange={setOpenEdit}
             id={id}
             company={company}
             position={position}
@@ -375,15 +382,19 @@ export const columns: ColumnDef<Job>[] = [
             location={location}
             work_model={work_model}
             job_type={job_type}
-            salary_min={salary_min}
+            salary_min={salary_min} 
             salary_max={salary_max}
             notes={notes}
             url={url}
-
-            // Pass the value down to updateJobDialog and then to JobFrom
-            //Minimal prop drilling
-
             />
+            <DeleteJobDialog 
+              open={openDelete} 
+              onOpenChange={setOpenDelete} 
+              id={id}
+              company={company}
+              position={position}
+            />
+
           </div>
         </>
       );

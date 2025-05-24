@@ -75,8 +75,8 @@ type JobFormProps = {
   location?: string;
   work_model?: string;
   job_type?: string;
-  salary_min?: string | number;
-  salary_max?: string | number;
+  salary_min?: number;
+  salary_max?: number;
   notes?: string;
   url?: string;
 };

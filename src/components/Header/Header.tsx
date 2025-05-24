@@ -1,13 +1,12 @@
 type HeaderProps = {
   title: string;
-  onJobAdded?: () => void;
 };
 
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AddJobDialog } from "@/components/AddJobDialog/AddJobDialog"
 
-export default function Header({ title, onJobAdded }: HeaderProps) {
+export default function Header({ title }: HeaderProps) {
   return (
     <header className="space-between group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2 lg:px-6">
@@ -18,7 +17,7 @@ export default function Header({ title, onJobAdded }: HeaderProps) {
         />
         <h1 className="text-base font-medium">{title}</h1>
       </div>
-      <AddJobDialog onJobAdded={onJobAdded} />
+      <AddJobDialog />
     </header>
   );
 }
