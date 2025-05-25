@@ -76,9 +76,9 @@ function isStatusKey(status: string): status is StatusKey {
   return status in statusMap;
 }
 
-function toPascalCase(str: string) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
-}
+// function toPascalCase(str: string) {
+//   return str.charAt(0).toUpperCase() + str.slice(1);
+// }
 
 function formatSalaryParts(num: number | null): {
   value: string;
@@ -99,6 +99,7 @@ function formatSalaryParts(num: number | null): {
 }
 
 export const columns: ColumnDef<Job>[] = [
+    //Select
   {
     id: "select",
     header: ({ table }) => (
@@ -354,6 +355,7 @@ export const columns: ColumnDef<Job>[] = [
     enableColumnFilter: false,
     enableSorting: false, // or undefined
   },
+  //Salaray Max
   {
     accessorKey: "salary_max",
     header: () => null,

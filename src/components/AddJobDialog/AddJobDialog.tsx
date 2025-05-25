@@ -2,8 +2,7 @@
 
 import { JobForm } from "@/components/JobForm/JobForm";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase/supabase";
-import { supabaseBrowser } from "@/lib/supabase/supabase-browser";
+import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { useRef } from "react";
 import { toast } from "sonner"
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
@@ -71,7 +70,7 @@ export const AddJobDialog = ({  }: AddJobDialogProps) => {
               };
   
 
-                const { data, error } = await supabase
+                const { data, error } = await supabaseBrowser
                 .from ("Job Applications")
                 .insert([valuesWithUserId]); 
 

@@ -3,7 +3,7 @@
 import Header from "../../../components/Header/Header";
 import { Job, columns } from "./columns";
 import { DataTable } from "./data-table";
-import { supabase } from "@/lib/supabase/supabase";
+import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
@@ -18,7 +18,16 @@ export default function Jobs() {
   useEffect(() => {
 
     const fetchJobs = async () => {
-      const { data, error } = await supabase
+
+    // const { data: { session }, error: sessionError } = await supabaseBrowser.auth.getSession();
+   
+    // if (!session) {
+    //   setError('You must be logged in to view jobs.');
+    //   setJobs(null);
+    //   return;
+    // }
+
+      const { data, error } = await supabaseBrowser
       .from("Job Applications")
       .select()
       setRefresh(false);

@@ -14,7 +14,7 @@ import {
 import { toast } from "sonner"
 
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { supabase } from "@/lib/supabase/supabase";
+import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { useRef } from "react";
 
 type DeleteJobDialogProps = {
@@ -48,7 +48,7 @@ export const DeleteJobDialog = ({ open, onOpenChange, id, company, position}: De
           className={'bg-red-500 hover:bg-red-600 text-white'}
           type="button"
           onClick={async () => {
-                const { data, error } = await supabase
+                const { data, error } = await supabaseBrowser
                 .from ("Job Applications")
                 .delete()
                 .eq("id", id);

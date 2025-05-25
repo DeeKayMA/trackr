@@ -2,7 +2,7 @@
 
 import { JobForm } from "@/components/JobForm/JobForm";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/lib/supabase/supabase";
+import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { useRef, useEffect, useState, use } from "react";
 import { useParams } from "next/navigation";
 import { toast } from "sonner"
@@ -83,7 +83,7 @@ export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, sta
                   salary_max: values.salary_max === "" ? null : Number(values.salary_max),
                 };
                 //Must push to supabase
-                const { data, error } = await supabase
+                const { data, error } = await supabaseBrowser
                 .from ("Job Applications")
                 .update([patch])
                 .eq("id", id);
