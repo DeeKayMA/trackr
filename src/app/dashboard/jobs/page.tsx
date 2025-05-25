@@ -15,9 +15,6 @@ export default function Jobs() {
   const { refresh, setRefresh } = useRefreshStore();
 
 
-  
-
-
   useEffect(() => {
 
     const fetchJobs = async () => {

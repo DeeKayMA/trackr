@@ -8,7 +8,6 @@ import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
 import { DeleteJobDialog } from "@/components/DeleteJobDialog/DeleteJobDialog";
 import { supabase } from "@/lib/supabase/supabase";
 
-
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -79,6 +78,24 @@ function isStatusKey(status: string): status is StatusKey {
 
 function toPascalCase(str: string) {
   return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+function formatSalaryParts(num: number | null): {
+  value: string;
+  unit: string;
+} {
+  if (num === null || isNaN(num)) return { value: "", unit: "" };
+  if (num >= 1_000_000)
+    return {
+      value: (num / 1_000_000).toFixed(num % 1_000_000 === 0 ? 0 : 1),
+      unit: "m",
+    };
+  if (num >= 1_000)
+    return {
+      value: Math.round(num / 1_000).toString(), // always integer for k
+      unit: "k",
+    };
+  return { value: num.toString(), unit: "" }
 }
 
 export const columns: ColumnDef<Job>[] = [
@@ -207,19 +224,33 @@ export const columns: ColumnDef<Job>[] = [
       );
     },
     cell: ({ row }) => {
-      const salaryMin = Math.round(
-        parseFloat(row.getValue("salary_min")) / 1000
-      );
-      const salaryMax =
-        row.original.salary_min && row.original.salary_max !== null
-          ? Math.round(row.original.salary_max / 1000)
-          : null;
+      const salaryMin = row.original.salary_min;
+      const salaryMax = row.original.salary_max;
 
-      return (
-        <div>
-          {salaryMax ? `£${salaryMin}–${salaryMax}k` : `£${salaryMin}k`}
-        </div>
-      ); //can add text centre class here
+      if (salaryMin !== null) {
+        const minParts = formatSalaryParts(salaryMin);
+        const maxParts =
+          salaryMax !== null ? formatSalaryParts(salaryMax) : null;
+
+        // If both min and max exist and have the same unit, show as "min–max{unit}"
+        if (maxParts && minParts.unit === maxParts.unit && minParts.unit) {
+          return (
+            <div>
+              £{minParts.value}–{maxParts.value}
+              {minParts.unit}
+            </div>
+          );
+        }
+        // If units differ or only min exists, show each with its unit
+        return (
+          <div>
+            £{minParts.value}
+            {minParts.unit}
+            {maxParts ? `–${maxParts.value}${maxParts.unit}` : ""}
+          </div>
+        );
+      }
+      return null;
     },
   },
   //Status
@@ -268,6 +299,18 @@ export const columns: ColumnDef<Job>[] = [
         </div>
       );
     },
+    cell: ({ row }) => {
+      const raw = row.getValue<string | null>("date_applied");
+      if (!raw) return <span>-</span>;
+      const date = new Date(raw);
+      // Format as DD-MM-YYYY
+      const formatted = `${date.getDate().toString().padStart(2, "0")}-${(
+        date.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}-${date.getFullYear()}`;
+      return <span>{formatted}</span>;
+    },
   },
   //Notes
   {
@@ -305,15 +348,15 @@ export const columns: ColumnDef<Job>[] = [
   //ID
   {
     accessorKey: "id",
-    header: () => null,       
+    header: () => null,
     cell: () => null,
     enableHiding: true,
     enableColumnFilter: false,
-    enableSorting: false,// or undefined
+    enableSorting: false, // or undefined
   },
   {
     accessorKey: "salary_max",
-    header: () => null,       
+    header: () => null,
     cell: () => null,
     enableHiding: true,
     enableColumnFilter: false,
@@ -360,9 +403,10 @@ export const columns: ColumnDef<Job>[] = [
                 {/* Open the edit dialog for the specific job */}
               </DropdownMenuItem>
               <DropdownMenuItem
-              onClick={() => {
+                onClick={() => {
                   setOpenDelete(true);
-                }}>
+                }}
+              >
                 Delete
                 {/* Delete the specific job with an onclick function 
                it must call remove on supabase 
@@ -373,28 +417,29 @@ export const columns: ColumnDef<Job>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="hidden">
-            <UpdateJobDialog open={openEdit} onOpenChange={setOpenEdit}
-            id={id}
-            company={company}
-            position={position}
-            status={status}
-            date_applied={date_applied}
-            location={location}
-            work_model={work_model}
-            job_type={job_type}
-            salary_min={salary_min} 
-            salary_max={salary_max}
-            notes={notes}
-            url={url}
+            <UpdateJobDialog
+              open={openEdit}
+              onOpenChange={setOpenEdit}
+              id={id}
+              company={company}
+              position={position}
+              status={status}
+              date_applied={date_applied}
+              location={location}
+              work_model={work_model}
+              job_type={job_type}
+              salary_min={salary_min}
+              salary_max={salary_max}
+              notes={notes}
+              url={url}
             />
-            <DeleteJobDialog 
-              open={openDelete} 
-              onOpenChange={setOpenDelete} 
+            <DeleteJobDialog
+              open={openDelete}
+              onOpenChange={setOpenDelete}
               id={id}
               company={company}
               position={position}
             />
-
           </div>
         </>
       );

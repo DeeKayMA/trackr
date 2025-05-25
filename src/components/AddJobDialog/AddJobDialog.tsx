@@ -3,9 +3,11 @@
 import { JobForm } from "@/components/JobForm/JobForm";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabase/supabase";
+import { supabaseBrowser } from "@/lib/supabase/supabase-browser";
 import { useRef } from "react";
 import { toast } from "sonner"
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { useEffect, useState } from "react";
 
 
 
@@ -29,6 +31,22 @@ export const AddJobDialog = ({  }: AddJobDialogProps) => {
     const closeRef = useRef<HTMLButtonElement>(null);
      const { refresh, setRefresh } = useRefreshStore();
 
+      const [userId, setUserId] = useState<string | null>(null);
+
+      useEffect(() => {
+        const fetchUser = async () => {
+          const { data: { user }, error } = await supabaseBrowser.auth.getUser();
+          if (user) setUserId(user.id);
+          else console.log('No user logged in', error);
+        };
+
+        fetchUser();
+      }, []);
+
+
+
+
+
     return(
         <div className="px-4 lg:px-6">
         <Dialog>
@@ -46,11 +64,16 @@ export const AddJobDialog = ({  }: AddJobDialogProps) => {
             <JobForm 
             submitName="Add Job"
             onSubmit={ async values => {
-                console.log(values);
-                //Must push to supabase
+
+              const valuesWithUserId = {
+                ...values,
+                user_id: userId, // Add the user ID to the values
+              };
+  
+
                 const { data, error } = await supabase
                 .from ("Job Applications")
-                .insert([values]); 
+                .insert([valuesWithUserId]); 
 
                 if(error){
                     console.log(error)
