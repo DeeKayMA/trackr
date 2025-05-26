@@ -1,11 +1,7 @@
+'use client'
+
 import {
-  Calendar,
-  Home,
-  Inbox,
-  Crosshair,
   Book,
-  Search,
-  Settings,
   LayoutDashboardIcon,
   BriefcaseBusiness,
   ChartColumnIncreasing,
@@ -25,7 +21,9 @@ import {
   SidebarFooter,
 } from "@/components/ui/sidebar";
 
-// import Link from 'next/link';
+
+import { useEffect, useState } from "react";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
 import NavUser from "../NavUser/NavUser";
 
 // Menu items.
@@ -53,6 +51,31 @@ const items = [
 ];
 
 export default function AppSidebar() {
+  const [userInfo, setUserInfo] = useState({
+    name: "",
+    email: "",
+    avatar: "",
+  });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data: { session } } = await supabaseBrowser.auth.getSession();
+      if (session?.user) {
+        setUserInfo({
+          name:
+            session.user.user_metadata?.full_name ||
+            session.user.user_metadata?.name ||
+            "",
+          email: session.user.email || "",
+          avatar: session.user.user_metadata?.avatar_url || "/globe.svg",
+        });
+      }
+    };
+    fetchUser();
+  }, []);
+
+
+
   return (
     <Sidebar>
       {/* Sidebar Header */}
@@ -100,11 +123,7 @@ export default function AppSidebar() {
       {/* Sidebar Footer */}
       <SidebarFooter>
         <NavUser
-          user={{
-            name: "John Doe",
-            email: "john.doe@gmail.com",
-            avatar: "/globe.svg",
-          }}
+          user={userInfo}
         />
       </SidebarFooter>
     </Sidebar>

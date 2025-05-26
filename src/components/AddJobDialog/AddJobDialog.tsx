@@ -85,7 +85,10 @@ export const AddJobDialog = ({  }: AddJobDialogProps) => {
                     // onJobAdded?.(); //Refresh the datatable 
                     setRefresh(true)
                 }
-            }}/>
+            }}
+            
+            
+            />
           </div>
           <DialogClose ref={closeRef} className="hidden" />
         </DialogContent>

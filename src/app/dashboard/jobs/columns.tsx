@@ -6,6 +6,7 @@ import { useState } from "react";
 import { ColumnDef } from "@tanstack/react-table";
 import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
 import { DeleteJobDialog } from "@/components/DeleteJobDialog/DeleteJobDialog";
+import { NotesDialog } from "@/components/NotesDialog/NotesDialog";
 import { supabase } from "@/lib/supabase/supabase";
 
 import { Button } from "@/components/ui/button";
@@ -51,6 +52,7 @@ export type Job = {
 };
 
 const arrowUpDown = "h-2 w-2";
+const sortButton = "-ml-3 text-muted-foreground text-sm"
 
 const statusMap = {
   Saved: {
@@ -76,10 +78,8 @@ function isStatusKey(status: string): status is StatusKey {
   return status in statusMap;
 }
 
-// function toPascalCase(str: string) {
-//   return str.charAt(0).toUpperCase() + str.slice(1);
-// }
 
+//Format the currency 
 function formatSalaryParts(num: number | null): {
   value: string;
   unit: string;
@@ -96,6 +96,13 @@ function formatSalaryParts(num: number | null): {
       unit: "k",
     };
   return { value: num.toString(), unit: "" }
+}
+
+//Truncate long words 
+function truncate(input: string | null, maxLength: number): string {
+  if(!input) return '';
+  return input.length > maxLength ? input.slice(0, maxLength) + '…' : input;
+    
 }
 
 export const columns: ColumnDef<Job>[] = [
@@ -127,49 +134,54 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "position",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Position</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Position</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
+    cell: ({ row }) => {
+      return truncate(row.original.position,20);
+      
+    }
   },
   // Company
   {
     accessorKey: "company",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Company</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Company</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
+    cell: ({ row }) => {
+      return truncate(row.original.company,20);
+      
+    }
   },
   //Job Type
   {
     accessorKey: "job_type",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Job Type</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Job Type</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
   },
@@ -178,15 +190,14 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "work_model",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Work Model</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Work Model</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
   },
@@ -195,17 +206,20 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "location",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Location</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Location</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
+    cell: ({ row }) => {
+      return truncate(row.original.location,15);
+      
+    }
   },
   //Salary
   {
@@ -213,15 +227,14 @@ export const columns: ColumnDef<Job>[] = [
 
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Salary</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Salary</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
     cell: ({ row }) => {
@@ -259,15 +272,14 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "status",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Status</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Status</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
     cell: ({ row }) => (
@@ -289,15 +301,14 @@ export const columns: ColumnDef<Job>[] = [
     accessorKey: "date_applied",
     header: ({ column }) => {
       return (
-        <div className="flex items-center">
-          <p>Date Applied</p>
-          <Button
+        <Button
             variant="ghost"
             onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+            className={sortButton}
           >
-            <ArrowUpDown className={arrowUpDown} />
+          <p>Date Applied</p>
+          <ArrowUpDown className={arrowUpDown} />
           </Button>
-        </div>
       );
     },
     cell: ({ row }) => {
@@ -319,7 +330,7 @@ export const columns: ColumnDef<Job>[] = [
     header: "Notes",
     cell: ({ row }) => {
       const notes = row.getValue<string>("notes");
-      return notes ? <span>{notes}</span> : <span></span>;
+      return notes ? <span>{truncate(notes, 40)}</span> : <span></span>;
     },
   },
   //Link
@@ -341,7 +352,7 @@ export const columns: ColumnDef<Job>[] = [
           rel="noopener noreferrer"
           className="hover:text-blue-700 flex flex-row items-center"
         >
-          View ↗{/* <ExternalLink className="ml-2 h-4 w-4" /> */}
+          Go to job ↗{/* <ExternalLink className="ml-2 h-4 w-4" /> */}
         </a>
       );
     },
@@ -382,6 +393,7 @@ export const columns: ColumnDef<Job>[] = [
       const notes = row.getValue<string>("notes");
       const url = row.getValue<string>("url");
 
+      const [openNote, setOpenNote] = useState(false);
       const [openEdit, setOpenEdit] = useState(false);
       const [openDelete, setOpenDelete] = useState(false);
 
@@ -396,6 +408,14 @@ export const columns: ColumnDef<Job>[] = [
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpenNote(true);
+                }}
+              >
+                View Note
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={() => {
                   setOpenEdit(true);
@@ -419,6 +439,13 @@ export const columns: ColumnDef<Job>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="hidden">
+            <NotesDialog 
+            note={notes} 
+            company={company} 
+            position={position}
+            open={openNote}
+            onOpenChange={setOpenNote}
+            />
             <UpdateJobDialog
               open={openEdit}
               onOpenChange={setOpenEdit}
