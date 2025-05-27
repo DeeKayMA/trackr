@@ -109,7 +109,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
       job_type: job_type ?? "",
       salary_min: salary_min !== undefined && salary_min !== null ? String(salary_min) : "",
       salary_max: salary_max !== undefined && salary_max !== null ? String(salary_max) : "",
-      status: status ?? "",
+      status: status ?? "Saved",
       date_applied: date_applied ? new Date(date_applied) : undefined,
       url: url ?? "",
       notes: notes ?? "",
@@ -157,6 +157,35 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
                 <Input placeholder="e.g. Trackr Inc" {...field} />
               </FormControl>
               {/* <FormDescription>Required</FormDescription> */}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* STATUS */}
+        <FormField
+          control={form.control}
+          name="status"
+          render={({ field }) => (
+            <FormItem>
+              <div className="flex items-center justify-between">
+                <FormLabel>Status</FormLabel>
+                <p className="text-xs text-muted-foreground"> Required</p>
+              </div>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select the application status" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="Saved">Saved</SelectItem>
+                  <SelectItem value="Applied">Applied</SelectItem>
+                  <SelectItem value="Interview">Interview</SelectItem>
+                  <SelectItem value="Offer">Offer</SelectItem>
+                  <SelectItem value="Rejected">Rejected</SelectItem>
+                </SelectContent>
+              </Select>
+        
               <FormMessage />
             </FormItem>
           )}
@@ -256,35 +285,6 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
               <FormControl>
                 <Input type="number" {...field} />
               </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        {/* STATUS */}
-        <FormField
-          control={form.control}
-          name="status"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Status</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger className="w-full">
-                    <SelectValue placeholder="Select the application status" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="Saved">Saved</SelectItem>
-                  <SelectItem value="Applied">Applied</SelectItem>
-                  <SelectItem value="Interview">Interview</SelectItem>
-                  <SelectItem value="Offer">Offer</SelectItem>
-                  <SelectItem value="Rejected">Rejected</SelectItem>
-                </SelectContent>
-              </Select>
-              {/* <FormDescription>
-                You can manage email addresses in your{" "}
-                <Link href="/examples/forms">email settings</Link>.
-              </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}

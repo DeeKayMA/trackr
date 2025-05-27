@@ -64,15 +64,17 @@ export const AddJobDialog = ({  }: AddJobDialogProps) => {
             submitName="Add Job"
             onSubmit={ async values => {
 
-              const valuesWithUserId = {
-                ...values,
-                user_id: userId, // Add the user ID to the values
-              };
+              const patch = {
+                  ...values,
+                  user_id: userId, // Add the user ID to the values
+                  salary_min: values.salary_min === "" ? null : Number(values.salary_min),
+                  salary_max: values.salary_max === "" ? null : Number(values.salary_max),
+                };
   
 
                 const { data, error } = await supabaseBrowser
                 .from ("Job Applications")
-                .insert([valuesWithUserId]); 
+                .insert([patch]); 
 
                 if(error){
                     console.log(error)
