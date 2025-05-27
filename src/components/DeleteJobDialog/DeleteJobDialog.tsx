@@ -1,4 +1,4 @@
-"use client";
+"use client"
 
 import { Button } from "@/components/ui/button"
 
@@ -35,7 +35,7 @@ export const DeleteJobDialog = ({ open, onOpenChange, id, company, position}: De
         <DialogHeader>
           <DialogTitle>Are you sure?</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. It will permanently delete the job: {position} at {company}.
+            The will permmanently delete the job entry for <span className="font-semibold">{position}</span> at <span className="font-semibold">{company}</span>.
           </DialogDescription>
         </DialogHeader>
         <DialogFooter className="sm:justify-start ">

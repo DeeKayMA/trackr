@@ -2,6 +2,12 @@
 "use client";
 import * as React from "react";
 
+import { useEffect } from "react";
+import { useJobStore } from "@/lib/store/useJobStore";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
+
+
+
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -26,6 +32,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { DeleteSelectedJobs } from "@/components/DeleteSelectedJobs/DeleteSelectedJobs";
 
 import {
   Select,
@@ -41,7 +48,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-  DropdownMenuLabel
+  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
 
 import { Input } from "@/components/ui/input";
@@ -49,6 +56,7 @@ import { Input } from "@/components/ui/input";
 import {
   Columns2,
   Eye,
+  Settings2,
   ChevronRightIcon,
   ChevronsRightIcon,
   ChevronLeftIcon,
@@ -75,32 +83,28 @@ function formatColumnId(id: string): string {
     .join(" ");
 }
 
-export function DataTable<TData, TValue>({
-  columns,
-  data,
-  
-}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({columns,data,}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
-  );
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
       company: true,
       position: true,
-      location: false,
-      job_type: false,
-      work_model: false,
+      location: true,
+      job_type: true,
+      work_model: true,
       salary: true,
       status: true,
       date_applied: true,
-      url: false,
-      notes: false,
+      url: true,
+      notes: true,
     });
 
   const [rowSelection, setRowSelection] = React.useState({});
 
   const [globalFilter, setGlobalFilter] = React.useState<any>([]);
+  const { refresh } = useRefreshStore();
+
 
   const table = useReactTable({
     data,
@@ -123,6 +127,26 @@ export function DataTable<TData, TValue>({
     },
   });
 
+  const setSelectedJobIds = useJobStore((state) => state.setSelectedJobIds);
+  const ids = useJobStore((state) => state.selectedJobIds);
+
+  useEffect(() => {
+  const selectedIDs = table
+    .getSelectedRowModel()
+    .rows.map((row) => Number((row.original as any).id))
+    .filter((id) => !isNaN(id));
+
+  setSelectedJobIds(selectedIDs);
+}, [table.getSelectedRowModel().rows, setSelectedJobIds]);
+
+useEffect(() => {
+  if (refresh) {
+    setRowSelection({}); // ✅ Clear all checkboxes
+  }
+}, [refresh]);
+
+  
+
   return (
     <div>
       <div className="flex items-center justify-between gap-4 py-4">
@@ -133,12 +157,14 @@ export function DataTable<TData, TValue>({
           onChange={(e) => table.setGlobalFilter(String(e.target.value))}
           className="max-w-sm"
         />
+        {/* Delete Button */}
+        <DeleteSelectedJobs ids={ids} />
 
         {/* Visibility */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto">
-              <Eye /> View
+              <Settings2 /> View
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
@@ -148,7 +174,11 @@ export function DataTable<TData, TValue>({
               .getAllColumns()
               .filter((column) => column.getCanHide())
               .map((column) => {
-                if (column.id !== "actions" && column.id !== "id" && column.id !== "salary_max" ) {
+                if (
+                  column.id !== "actions" &&
+                  column.id !== "id" &&
+                  column.id !== "salary_max"
+                ) {
                   return (
                     <DropdownMenuCheckboxItem
                       key={column.id}

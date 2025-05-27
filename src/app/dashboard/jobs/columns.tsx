@@ -145,7 +145,7 @@ export const columns: ColumnDef<Job>[] = [
       );
     },
     cell: ({ row }) => {
-      return truncate(row.original.position,20);
+      return truncate(row.original.position,40);
       
     }
   },
