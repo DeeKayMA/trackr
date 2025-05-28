@@ -6,8 +6,6 @@ import { useEffect } from "react";
 import { useJobStore } from "@/lib/store/useJobStore";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
-
-
 import {
   ColumnDef,
   ColumnFiltersState,
@@ -61,6 +59,7 @@ import {
   ChevronsRightIcon,
   ChevronLeftIcon,
   ChevronsLeftIcon,
+  X,
 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {
@@ -83,9 +82,14 @@ function formatColumnId(id: string): string {
     .join(" ");
 }
 
-export function DataTable<TData, TValue>({columns,data,}: DataTableProps<TData, TValue>) {
+export function DataTable<TData, TValue>({
+  columns,
+  data,
+}: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
-  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>([]);
+  const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
+    []
+  );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
       company: true,
@@ -104,7 +108,6 @@ export function DataTable<TData, TValue>({columns,data,}: DataTableProps<TData, 
 
   const [globalFilter, setGlobalFilter] = React.useState<any>([]);
   const { refresh } = useRefreshStore();
-
 
   const table = useReactTable({
     data,
@@ -131,32 +134,43 @@ export function DataTable<TData, TValue>({columns,data,}: DataTableProps<TData, 
   const ids = useJobStore((state) => state.selectedJobIds);
 
   useEffect(() => {
-  const selectedIDs = table
-    .getSelectedRowModel()
-    .rows.map((row) => Number((row.original as any).id))
-    .filter((id) => !isNaN(id));
+    const selectedIDs = table
+      .getSelectedRowModel()
+      .rows.map((row) => Number((row.original as any).id))
+      .filter((id) => !isNaN(id));
 
-  setSelectedJobIds(selectedIDs);
-}, [table.getSelectedRowModel().rows, setSelectedJobIds]);
+    setSelectedJobIds(selectedIDs);
+  }, [table.getSelectedRowModel().rows, setSelectedJobIds]);
 
-useEffect(() => {
-  if (refresh) {
-    setRowSelection({}); // ✅ Clear all checkboxes
-  }
-}, [refresh]);
-
-  
+  useEffect(() => {
+    if (refresh) {
+      setRowSelection({}); // ✅ Clear all checkboxes
+    }
+  }, [refresh]);
 
   return (
     <div>
       <div className="flex items-center justify-between gap-4 py-4">
         {/* Searchbar */}
-        <Input
-          placeholder="Search..."
-          value={globalFilter || ""}
-          onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-          className="max-w-sm"
-        />
+        <div className="relative max-w-sm w-full">
+          <Input
+            placeholder="Search..."
+            value={globalFilter || ""}
+            onChange={(e) => table.setGlobalFilter(String(e.target.value))}
+            className="pr-10"
+          />
+          {globalFilter && (
+            <Button
+              type="button"
+              onClick={() => table.setGlobalFilter("")}
+              className="absolute right-0 top-1/2 -translate-y-1/2 text-gray-400 hover:bg-transparent"
+              variant="ghost"
+              size="icon"
+            >
+              <X/>
+            </Button>
+          )}
+        </div>
         {/* Delete Button */}
         <DeleteSelectedJobs ids={ids} />
 
