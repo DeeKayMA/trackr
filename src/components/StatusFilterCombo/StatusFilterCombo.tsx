@@ -13,6 +13,8 @@ import {
   XCircleIcon,
   BookmarkIcon,
   LoaderIcon,
+  Undo,
+  ListFilter
 } from "lucide-react";
 import {
   Command,
@@ -57,6 +59,10 @@ const statuses: Status[] = [
     value: "Rejected",
     label: "Rejected",
   },
+  {
+    value: "Withdrawn",
+    label: "Withdrawn",
+  },
 ];
 
 const statusMap = {
@@ -74,6 +80,9 @@ const statusMap = {
   },
   Rejected: {
     icon: <XCircleIcon />,
+  },
+  Withdrawn: {
+    icon: <Undo />,
   },
 };
 
@@ -99,7 +108,7 @@ export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className=" border-dashed justify-start">
-            <CirclePlus />
+            <ListFilter />
             {selectedStatus ? (
               <>
                 Status{" "}
@@ -108,7 +117,7 @@ export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
                   role="none"
                   className="shrink-0 bg-border w-[1px] mx-2 h-4"
                 ></div>{" "}
-                <Badge variant="secondary">{selectedStatus.label}</Badge>{" "}
+                <Badge variant="secondary">{selectedStatus.label}</Badge>
               </>
             ) : (
               <>Status</>

@@ -183,6 +183,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
                   <SelectItem value="Interview">Interview</SelectItem>
                   <SelectItem value="Offer">Offer</SelectItem>
                   <SelectItem value="Rejected">Rejected</SelectItem>
+                  <SelectItem value="Withdrawn">Withdrawn</SelectItem>
                 </SelectContent>
               </Select>
         

@@ -151,14 +151,14 @@ export function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-4 py-4">
+      <div className="flex flex-wrap items-center gap-4 py-4">
         {/* Searchbar */}
-        <div className="relative max-w-sm w-full">
+        <div className="relative lg:max-w-sm w-full min-w-[40px]">
           <Input
             placeholder="Search..."
             value={globalFilter || ""}
             onChange={(e) => table.setGlobalFilter(String(e.target.value))}
-            className="pr-10"
+            className="pr-10 "
           />
           {/* If global filter has a value, show the clear button */}
           {globalFilter && (
@@ -180,12 +180,12 @@ export function DataTable<TData, TValue>({
           }
         />
         {/* Delete Button */}
-        <DeleteSelectedJobs ids={ids} />
+        <DeleteSelectedJobs ids={ids}/>
 
         {/* Visibility */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="lg:ml-auto md:ml-auto">
               <Settings2 /> View
             </Button>
           </DropdownMenuTrigger>

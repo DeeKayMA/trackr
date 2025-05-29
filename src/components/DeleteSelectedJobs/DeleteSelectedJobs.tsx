@@ -18,6 +18,8 @@ import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { supabase, supabaseBrowser } from "@/lib/supabase/supabase"
 import { useJobStore } from "@/lib/store/useJobStore";
 
+import { Trash2 } from 'lucide-react';
+
 
 
 type DeleteSelectedJobs = {
@@ -36,12 +38,13 @@ export const DeleteSelectedJobs = ({ ids }: DeleteSelectedJobs) => {
       <DialogTrigger asChild>
         {ids.length === 0 ? (
           //Button disabled until ids > 0
-          <Button disabled variant="secondary">
-            Delete
-          </Button>
+          // <Button disabled variant="secondary">
+          //   Delete
+          // </Button>
+          <></>
         ) : (
           //Button active and red
-          <Button variant="destructive">Delete</Button>
+          <Button variant="destructive" size="icon"><Trash2/></Button>
         )}
       </DialogTrigger>
 

@@ -31,6 +31,7 @@ import {
   XCircleIcon,
   BookmarkIcon,
   MoreHorizontal,
+  Undo
 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -69,6 +70,9 @@ const statusMap = {
   },
   Rejected: {
     icon: <XCircleIcon className="text-red-500 dark:text-red-400" />,
+  },
+  Withdrawn: {
+    icon: <Undo className="text-red-500 dark:text-red-400" />,
   },
 };
 
