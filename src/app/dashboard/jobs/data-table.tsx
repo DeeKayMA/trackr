@@ -5,6 +5,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useJobStore } from "@/lib/store/useJobStore";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { StausFilterCombo } from "@/components/StatusFilterCombo/StatusFilterCombo";
 
 import {
   ColumnDef,
@@ -159,6 +160,7 @@ export function DataTable<TData, TValue>({
             onChange={(e) => table.setGlobalFilter(String(e.target.value))}
             className="pr-10"
           />
+          {/* If global filter has a value, show the clear button */}
           {globalFilter && (
             <Button
               type="button"
@@ -167,10 +169,16 @@ export function DataTable<TData, TValue>({
               variant="ghost"
               size="icon"
             >
-              <X/>
+              <X />
             </Button>
           )}
         </div>
+        {/* Status Filter Checkboxes */}
+        <StausFilterCombo
+          setColumnFilter={(value) =>
+            table.getColumn("status")?.setFilterValue(value)
+          }
+        />
         {/* Delete Button */}
         <DeleteSelectedJobs ids={ids} />
 
