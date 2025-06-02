@@ -29,7 +29,7 @@ import NavUser from "../NavUser/NavUser";
 // Menu items.
 const items = [
   {
-    title: "Dashboard",
+    title: "Home",
     url: "/dashboard",
     icon: LayoutDashboardIcon,
   },
@@ -67,7 +67,7 @@ export default function AppSidebar() {
             session.user.user_metadata?.name ||
             "",
           email: session.user.email || "",
-          avatar: session.user.user_metadata?.avatar_url || "/globe.svg",
+          avatar: session.user.user_metadata?.avatar_url,
         });
       }
     };
