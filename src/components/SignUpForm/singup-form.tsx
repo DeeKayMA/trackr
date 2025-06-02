@@ -30,6 +30,17 @@ export function SignUpForm({
             <div className="grid gap-6">
             {/* LOGIN FORM */}
               <div className="grid gap-6">
+                {/* Name */}
+                <div className="grid gap-2">
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    id="name"
+                    name="name"
+                    type="text"
+                    placeholder="Joe Bloggs"
+                    required
+                  />
+                </div>
                 {/* EMAIL */}
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>

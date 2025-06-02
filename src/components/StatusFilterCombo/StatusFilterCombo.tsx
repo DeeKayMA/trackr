@@ -5,6 +5,7 @@ import * as React from "react";
 import { useMediaQuery } from "@react-hook/media-query";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+import { useState } from "react";
 import {
   CirclePlus,
   CheckCircle2Icon,
@@ -97,7 +98,7 @@ type StausFilterComboProps = {
 };
 
 export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
     null
