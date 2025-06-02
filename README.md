@@ -41,14 +41,14 @@ Trackr is in active development. Here's what's done and what’s next:
 - Created initial dashboard layout and job table
 - Form handling with React Hook Form
 - Filtering, sorting, and search
+- CRUD operations for job entries
 
 
 ### 🚧 In Progress
-- CRUD operations for job entries
-- Mobile responsiveness
+- Dashboard stats & charts
 
 ### ⏭ Up Next
-- Dashboard stats & charts
+- Kanban Board
 - Public deployment via Vercel
 - README + live demo link
 
