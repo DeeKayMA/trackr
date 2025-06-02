@@ -141,7 +141,7 @@ export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
         <Button variant="outline" className="border-dashed justify-start">
           <CirclePlus />
           {selectedStatus ? (
-            <>
+            <div>
               Status
               {/* Divider  */}
               <div
@@ -150,7 +150,7 @@ export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
                 className="shrink-0 bg-border w-[1px] mx-2 h-4"
               ></div>
               <Badge variant="secondary">{selectedStatus.label}</Badge>
-            </>
+            </div>
           ) : (
             <>Status</>
           )}

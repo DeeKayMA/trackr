@@ -7,7 +7,9 @@ import { ColumnDef } from "@tanstack/react-table";
 import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
 import { DeleteJobDialog } from "@/components/DeleteJobDialog/DeleteJobDialog";
 import { NotesDialog } from "@/components/NotesDialog/NotesDialog";
-import { supabase } from "@/lib/supabase/supabase";
+import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
+import { toast } from "sonner";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,6 +20,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -31,7 +40,7 @@ import {
   XCircleIcon,
   BookmarkIcon,
   MoreHorizontal,
-  Undo
+  Undo,
 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -53,7 +62,7 @@ export type Job = {
 };
 
 const arrowUpDown = "h-2 w-2";
-const sortButton = "-ml-3 text-muted-foreground text-sm"
+const sortButton = "-ml-3 text-muted-foreground text-sm";
 
 const statusMap = {
   Saved: {
@@ -82,8 +91,7 @@ function isStatusKey(status: string): status is StatusKey {
   return status in statusMap;
 }
 
-
-//Format the currency 
+//Format the currency
 function formatSalaryParts(num: number | null): {
   value: string;
   unit: string;
@@ -99,18 +107,17 @@ function formatSalaryParts(num: number | null): {
       value: Math.round(num / 1_000).toString(), // always integer for k
       unit: "k",
     };
-  return { value: num.toString(), unit: "" }
+  return { value: num.toString(), unit: "" };
 }
 
-//Truncate long words 
+//Truncate long words
 function truncate(input: string | null, maxLength: number): string {
-  if(!input) return '';
-  return input.length > maxLength ? input.slice(0, maxLength) + '…' : input;
-    
+  if (!input) return "";
+  return input.length > maxLength ? input.slice(0, maxLength) + "…" : input;
 }
 
 export const columns: ColumnDef<Job>[] = [
-    //Select
+  //Select
   {
     id: "select",
     header: ({ table }) => (
@@ -139,19 +146,18 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Position</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
     cell: ({ row }) => {
-      return truncate(row.original.position,40);
-      
-    }
+      return truncate(row.original.position, 40);
+    },
   },
   // Company
   {
@@ -159,19 +165,18 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Company</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
     cell: ({ row }) => {
-      return truncate(row.original.company,20);
-      
-    }
+      return truncate(row.original.company, 20);
+    },
   },
   //Job Type
   {
@@ -179,13 +184,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Job Type</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
   },
@@ -195,13 +200,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Work Model</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
   },
@@ -211,19 +216,18 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Location</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
     cell: ({ row }) => {
-      return truncate(row.original.location,15);
-      
-    }
+      return truncate(row.original.location, 15);
+    },
   },
   //Salary
   {
@@ -232,13 +236,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Salary</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
     cell: ({ row }) => {
@@ -277,28 +281,81 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Status</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
-    cell: ({ row }) => (
-      <Badge
-        variant="outline"
-        className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-4"
-      >
-        {isStatusKey(row.original.status) ? (
-          statusMap[row.original.status]?.icon
-        ) : (
-          <LoaderIcon />
-        )}
-        {row.original.status}
-      </Badge>
-    ),
+    cell: ({ row }) =>
+        (
+        <Badge
+          variant="outline"
+          className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-4"
+        >
+          {isStatusKey(row.original.status) ? (
+            statusMap[row.original.status]?.icon
+          ) : (
+            <LoaderIcon />
+          )}
+          {row.original.status}
+        </Badge>
+      ),
+      // {
+      //   const initialStatus = row.original.status;
+      //   const [status, setStatus] = useState(initialStatus);
+      //   const [loading, setLoading] = useState(false);
+      //   const jobId = row.original.id;
+      //   const position = row.original.position;
+      //   const company = row.original.company;
+      //   const { refresh, setRefresh } = useRefreshStore();
+
+      //   const handleStatusChange = async (newStatus: string) => {
+      //     setStatus(newStatus);
+      //     setLoading(true);
+
+      //     const { error } = await supabaseBrowser
+      //       .from("Job Applications")
+      //       .update({ status: newStatus })
+      //       .eq("id", jobId);
+
+      //     setLoading(false);
+      //     setRefresh(true);
+
+      //     if (error) {
+      //       console.error("Failed to update status:", error.message);
+      //       toast("Failed to update status", {
+      //         description: `${position} at ${company} updated to "${newStatus}"`,
+      //       });
+      //     } else {
+      //       toast("Job Status Updated", {
+      //         description: `${position} at ${company} updated to "${newStatus}"`,
+      //       });
+      //     }
+      //   };
+
+      //   return (
+      //     <Select value={status} onValueChange={(value) => handleStatusChange(value)} disabled={loading}>
+      //       <SelectTrigger className="w-[180px]" >
+      //         <SelectValue placeholder="Select Status" />
+      //       </SelectTrigger>
+      //       <SelectContent>
+      //         {Object.keys(statusMap).map((statusKey)=> (
+      //           <SelectItem key={statusKey} value={statusKey}>
+      //             <div className="flex items-center gap-2">
+      //             {isStatusKey(statusKey) && statusMap[statusKey].icon}
+      //             {statusKey}
+      //           </div>
+      //           </SelectItem>
+      //         ))}
+              
+      //       </SelectContent>
+      //     </Select>
+      //   );
+      // },
   },
   //Date Applied
   {
@@ -306,13 +363,13 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => {
       return (
         <Button
-            variant="ghost"
-            onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-            className={sortButton}
-          >
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
           <p>Date Applied</p>
           <ArrowUpDown className={arrowUpDown} />
-          </Button>
+        </Button>
       );
     },
     cell: ({ row }) => {
@@ -443,12 +500,12 @@ export const columns: ColumnDef<Job>[] = [
             </DropdownMenuContent>
           </DropdownMenu>
           <div className="hidden">
-            <NotesDialog 
-            note={notes} 
-            company={company} 
-            position={position}
-            open={openNote}
-            onOpenChange={setOpenNote}
+            <NotesDialog
+              note={notes}
+              company={company}
+              position={position}
+              open={openNote}
+              onOpenChange={setOpenNote}
             />
             <UpdateJobDialog
               open={openEdit}

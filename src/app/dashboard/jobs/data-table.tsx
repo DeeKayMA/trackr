@@ -179,6 +179,8 @@ export function DataTable<TData, TValue>({
             table.getColumn("status")?.setFilterValue(value)
           }
         />
+        {/* City Filter */}
+        
         {/* Delete Button */}
         <DeleteSelectedJobs ids={ids}/>
 
