@@ -95,7 +95,7 @@ export function DataTable<TData, TValue>({
     React.useState<VisibilityState>({
       company: true,
       position: true,
-      location: false,
+      location: true,
       job_type: false,
       work_model: false,
       salary: true,

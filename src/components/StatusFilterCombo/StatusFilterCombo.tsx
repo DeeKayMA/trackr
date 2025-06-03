@@ -100,7 +100,7 @@ type StausFilterComboProps = {
 export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [selectedStatus, setSelectedStatus] = React.useState<Status | null>(
+  const [selectedStatus, setSelectedStatus] = useState<Status | null>(
     null
   );
 
@@ -198,7 +198,6 @@ function StatusList({
               }}
             >
               {/* Checkbox  - Need to connect the checkbox to the filter*/}
-              {/* <Checkbox /> */}
 
               {isStatusKey(status.value) ? (
                 statusMap[status.value].icon
