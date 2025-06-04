@@ -69,9 +69,24 @@ export const StatCard = ({
         <CardContent>
           <p className="text-3xl font-bold tabular-nums">{count}</p>
 
-          <p className="text-sm text-muted-foreground mt-2">
+          {/* <p className="text-sm text-muted-foreground mt-2">
             {trending === "new" ? (
-              <span>New growth </span>
+              <span>New growth</span>
+            ) : trending === "up" ? (
+              <span>Up {countDiff} </span>
+            ) : trending === "down" ? (
+              <span>Down {Math.abs(countDiff)} </span>
+            ) : trending === "flat" ? (<span>No change </span>) 
+            :null}
+            since last month
+          </p> */}
+
+          
+        </CardContent>
+        <CardFooter>
+          <p className="text-sm text-muted-foreground">
+            {trending === "new" ? (
+              <span>New growth</span>
             ) : trending === "up" ? (
               <span>Up {countDiff} </span>
             ) : trending === "down" ? (
@@ -80,7 +95,7 @@ export const StatCard = ({
             :null}
             since last month
           </p>
-        </CardContent>
+        </CardFooter>
       </Card>
     </div>
   );

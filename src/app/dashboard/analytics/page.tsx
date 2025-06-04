@@ -4,11 +4,24 @@ import { TempCard } from "@/components/temp/TempCard";
 import { TotalAppsCard } from "./components/TotalAppsCard";
 import { TotalInterviewsCard } from "./components/TotalInterviewsCard";
 import { TotalOffersCard } from "./components/TotalOffersCard";
+import { AverageSalaryCard } from "./components/AverageSalarayCard";
+import { DaysSinceLastAppCard } from "./components/DaysSinceLastApp";
+import { ApplicationDistributionCard } from "@/app/dashboard/analytics/components/ApplicationDistributionCard";
+import { ApplicationRankingCard } from "@/app/dashboard/analytics/components/ApplicationRankingCard";
+import { ConversionRatesCard } from "@/app/dashboard/analytics/components/ConversionRatesCard";
+
+
+
+
+
+
+
+
 export default function Analytics() {
   return (
-    <div className="flex flex-col w-full min-h-full">
+    <div className="flex flex-col w-full">
       <Header title="Analytics" />
-      <main className="max-w-[1500px] justify-center h-full grid grid-cols-3 grid-rows-5 gap-4 my-4 mx-auto px-4">
+      <main className=" w-full justify-center grid grid-cols-3 grid-rows-5 gap-4 my-4 mx-auto px-4">
         {/* Realtime Stats */}
         <TotalAppsCard/>
         <TotalInterviewsCard/>
@@ -20,12 +33,13 @@ export default function Analytics() {
         
 
         {/* Conversion rates - radial charts */}
-        <TempCard className="col-span-1 row-span-2" cardName="Conversion Rates: App -> Int, Int -> Offer, App -> Offer"/>
+        {/* <TempCard className="col-span-1 row-span-2" cardName="Conversion Rates: App -> Int, Int -> Offer, App -> Offer"/> */}
+        <ConversionRatesCard/>
   
 
         {/* Days since last application - Stat card */}
         {/* <div>Days since last application</div> */}
-        <TempCard className="col-start-1" cardName="Days since last app"/>
+        <DaysSinceLastAppCard/>
 
         {/* Line chart or area chart */}
         {/* <div>Applications submitted over time, weekly,monthly</div> */}
@@ -36,14 +50,15 @@ export default function Analytics() {
         {/* MEDIUM PRIORITY DATA, maybe put behind show more */}
 
         {/* Bar chart */}
-        <TempCard className="" cardName="Top: Job Titles, Companies, Location"/>
+        <ApplicationRankingCard/>
+
 
 
         {/* Stat Card */}
-        <TempCard className="" cardName="Avg Salary"/>
+        <AverageSalaryCard/>
 
         {/* Pie chart */}
-        <TempCard className="" cardName="Apps by: Job Type, Work Type, Locatio"/>
+        <ApplicationDistributionCard/>
         
       </main>
     </div>

@@ -1,11 +1,35 @@
-// Main dashboard (stats, charts, data table)
-import Header from "../../components/Header/Header";
+// Analytics page on the dashboard
+import Header from "@/components/Header/Header";
+import { TempCard } from "@/components/temp/TempCard";
+import { TotalAppsCard } from "@/app/dashboard/analytics/components/TotalAppsCard";
+import { TotalInterviewsCard } from "@/app/dashboard/analytics/components/TotalInterviewsCard";
+import { TotalOffersCard } from "@/app/dashboard/analytics/components/TotalOffersCard";
+import { Button } from "@/components/ui/button";
+import { QuoteCard } from "@/app/dashboard/analytics/components/QuoteCard";
 
-export default function Dashboard() {
-    return (
-      <div className="flex flex-col w-full">
-        <Header title="Dashboard" />
-        <h1 className="text-3xl  font-bold underline">Dashboard</h1>
-      </div>
-    );
+export default function Analytics() {
+  return (
+    <div className="flex flex-col w-full">
+      <Header title="Home" />
+      <main className="w-full h-full justify-center grid grid-cols-3 grid-rows-4 gap-4 my-4 mx-auto px-4">
+        {/* Realtime Stats */}
+        <TotalAppsCard />
+        <TotalInterviewsCard />
+        <TotalOffersCard />
+
+        {/* <TempCard className="row-span-1" cardName="Quote" /> */}
+        <QuoteCard/>
+        <TempCard className="row-span-1" cardName="Streak" />
+        <TempCard className="row-span-1" cardName="Quick Links" />
+
+        {/* <TempCard className="row-span-1" cardName="Quick Links"/> */}
+
+        <TempCard
+          className="col-span-2 row-span-2"
+          cardName="This Months Activity"
+        />
+        <TempCard className="row-span-2" cardName="Recent Job Applications" />
+      </main>
+    </div>
+  );
 }

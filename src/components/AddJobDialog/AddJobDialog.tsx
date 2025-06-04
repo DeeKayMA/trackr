@@ -139,8 +139,7 @@ export const AddJobDialog = ({}: AddJobDialogProps) => {
                   closeRef.current?.click(); // Close the dialog
                   toast("Job Added", {
                     description: values.position + " at " + values.company,
-                  }); // Success message
-                  // onJobAdded?.(); //Refresh the datatable
+                  }); 
                   setRefresh(true);
                 }
               }}
