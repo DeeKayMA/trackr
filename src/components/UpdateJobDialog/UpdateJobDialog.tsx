@@ -33,6 +33,7 @@ type UpdateJobDialogProps = {
   position: string;
   status: string;
   date_applied: string;
+  closing_date: string;
   location: string;
   work_model: string;
   job_type: string;
@@ -44,7 +45,7 @@ type UpdateJobDialogProps = {
 
 
 
-export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, status, date_applied, location, work_model, job_type, salary_min, salary_max, notes, url }: UpdateJobDialogProps) => {
+export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, status, date_applied, closing_date, location, work_model, job_type, salary_min, salary_max, notes, url }: UpdateJobDialogProps) => {
     const closeRef = useRef<HTMLButtonElement>(null);
     const { refresh, setRefresh } = useRefreshStore();
     const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -68,6 +69,7 @@ export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, sta
             position={position}
             status={status}
             date_applied={date_applied}
+            closing_date={closing_date}
             location={location}
             work_model={work_model}
             job_type={job_type}
@@ -134,6 +136,7 @@ export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, sta
             position={position}
             status={status}
             date_applied={date_applied}
+            closing_date={closing_date}
             location={location}
             work_model={work_model}
             job_type={job_type}

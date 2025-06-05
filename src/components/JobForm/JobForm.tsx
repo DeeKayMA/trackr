@@ -60,6 +60,7 @@ const formSchema = z.object({
     required_error: "Please select a status for this position",
   }),
   date_applied: z.date().optional(),
+  closing_date: z.date().optional(),
   url: z.string().optional(),
   notes: z.string().optional(),
 });
@@ -72,6 +73,7 @@ type JobFormProps = {
   position?: string;
   status?: string;
   date_applied?: string | Date;
+  closing_date?: string | Date;
   location?: string;
   work_model?: string;
   job_type?: string;
@@ -81,7 +83,7 @@ type JobFormProps = {
   url?: string;
 };
 
-export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position, status, date_applied, location, work_model, job_type, salary_min, salary_max, notes, url }: JobFormProps) => {
+export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position, status, date_applied, closing_date, location, work_model, job_type, salary_min, salary_max, notes, url }: JobFormProps) => {
 
   
   const form = useForm<z.infer<typeof formSchema>>({
@@ -111,6 +113,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
       salary_max: salary_max !== undefined && salary_max !== null ? String(salary_max) : "",
       status: status ?? "Saved",
       date_applied: date_applied ? new Date(date_applied) : undefined,
+      closing_date: closing_date ? new Date(closing_date) : undefined,
       url: url ?? "",
       notes: notes ?? "",
     }
@@ -329,6 +332,49 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
               <FormControl>
                 <Input type="number" {...field} />
               </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* DATE */}
+        <FormField
+          control={form.control}
+          name="closing_date"
+          render={({ field }) => (
+            <FormItem className="flex flex-col ">
+              <FormLabel>Closing Date</FormLabel>
+              <Popover modal>
+                <PopoverTrigger asChild>
+                  <FormControl>
+                    <Button
+                      variant={"outline"}
+                      className={cn(
+                        "w-full pl-3 text-left font-normal",
+                        !field.value && "text-muted-foreground"
+                      )}
+                    >
+                      {field.value ? (
+                        format(field.value, "PPP")
+                      ) : (
+                        <span>Pick a date</span>
+                      )}
+                      <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                    </Button>
+                  </FormControl>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0" align="start">
+                  <Calendar
+                    mode="single"
+                    selected={field.value}
+                    onSelect={field.onChange}
+                    disabled={(date) => date < new Date("1900-01-01")}
+                    initialFocus
+                  />
+                </PopoverContent>
+              </Popover>
+              {/* <FormDescription>
+                When did you apply for the position?
+              </FormDescription> */}
               <FormMessage />
             </FormItem>
           )}

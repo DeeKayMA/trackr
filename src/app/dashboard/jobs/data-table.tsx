@@ -101,6 +101,7 @@ export function DataTable<TData, TValue>({
       salary: true,
       status: true,
       date_applied: false,
+      closing_date: true,
       url: true,
       notes: true,
     });

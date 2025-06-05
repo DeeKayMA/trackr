@@ -51,6 +51,7 @@ export type Job = {
   position: string;
   status: string;
   date_applied: string | null;
+  closing_date: string | null;
   location: string | null;
   work_model: string | null;
   job_type: string | null;
@@ -290,72 +291,71 @@ export const columns: ColumnDef<Job>[] = [
         </Button>
       );
     },
-    cell: ({ row }) =>
-        (
-        <Badge
-          variant="outline"
-          className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-4"
-        >
-          {isStatusKey(row.original.status) ? (
-            statusMap[row.original.status]?.icon
-          ) : (
-            <LoaderIcon />
-          )}
-          {row.original.status}
-        </Badge>
-      ),
-      // {
-      //   const initialStatus = row.original.status;
-      //   const [status, setStatus] = useState(initialStatus);
-      //   const [loading, setLoading] = useState(false);
-      //   const jobId = row.original.id;
-      //   const position = row.original.position;
-      //   const company = row.original.company;
-      //   const { refresh, setRefresh } = useRefreshStore();
+    cell: ({ row }) => (
+      <Badge
+        variant="outline"
+        className="flex gap-1 px-1.5 text-muted-foreground [&_svg]:size-4"
+      >
+        {isStatusKey(row.original.status) ? (
+          statusMap[row.original.status]?.icon
+        ) : (
+          <LoaderIcon />
+        )}
+        {row.original.status}
+      </Badge>
+    ),
+    // {
+    //   const initialStatus = row.original.status;
+    //   const [status, setStatus] = useState(initialStatus);
+    //   const [loading, setLoading] = useState(false);
+    //   const jobId = row.original.id;
+    //   const position = row.original.position;
+    //   const company = row.original.company;
+    //   const { refresh, setRefresh } = useRefreshStore();
 
-      //   const handleStatusChange = async (newStatus: string) => {
-      //     setStatus(newStatus);
-      //     setLoading(true);
+    //   const handleStatusChange = async (newStatus: string) => {
+    //     setStatus(newStatus);
+    //     setLoading(true);
 
-      //     const { error } = await supabaseBrowser
-      //       .from("Job Applications")
-      //       .update({ status: newStatus })
-      //       .eq("id", jobId);
+    //     const { error } = await supabaseBrowser
+    //       .from("Job Applications")
+    //       .update({ status: newStatus })
+    //       .eq("id", jobId);
 
-      //     setLoading(false);
-      //     setRefresh(true);
+    //     setLoading(false);
+    //     setRefresh(true);
 
-      //     if (error) {
-      //       console.error("Failed to update status:", error.message);
-      //       toast("Failed to update status", {
-      //         description: `${position} at ${company} updated to "${newStatus}"`,
-      //       });
-      //     } else {
-      //       toast("Job Status Updated", {
-      //         description: `${position} at ${company} updated to "${newStatus}"`,
-      //       });
-      //     }
-      //   };
+    //     if (error) {
+    //       console.error("Failed to update status:", error.message);
+    //       toast("Failed to update status", {
+    //         description: `${position} at ${company} updated to "${newStatus}"`,
+    //       });
+    //     } else {
+    //       toast("Job Status Updated", {
+    //         description: `${position} at ${company} updated to "${newStatus}"`,
+    //       });
+    //     }
+    //   };
 
-      //   return (
-      //     <Select value={status} onValueChange={(value) => handleStatusChange(value)} disabled={loading}>
-      //       <SelectTrigger className="w-[180px]" >
-      //         <SelectValue placeholder="Select Status" />
-      //       </SelectTrigger>
-      //       <SelectContent>
-      //         {Object.keys(statusMap).map((statusKey)=> (
-      //           <SelectItem key={statusKey} value={statusKey}>
-      //             <div className="flex items-center gap-2">
-      //             {isStatusKey(statusKey) && statusMap[statusKey].icon}
-      //             {statusKey}
-      //           </div>
-      //           </SelectItem>
-      //         ))}
-              
-      //       </SelectContent>
-      //     </Select>
-      //   );
-      // },
+    //   return (
+    //     <Select value={status} onValueChange={(value) => handleStatusChange(value)} disabled={loading}>
+    //       <SelectTrigger className="w-[180px]" >
+    //         <SelectValue placeholder="Select Status" />
+    //       </SelectTrigger>
+    //       <SelectContent>
+    //         {Object.keys(statusMap).map((statusKey)=> (
+    //           <SelectItem key={statusKey} value={statusKey}>
+    //             <div className="flex items-center gap-2">
+    //             {isStatusKey(statusKey) && statusMap[statusKey].icon}
+    //             {statusKey}
+    //           </div>
+    //           </SelectItem>
+    //         ))}
+
+    //       </SelectContent>
+    //     </Select>
+    //   );
+    // },
   },
   //Date Applied
   {
@@ -373,15 +373,49 @@ export const columns: ColumnDef<Job>[] = [
       );
     },
     cell: ({ row }) => {
-      const raw = row.getValue<string | null>("date_applied");
+      const raw = row.getValue<string | null>("closing_date");
       if (!raw) return <span>-</span>;
+
       const date = new Date(raw);
-      // Format as DD-MM-YYYY
-      const formatted = `${date.getDate().toString().padStart(2, "0")}-${(
-        date.getMonth() + 1
-      )
-        .toString()
-        .padStart(2, "0")}-${date.getFullYear()}`;
+
+      const formatted = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        timeZone: "UTC",
+      });
+
+      return <span>{formatted}</span>;
+    },
+  },
+  //Closing Date
+  {
+    accessorKey: "closing_date",
+    header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
+          <p>Closing Date</p>
+          <ArrowUpDown className={arrowUpDown} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => {
+      const raw = row.getValue<string | null>("closing_date");
+      if (!raw) return <span>-</span>;
+
+      const date = new Date(raw);
+
+      const formatted = date.toLocaleDateString("en-GB", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+        timeZone: "UTC",
+      });
+
       return <span>{formatted}</span>;
     },
   },
@@ -446,6 +480,7 @@ export const columns: ColumnDef<Job>[] = [
       const position = row.getValue<string>("position");
       const status = row.getValue<string>("status");
       const date_applied = row.getValue<string>("date_applied");
+      const closing_date = row.getValue<string>("closing_date");
       const location = row.getValue<string>("location");
       const work_model = row.getValue<string>("work_model");
       const job_type = row.getValue<string>("job_type");
@@ -515,6 +550,7 @@ export const columns: ColumnDef<Job>[] = [
               position={position}
               status={status}
               date_applied={date_applied}
+              closing_date={closing_date}
               location={location}
               work_model={work_model}
               job_type={job_type}
