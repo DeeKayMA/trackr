@@ -62,7 +62,6 @@ console.log(countToday)
   else if ( percentageChange === 0 && countToday > 0 ) trending = "new";
 
   return (
-    <div>
       <StatCard
         statName={"Offers"}
         statDescription={"All time"}
@@ -72,6 +71,5 @@ console.log(countToday)
         countDiff={countDiff}
         
       />
-    </div>
   );
 };

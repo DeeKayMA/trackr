@@ -32,7 +32,6 @@ export const StatCard = ({
   countDiff
 }: StatCardProps) => {
   return (
-    <div>
       <Card>
         <CardHeader>
           <CardTitle>{statName}</CardTitle>
@@ -69,18 +68,6 @@ export const StatCard = ({
         <CardContent>
           <p className="text-3xl font-bold tabular-nums">{count}</p>
 
-          {/* <p className="text-sm text-muted-foreground mt-2">
-            {trending === "new" ? (
-              <span>New growth</span>
-            ) : trending === "up" ? (
-              <span>Up {countDiff} </span>
-            ) : trending === "down" ? (
-              <span>Down {Math.abs(countDiff)} </span>
-            ) : trending === "flat" ? (<span>No change </span>) 
-            :null}
-            since last month
-          </p> */}
-
           
         </CardContent>
         <CardFooter>
@@ -97,6 +84,5 @@ export const StatCard = ({
           </p>
         </CardFooter>
       </Card>
-    </div>
   );
 };

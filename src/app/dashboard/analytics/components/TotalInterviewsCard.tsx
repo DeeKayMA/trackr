@@ -59,7 +59,6 @@ const percentageChange = ((countToday - countLastMonth) / countLastMonth) * 100;
   else if ( percentageChange === 0 && countToday > 0 ) trending = "new";
 
   return (
-    <div>
       <StatCard
         statName={"Interviews"}
         statDescription={"All time"}
@@ -68,6 +67,5 @@ const percentageChange = ((countToday - countLastMonth) / countLastMonth) * 100;
         count={countToday}
         countDiff={countDiff}
       />
-    </div>
   );
 };
