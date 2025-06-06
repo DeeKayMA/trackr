@@ -5,8 +5,8 @@ import { useState } from "react";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
-import { DeleteJobDialog } from "@/components/DeleteJobDialog/DeleteJobDialog";
-import { NotesDialog } from "@/components/NotesDialog/NotesDialog";
+import { DeleteJobDialog } from "@/components/Global/DeleteJobDialog/DeleteJobDialog";
+import { NotesDialog } from "@/components/Global/NotesDialog/NotesDialog";
 import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { toast } from "sonner";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";

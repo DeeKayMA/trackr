@@ -1,5 +1,5 @@
 // Analytics page on the dashboard
-import Header from "../../../components/Header/Header";
+import Header from "../../../components/Global/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
 import { TotalAppsCard } from "../../../components/Analytics/TotalAppsCard";
 import { TotalInterviewsCard } from "../../../components/Analytics/TotalInterviewsCard";

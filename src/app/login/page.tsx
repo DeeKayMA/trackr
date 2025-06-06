@@ -1,6 +1,6 @@
 import { Crosshair } from "lucide-react";
-import { LoginForm } from "@/components/LoginForm/login-form";
-import { SignUpForm } from "@/components/SignUpForm/singup-form";
+import { LoginForm } from "@/components/Global/LoginForm/login-form";
+import { SignUpForm } from "@/components/Global/SignUpForm/singup-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function LoginPage() {
