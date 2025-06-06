@@ -11,6 +11,7 @@ import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { toast } from "sonner";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
+
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -44,6 +45,7 @@ import {
 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
+import { convertFromUTC } from "@/lib/utils/dateutils";
 
 export type Job = {
   id: string;
@@ -304,58 +306,6 @@ export const columns: ColumnDef<Job>[] = [
         {row.original.status}
       </Badge>
     ),
-    // {
-    //   const initialStatus = row.original.status;
-    //   const [status, setStatus] = useState(initialStatus);
-    //   const [loading, setLoading] = useState(false);
-    //   const jobId = row.original.id;
-    //   const position = row.original.position;
-    //   const company = row.original.company;
-    //   const { refresh, setRefresh } = useRefreshStore();
-
-    //   const handleStatusChange = async (newStatus: string) => {
-    //     setStatus(newStatus);
-    //     setLoading(true);
-
-    //     const { error } = await supabaseBrowser
-    //       .from("Job Applications")
-    //       .update({ status: newStatus })
-    //       .eq("id", jobId);
-
-    //     setLoading(false);
-    //     setRefresh(true);
-
-    //     if (error) {
-    //       console.error("Failed to update status:", error.message);
-    //       toast("Failed to update status", {
-    //         description: `${position} at ${company} updated to "${newStatus}"`,
-    //       });
-    //     } else {
-    //       toast("Job Status Updated", {
-    //         description: `${position} at ${company} updated to "${newStatus}"`,
-    //       });
-    //     }
-    //   };
-
-    //   return (
-    //     <Select value={status} onValueChange={(value) => handleStatusChange(value)} disabled={loading}>
-    //       <SelectTrigger className="w-[180px]" >
-    //         <SelectValue placeholder="Select Status" />
-    //       </SelectTrigger>
-    //       <SelectContent>
-    //         {Object.keys(statusMap).map((statusKey)=> (
-    //           <SelectItem key={statusKey} value={statusKey}>
-    //             <div className="flex items-center gap-2">
-    //             {isStatusKey(statusKey) && statusMap[statusKey].icon}
-    //             {statusKey}
-    //           </div>
-    //           </SelectItem>
-    //         ))}
-
-    //       </SelectContent>
-    //     </Select>
-    //   );
-    // },
   },
   //Date Applied
   {
@@ -376,13 +326,12 @@ export const columns: ColumnDef<Job>[] = [
       const raw = row.getValue<string | null>("date_applied");
       if (!raw) return <span>-</span>;
 
-      const date = new Date(raw);
+      const localDate = convertFromUTC(raw);
 
-      const formatted = date.toLocaleDateString("en-GB", {
+      const formatted = localDate.toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-        timeZone: "UTC",
       });
 
       return <span>{formatted}</span>;
@@ -407,13 +356,12 @@ export const columns: ColumnDef<Job>[] = [
       const raw = row.getValue<string | null>("closing_date");
       if (!raw) return <span>-</span>;
 
-      const date = new Date(raw);
+      const localDate = convertFromUTC(raw);
 
-      const formatted = date.toLocaleDateString("en-GB", {
+      const formatted = localDate.toLocaleDateString(undefined, {
         day: "2-digit",
         month: "2-digit",
         year: "numeric",
-        timeZone: "UTC",
       });
 
       return <span>{formatted}</span>;
