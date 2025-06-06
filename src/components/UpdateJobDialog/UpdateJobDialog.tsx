@@ -8,6 +8,7 @@ import { useParams } from "next/navigation";
 import { toast } from "sonner"
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { useMediaQuery } from "@react-hook/media-query";
+import { convertToUTC } from "@/lib/utils/dateutils";
 
 
 import {
@@ -86,6 +87,8 @@ export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, sta
                   ...values,
                   salary_min: values.salary_min === "" ? null : Number(values.salary_min),
                   salary_max: values.salary_max === "" ? null : Number(values.salary_max),
+                  date_applied: convertToUTC(values.date_applied),
+                  closing_date: convertToUTC(values.closing_date),
                 };
                 //Must push to supabase
                 const { data, error } = await supabaseBrowser
@@ -153,6 +156,8 @@ export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, sta
                   ...values,
                   salary_min: values.salary_min === "" ? null : Number(values.salary_min),
                   salary_max: values.salary_max === "" ? null : Number(values.salary_max),
+                  date_applied: convertToUTC(values.date_applied),
+                  closing_date: convertToUTC(values.closing_date),
                 };
                 //Must push to supabase
                 const { data, error } = await supabaseBrowser

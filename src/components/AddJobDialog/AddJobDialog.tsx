@@ -8,6 +8,7 @@ import { toast } from "sonner";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { useEffect, useState } from "react";
 import { useMediaQuery } from "@react-hook/media-query";
+import { convertToUTC } from "@/lib/utils/dateutils";
 
 import {
   Dialog,
@@ -69,14 +70,10 @@ export const AddJobDialog = ({}: AddJobDialogProps) => {
                   const patch = {
                     ...values,
                     user_id: userId, // Add the user ID to the values
-                    salary_min:
-                      values.salary_min === ""
-                        ? null
-                        : Number(values.salary_min),
-                    salary_max:
-                      values.salary_max === ""
-                        ? null
-                        : Number(values.salary_max),
+                    salary_min:values.salary_min === "" ? null : Number(values.salary_min),
+                    salary_max: values.salary_max === "" ? null : Number(values.salary_max),
+                    date_applied: convertToUTC(values.date_applied),
+                    closing_date: convertToUTC(values.closing_date),
                   };
 
                   const { data, error } = await supabaseBrowser
@@ -119,13 +116,14 @@ export const AddJobDialog = ({}: AddJobDialogProps) => {
             <JobForm
               submitName="Add Job"
               onSubmit={async (values) => {
+
                 const patch = {
                   ...values,
                   user_id: userId, // Add the user ID to the values
-                  salary_min:
-                    values.salary_min === "" ? null : Number(values.salary_min),
-                  salary_max:
-                    values.salary_max === "" ? null : Number(values.salary_max),
+                  salary_min:values.salary_min === "" ? null : Number(values.salary_min),
+                  salary_max: values.salary_max === "" ? null : Number(values.salary_max),
+                  date_applied: convertToUTC(values.date_applied),
+                  closing_date: convertToUTC(values.closing_date),
                 };
 
                 const { data, error } = await supabaseBrowser
@@ -141,6 +139,7 @@ export const AddJobDialog = ({}: AddJobDialogProps) => {
                     description: values.position + " at " + values.company,
                   }); 
                   setRefresh(true);
+                  
                 }
               }}
             />
