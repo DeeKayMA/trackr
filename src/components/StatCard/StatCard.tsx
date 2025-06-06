@@ -73,7 +73,7 @@ export const StatCard = ({
         <CardFooter>
           <p className="text-sm text-muted-foreground">
             {trending === "new" ? (
-              <span>New growth</span>
+              <span>New growth </span>
             ) : trending === "up" ? (
               <span>Up {countDiff} </span>
             ) : trending === "down" ? (

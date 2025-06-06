@@ -8,7 +8,7 @@ import { AverageSalaryCard } from "./components/AverageSalarayCard";
 import { DaysSinceLastAppCard } from "./components/DaysSinceLastApp";
 import { ApplicationDistributionCard } from "@/app/dashboard/analytics/components/ApplicationDistributionCard";
 import { ApplicationRankingCard } from "@/app/dashboard/analytics/components/ApplicationRankingCard";
-import { ConversionRatesCard } from "@/app/dashboard/analytics/components/ConversionRatesCard";
+import { ConversionRatesCard } from "@/app/dashboard/analytics/components/ConversionRates/ConversionRatesCard";
 
 
 
@@ -21,7 +21,7 @@ export default function Analytics() {
   return (
     <div className="flex flex-col w-full">
       <Header title="Analytics" />
-      <main className=" w-full justify-center grid grid-cols-3 grid-rows-5 gap-4 my-4 mx-auto px-4">
+      <main className=" w-full justify-center grid grid-cols-3 auto-rows-[minmax(150px,_auto)] gap-4 my-4 mx-auto px-4">
         {/* Realtime Stats */}
         <TotalAppsCard/>
         <TotalInterviewsCard/>
@@ -51,8 +51,6 @@ export default function Analytics() {
 
         {/* Bar chart */}
         <ApplicationRankingCard/>
-
-
 
         {/* Stat Card */}
         <AverageSalaryCard/>

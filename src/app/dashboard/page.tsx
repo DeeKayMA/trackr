@@ -12,20 +12,20 @@ export default function Analytics() {
   return (
     <div className="flex flex-col w-full">
       <Header title="Home" />
-      <main className=" w-full justify-center grid grid-cols-3 grid-rows-[repeat(4,_minmax(150px,_auto))] gap-4 my-4 mx-auto px-4">
+      <main className=" w-full justify-center grid grid-col-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(150px,_auto)] gap-4 my-4 mx-auto px-4">
         {/* Realtime Stats */}
         <TotalAppsCard />
         <TotalInterviewsCard />
         <TotalOffersCard />
         {/* <TempCard className="row-span-1" cardName="Quote" /> */}
         <QuoteCard />
-        <TempCard className="row-span-1" cardName="Streak" />
+        <TempCard className="" cardName="Streak" />
         <QuickLinks/>
         <TempCard
-          className="col-span-2 row-span-2"
+          className="lg:col-span-2 lg:row-span-2"
           cardName="This Months Activity"
         />
-        <TempCard className="row-span-2" cardName="Recent Job Applications" />
+        <TempCard className="lg:row-span-2 " cardName="Recent Job Applications" />
       </main>
     </div>
   );

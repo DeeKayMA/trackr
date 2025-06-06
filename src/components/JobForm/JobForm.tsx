@@ -237,20 +237,6 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
             </FormItem>
           )}
         />
-        {/* LOCATION */}
-        <FormField
-          control={form.control}
-          name="location"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Location</FormLabel>
-              <FormControl>
-                <Input placeholder="e.g. London" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
         {/* JOB TYPE */}
         <FormField
           control={form.control}
@@ -281,6 +267,21 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
             </FormItem>
           )}
         />
+        {/* LOCATION */}
+        <FormField
+          control={form.control}
+          name="location"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Location</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g. London" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        
         {/* WORK Model */}
         <FormField
           control={form.control}

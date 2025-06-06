@@ -373,7 +373,7 @@ export const columns: ColumnDef<Job>[] = [
       );
     },
     cell: ({ row }) => {
-      const raw = row.getValue<string | null>("closing_date");
+      const raw = row.getValue<string | null>("date_applied");
       if (!raw) return <span>-</span>;
 
       const date = new Date(raw);
