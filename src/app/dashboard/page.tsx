@@ -1,12 +1,12 @@
 // Analytics page on the dashboard
 import Header from "@/components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
-import { TotalAppsCard } from "@/app/dashboard/analytics/components/TotalAppsCard";
-import { TotalInterviewsCard } from "@/app/dashboard/analytics/components/TotalInterviewsCard";
-import { TotalOffersCard } from "@/app/dashboard/analytics/components/TotalOffersCard";
+import { TotalAppsCard } from "@/components/Analytics/TotalAppsCard";
+import { TotalInterviewsCard } from "@/components/Analytics/TotalInterviewsCard";
+import { TotalOffersCard } from "@/components/Analytics/TotalOffersCard";
 import { Button } from "@/components/ui/button";
-import { QuoteCard } from "@/app/dashboard/analytics/components/QuoteCard";
-import { QuickLinks } from "@/app/dashboard/analytics/components/QuickLinks";
+import { QuoteCard } from "@/components/Analytics/QuoteCard";
+import { QuickLinks } from "@/components/Analytics/QuickLinks";
 
 export default function Analytics() {
   return (

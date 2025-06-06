@@ -2,9 +2,9 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { TempCard } from "@/components/temp/TempCard";
 
 import { Tooltip, TooltipContent, TooltipTrigger, TooltipProvider} from "@/components/ui/tooltip"
-import { AppToInterviewRadial } from "@/app/dashboard/analytics/components/ConversionRates/AppToIntRadial";
-import { IntToOfferRadial } from "@/app/dashboard/analytics/components/ConversionRates/IntToOfferRadial";
-import { AppToOfferRadial } from "@/app/dashboard/analytics/components/ConversionRates/AppToOfferRadial";
+import { AppToInterviewRadial } from "@/components/Analytics/ConversionRates/AppToIntRadial";
+import { IntToOfferRadial } from "@/components/Analytics/ConversionRates/IntToOfferRadial";
+import { AppToOfferRadial } from "@/components/Analytics/ConversionRates/AppToOfferRadial";
 
 export const ConversionRatesCard = () => {
   return (

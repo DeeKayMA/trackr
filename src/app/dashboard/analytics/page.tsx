@@ -1,14 +1,14 @@
 // Analytics page on the dashboard
 import Header from "../../../components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
-import { TotalAppsCard } from "./components/TotalAppsCard";
-import { TotalInterviewsCard } from "./components/TotalInterviewsCard";
-import { TotalOffersCard } from "./components/TotalOffersCard";
-import { AverageSalaryCard } from "./components/AverageSalarayCard";
-import { DaysSinceLastAppCard } from "./components/DaysSinceLastApp";
-import { ApplicationDistributionCard } from "@/app/dashboard/analytics/components/ApplicationDistributionCard";
-import { ApplicationRankingCard } from "@/app/dashboard/analytics/components/ApplicationRankingCard";
-import { ConversionRatesCard } from "@/app/dashboard/analytics/components/ConversionRates/ConversionRatesCard";
+import { TotalAppsCard } from "../../../components/Analytics/TotalAppsCard";
+import { TotalInterviewsCard } from "../../../components/Analytics/TotalInterviewsCard";
+import { TotalOffersCard } from "../../../components/Analytics/TotalOffersCard";
+import { AverageSalaryCard } from "../../../components/Analytics/AverageSalarayCard";
+import { DaysSinceLastAppCard } from "../../../components/Analytics/DaysSinceLastApp";
+import { ApplicationDistributionCard } from "@/components/Analytics/ApplicationDistributionCard";
+import { ApplicationRankingCard } from "@/components/Analytics/ApplicationRankingCard";
+import { ConversionRatesCard } from "@/components/Analytics/ConversionRates/ConversionRatesCard";
 
 
 
