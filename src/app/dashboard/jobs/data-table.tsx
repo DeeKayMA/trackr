@@ -5,7 +5,7 @@ import * as React from "react";
 import { useEffect } from "react";
 import { useJobStore } from "@/lib/store/useJobStore";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { StausFilterCombo } from "@/components/Global/StatusFilterCombo/StatusFilterCombo";
+import { StausFilterCombo } from "@/components/StatusFilterCombo/StatusFilterCombo";
 
 import {
   ColumnDef,
@@ -31,7 +31,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { DeleteSelectedJobs } from "@/components/Global/DeleteSelectedJobs/DeleteSelectedJobs";
+import { DeleteSelectedJobs } from "@/components/DeleteSelectedJobs/DeleteSelectedJobs";
 
 import {
   Select,

@@ -1,6 +1,6 @@
 "use client";
 
-import { StatCard } from "@/components/Global/StatCard/StatCard";
+import { StatCard } from "@/components/StatCard/StatCard";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
