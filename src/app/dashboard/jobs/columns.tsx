@@ -254,13 +254,11 @@ export const columns: ColumnDef<Job>[] = [
       const salaryMax = row.original.salary_max;
       const frequency = row.original.frequency;
 
-      if (salaryMin !== null) {
+      if (salaryMin !== null && salaryMax !== null) {
         const minParts = formatSalaryParts(salaryMin);
-        const maxParts =
-          salaryMax !== null ? formatSalaryParts(salaryMax) : null;
+        const maxParts = formatSalaryParts(salaryMax);
 
-        // If both min and max exist and have the same unit, show as "min–max{unit}"
-        if (maxParts && minParts.unit === maxParts.unit && minParts.unit) {
+        if (minParts.unit === maxParts.unit && minParts.unit) {
           return (
             <div>
               £{minParts.value}–{maxParts.value}
@@ -268,15 +266,36 @@ export const columns: ColumnDef<Job>[] = [
             </div>
           );
         }
-        // If units differ or only min exists, show each with its unit
+
         return (
           <div>
             £{minParts.value}
-            {minParts.unit}
-            {maxParts ? `–${maxParts.value}${maxParts.unit} ${frequency? frequency : ""}` : ""}
+            {minParts.unit} {frequency} – £{maxParts.value}
+            {maxParts.unit} {frequency}
           </div>
         );
       }
+
+      if (salaryMin !== null) {
+        const minParts = formatSalaryParts(salaryMin);
+        return (
+          <div>
+            £{minParts.value}
+            {minParts.unit} {frequency}
+          </div>
+        );
+      }
+
+      if (salaryMax !== null) {
+        const maxParts = formatSalaryParts(salaryMax);
+        return (
+          <div>
+            £{maxParts.value}
+            {maxParts.unit} {frequency}
+          </div>
+        );
+      }
+
       return null;
     },
   },
