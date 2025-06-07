@@ -1,5 +1,5 @@
 // Analytics page on the dashboard
-import Header from "../../../components/Header/Header";
+import Header from "@/components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
 
 export default function Analytics() {

@@ -53,7 +53,7 @@ export async function updateSession(request: NextRequest) {
   if (
     !user &&
     //Public pages
-    !['/login', '/check-email', '/auth', '/'].some((path) =>
+    !['/login', '/check-email', '/auth', '/' , '/dashboard'].some((path) =>
       request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(`${path}/`)
   )) {
     const url = request.nextUrl.clone()

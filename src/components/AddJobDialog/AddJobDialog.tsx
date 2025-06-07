@@ -1,6 +1,6 @@
 "use client";
 
-import { JobForm } from "@/components/JobForm/JobForm";
+import { JobForm } from "@/components/Forms/JobForm";
 import { Button } from "@/components/ui/button";
 import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { useRef } from "react";

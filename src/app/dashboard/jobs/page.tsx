@@ -1,6 +1,6 @@
 "use client";
 
-import Header from "../../../components/Header/Header";
+import Header from "@/components/Header/Header";
 import { Job, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";

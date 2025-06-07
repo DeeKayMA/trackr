@@ -25,6 +25,7 @@ import {
 import { useEffect, useState } from "react";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
 import NavUser from "../NavUser/NavUser";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
 
 // Menu items.
 const items = [
@@ -56,25 +57,49 @@ export default function AppSidebar() {
     email: "",
     avatar: "",
   });
+  const { refresh, setRefresh } = useRefreshStore();
 
   useEffect(() => {
-    const fetchUser = async () => {
-      const { data: { session } } = await supabaseBrowser.auth.getSession();
-      if (session?.user) {
-        setUserInfo({
-          name:
-            session.user.user_metadata?.full_name ||
-            session.user.user_metadata?.name ||
-            "",
-          email: session.user.email || "",
-          avatar: session.user.user_metadata?.avatar_url,
-        });
-      }
-    };
-    fetchUser();
-  }, []);
+  const fetchUser = async () => {
+    const { data: { session }, error: sessionError } = await supabaseBrowser.auth.getSession();
+
+    if (sessionError) {
+      console.error("Session error:", sessionError);
+      return;
+    }
+
+    const user = session?.user;
+    if (!user) return;
+
+    // Fetch from Account Details
+    const { data, error } = await supabaseBrowser
+      .from("Account Details")
+      .select("username, profile_img")
+      .eq("user_id", user.id)
+      .single();
+
+    if (error) {
+      console.error("Error fetching account details:", error);
+      return;
+    }
+
+    setUserInfo({
+      name: data?.username || "",
+      email: user.email || "",
+      avatar: data?.profile_img || null,
+    });
+
+    setRefresh(false); 
+
+  };
+
+  
+
+  fetchUser();
+}, [refresh, setRefresh]);
 
 
+console.log(userInfo)
 
   return (
     <Sidebar>
