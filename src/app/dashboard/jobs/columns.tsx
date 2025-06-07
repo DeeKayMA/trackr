@@ -1,15 +1,13 @@
 // (client component) will contain our column definitions.
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import { ColumnDef } from "@tanstack/react-table";
 import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
 import { DeleteJobDialog } from "@/components/DeleteJobDialog/DeleteJobDialog";
 import { NotesDialog } from "@/components/NotesDialog/NotesDialog";
-import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
-import { toast } from "sonner";
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { useUserStore } from "@/lib/store/useUserStore";
 
 
 import { Button } from "@/components/ui/button";
@@ -21,13 +19,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 
 import { Badge } from "@/components/ui/badge";
 
@@ -95,7 +86,10 @@ function isStatusKey(status: string): status is StatusKey {
   return status in statusMap;
 }
 
-//Format the currency
+
+
+
+//Format the salary
 function formatSalaryParts(num: number | null): {
   value: string;
   unit: string;
@@ -121,6 +115,7 @@ function truncate(input: string | null, maxLength: number): string {
 }
 
 export const columns: ColumnDef<Job>[] = [
+  
   //Select
   {
     id: "select",
@@ -253,6 +248,8 @@ export const columns: ColumnDef<Job>[] = [
       const salaryMin = row.original.salary_min;
       const salaryMax = row.original.salary_max;
       const frequency = row.original.frequency;
+      const currency = useUserStore((state) => state.currency);
+
 
       if (salaryMin !== null && salaryMax !== null) {
         const minParts = formatSalaryParts(salaryMin);
@@ -261,7 +258,7 @@ export const columns: ColumnDef<Job>[] = [
         if (minParts.unit === maxParts.unit && minParts.unit) {
           return (
             <div>
-              £{minParts.value}–{maxParts.value}
+              {currency}{minParts.value}–{maxParts.value}
               {minParts.unit} {frequency}
             </div>
           );
@@ -269,8 +266,8 @@ export const columns: ColumnDef<Job>[] = [
 
         return (
           <div>
-            £{minParts.value}
-            {minParts.unit} {frequency} – £{maxParts.value}
+            {currency}{minParts.value}
+            {minParts.unit} {frequency} – {currency}{maxParts.value}
             {maxParts.unit} {frequency}
           </div>
         );
@@ -280,7 +277,7 @@ export const columns: ColumnDef<Job>[] = [
         const minParts = formatSalaryParts(salaryMin);
         return (
           <div>
-            £{minParts.value}
+            {currency}{minParts.value}
             {minParts.unit} {frequency}
           </div>
         );
@@ -290,7 +287,7 @@ export const columns: ColumnDef<Job>[] = [
         const maxParts = formatSalaryParts(salaryMax);
         return (
           <div>
-            £{maxParts.value}
+            {currency}{maxParts.value}
             {maxParts.unit} {frequency}
           </div>
         );

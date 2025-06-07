@@ -24,13 +24,17 @@ import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { useUserStore } from "@/lib/store/useUserStore";
+
+
+
 
 const formSchema = z.object({
   profile_img: z.string().optional(),
   username: z.string().min(0).max(50).optional(),
   daily_goal: z.string().min(0).max(3).optional(),
   weekly_goal: z.string().min(0).max(3).optional(),
-  currency: z.string().min(0).max(50).optional(),
+  currency: z.string().min(0).max(50),
 });
 
 export function ProfileForm() {
@@ -38,6 +42,8 @@ export function ProfileForm() {
   const [email, setEmail] = useState<string | null | undefined>(null);
   const [loading, setLoading] = useState(true);
   const { refresh, setRefresh } = useRefreshStore();
+  const { currency, setCurrency } = useUserStore();
+  // const setCurrency = useUserStore((state) => state.setCurrency);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,7 +56,10 @@ export function ProfileForm() {
     },
   });
 
+  
+
   useEffect(() => {
+
     const loadProfile = async () => {
       const {
         data: { user },
@@ -74,7 +83,12 @@ export function ProfileForm() {
 
       if (data) {
         form.reset(data); // ✅ Prefill the form
+        setCurrency(data.currency.trim().split(" ")[0]); // optional: format symbol
       }
+
+      // if (!error && data) {
+      //   setCurrency(data.currency.trim().split(" ")[0]); // optional: format symbol
+      // }
 
       setLoading(false);
     };
@@ -121,6 +135,8 @@ export function ProfileForm() {
         description: "Your account details have been updated",
       });
       setRefresh(true)
+      setCurrency(values.currency.trim().split(" ")[0]);
+      
     }
   };
 
@@ -214,28 +230,20 @@ export function ProfileForm() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="USD">$ - US Dollar (USD)</SelectItem>
-                    <SelectItem value="EUR">€ - Euro (EUR)</SelectItem>
-                    <SelectItem value="JPY">¥ - Japanese Yen (JPY)</SelectItem>
-                    <SelectItem value="GBP">£ - British Pound (GBP)</SelectItem>
-                    <SelectItem value="AUD">
-                      $ - Australian Dollar (AUD)
-                    </SelectItem>
-                    <SelectItem value="CAD">
-                      $ - Canadian Dollar (CAD)
-                    </SelectItem>
+                    <SelectItem value="$ - USD">$ - US Dollar (USD)</SelectItem>
+                    <SelectItem value="€ - EUR">€ - Euro (EUR)</SelectItem>
+                    <SelectItem value="¥ - JPY">¥ - Japanese Yen (JPY)</SelectItem>
+                    <SelectItem value="£ - GBP">£ - British Pound (GBP)</SelectItem>
+                    <SelectItem value="$ -AUD">$ - Australian Dollar (AUD)</SelectItem>
+                    <SelectItem value="$ - CAD">$ - Canadian Dollar (CAD)</SelectItem>
                     <SelectItem value="CHF">CHF - Swiss Franc (CHF)</SelectItem>
-                    <SelectItem value="CNY">¥ - Chinese Yuan (CNY)</SelectItem>
-                    <SelectItem value="HKD">
-                      $ - Hong Kong Dollar (HKD)
-                    </SelectItem>
-                    <SelectItem value="NZD">
-                      $ - New Zealand Dollar (NZD)
-                    </SelectItem>
+                    <SelectItem value="¥ - CNY">¥ - Chinese Yuan (CNY)</SelectItem>
+                    <SelectItem value="$ - HKD">$ - Hong Kong Dollar (HKD)</SelectItem>
+                    <SelectItem value="$ - NZD">$ - New Zealand Dollar (NZD)</SelectItem>
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  The currency you want to use (default: £ GBP)
+                  The currency you want to use on the platform
                 </FormDescription>
                 <FormMessage />
               </FormItem>
