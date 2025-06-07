@@ -43,6 +43,7 @@ export function ProfileForm() {
   const [loading, setLoading] = useState(true);
   const { refresh, setRefresh } = useRefreshStore();
   const { currency, setCurrency } = useUserStore();
+  
   // const setCurrency = useUserStore((state) => state.setCurrency);
 
   const form = useForm<z.infer<typeof formSchema>>({
