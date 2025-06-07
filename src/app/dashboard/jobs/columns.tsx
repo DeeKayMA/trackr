@@ -61,6 +61,7 @@ export type Job = {
   notes: string | null;
   salary_min: number | null;
   salary_max: number | null;
+  frequency: string | null;
   onJobUpdated?: () => void;
 };
 
@@ -251,6 +252,7 @@ export const columns: ColumnDef<Job>[] = [
     cell: ({ row }) => {
       const salaryMin = row.original.salary_min;
       const salaryMax = row.original.salary_max;
+      const frequency = row.original.frequency;
 
       if (salaryMin !== null) {
         const minParts = formatSalaryParts(salaryMin);
@@ -262,7 +264,7 @@ export const columns: ColumnDef<Job>[] = [
           return (
             <div>
               £{minParts.value}–{maxParts.value}
-              {minParts.unit}
+              {minParts.unit} {frequency}
             </div>
           );
         }
@@ -271,7 +273,7 @@ export const columns: ColumnDef<Job>[] = [
           <div>
             £{minParts.value}
             {minParts.unit}
-            {maxParts ? `–${maxParts.value}${maxParts.unit}` : ""}
+            {maxParts ? `–${maxParts.value}${maxParts.unit} ${frequency? frequency : ""}` : ""}
           </div>
         );
       }
@@ -418,6 +420,15 @@ export const columns: ColumnDef<Job>[] = [
     enableColumnFilter: false,
     enableSorting: false,
   },
+  //Frequency
+  {
+    accessorKey: "frequency",
+    header: () => null,
+    cell: () => null,
+    enableHiding: true,
+    enableColumnFilter: false,
+    enableSorting: false,
+  },
   //Actions
   {
     id: "actions",
@@ -434,6 +445,7 @@ export const columns: ColumnDef<Job>[] = [
       const job_type = row.getValue<string>("job_type");
       const salary_min = row.getValue<number>("salary_min");
       const salary_max = row.getValue<number>("salary_max");
+      const frequency = row.getValue<string>("frequency");
       const notes = row.getValue<string>("notes");
       const url = row.getValue<string>("url");
 
@@ -504,6 +516,7 @@ export const columns: ColumnDef<Job>[] = [
               job_type={job_type}
               salary_min={salary_min}
               salary_max={salary_max}
+              frequency={frequency}
               notes={notes}
               url={url}
             />

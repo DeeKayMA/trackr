@@ -61,6 +61,7 @@ const formSchema = z.object({
   }),
   date_applied: z.date().optional(),
   closing_date: z.date().optional(),
+  frequency: z.string().optional(),
   url: z.string().optional(),
   notes: z.string().optional(),
 });
@@ -79,30 +80,18 @@ type JobFormProps = {
   job_type?: string;
   salary_min?: number;
   salary_max?: number;
+  frequency?: string;
   notes?: string;
   url?: string;
 };
 
-export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position, status, date_applied, closing_date, location, work_model, job_type, salary_min, salary_max, notes, url }: JobFormProps) => {
+export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position, status, date_applied, closing_date, frequency, location, work_model, job_type, salary_min, salary_max, notes, url }: JobFormProps) => {
 
   
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: 
     
-    // id?{
-    //   position: "",
-    //   company: "",
-    //   location: "",
-    //   work_model: "",
-    //   job_type: "",
-    //   salary_min: "",
-    //   salary_max: "",
-    //   status: "Saved",
-    //   date_applied: undefined,
-    //   url: "",
-    //   notes: "",
-    // } : 
     {
       position: position ?? "",
       company: company ?? "",
@@ -114,6 +103,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
       status: status ?? "Saved",
       date_applied: date_applied ? new Date(date_applied) : undefined,
       closing_date: closing_date ? new Date(closing_date) : undefined,
+      frequency: frequency ?? "",
       url: url ?? "",
       notes: notes ?? "",
     }
@@ -337,6 +327,37 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
             </FormItem>
           )}
         />
+        {/* Frequency  */}
+        <FormField
+          control={form.control}
+          name="frequency"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Frequency</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select pay frequency" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="/ hours">Per Hour</SelectItem>
+                  <SelectItem value="/day">Per Day</SelectItem>
+                  <SelectItem value="/ week">Per Week</SelectItem>
+                  <SelectItem value="/ month">Per Month</SelectItem>
+                  <SelectItem value="/ year">Per Year</SelectItem>
+                  <SelectItem value="/ task">Per Task</SelectItem>
+                  <SelectItem value="/ job">Per Job</SelectItem>
+                </SelectContent>
+              </Select>
+              {/* <FormDescription>
+                You can manage email addresses in your{" "}
+                <Link href="/examples/forms">email settings</Link>.
+              </FormDescription> */}
+              <FormMessage />
+            </FormItem>
+          )}
+          />
         {/* DATE */}
         <FormField
           control={form.control}
