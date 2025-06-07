@@ -5,9 +5,7 @@ import { useState, useEffect } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -48,8 +46,10 @@ export const WeeklyTargetCard = ({ className }: StreakCardProps) => {
       endOfWeek.setDate(startOfWeek.getDate() + 6);
       endOfWeek.setHours(23, 59, 59, 999);
 
-      const startOfWeekISO = startOfWeek.toISOString();
-      const endOfWeekISO = endOfWeek.toISOString();
+      const getUTCISOString = (date: Date) => new Date(date.getTime() - date.getTimezoneOffset() * 60000).toISOString();
+
+      const startOfWeekISO = getUTCISOString(startOfWeek);
+      const endOfWeekISO = getUTCISOString(endOfWeek);
 
       const { count, error: countError } = await supabaseBrowser
         .from("Job Applications")
@@ -95,8 +95,8 @@ export const WeeklyTargetCard = ({ className }: StreakCardProps) => {
       <CardFooter>
         <p className="text-sm text-muted-foreground">
           {goalReached
-            ? "Great job! You've hit your target this week 🎉"
-            : `You're ${goal - count} away from your target`}
+            ? "Great job! You hit your target 🎉"
+            : `You're ${goal - count} away from your weekly target`}
         </p>
       </CardFooter>
     </Card>

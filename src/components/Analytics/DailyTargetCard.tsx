@@ -5,9 +5,7 @@ import { useState, useEffect } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import {
   Card,
-  CardAction,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -37,9 +35,14 @@ export const DailyTargetCard = ({ className }: StreakCardProps) => {
         return;
       }
 
-      const today = new Date();
-      const startOfDay = new Date(today.setHours(0, 0, 0, 0)).toISOString();
-      const endOfDay = new Date(today.setHours(23, 59, 59, 999)).toISOString();
+      const now = new Date();
+      const localStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+      const localEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+
+      // Convert to UTC string so Supabase compares time in the same format
+      const startOfDay = new Date(localStart.getTime() - localStart.getTimezoneOffset() * 60000).toISOString();
+      const endOfDay = new Date(localEnd.getTime() - localEnd.getTimezoneOffset() * 60000).toISOString();
+
 
       const { count, error: countError } = await supabaseBrowser
         .from("Job Applications")
@@ -70,7 +73,7 @@ export const DailyTargetCard = ({ className }: StreakCardProps) => {
       <CardHeader className="flex flex-row flex-wrap items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Daily Target</CardTitle>
         <Badge className={ goalReached? "bg-lime-200 text-primary-950 border": "bg-amber-200/50 text-priamry-950 "}>
-          {goalReached ? " 🏆 Goal Achieved" : "🔥 Keep Going"}
+          {goalReached ? "🏆 Goal Achieved" : count === 0 ? "📋 Get Applying": "🔥 Keep Going"}
         </Badge>
       </CardHeader>
       
@@ -83,8 +86,8 @@ export const DailyTargetCard = ({ className }: StreakCardProps) => {
       <CardFooter>
         <p className="text-sm text-muted-foreground">
           {goalReached
-            ? "Great job! You've hit your target today 🎉"
-            : `You're ${goal - count} away from your target`}
+            ? "Great job! You hit your target 🎉"
+            : `You're ${goal - count} away from your daily target`}
         </p>
       </CardFooter>
     </Card>

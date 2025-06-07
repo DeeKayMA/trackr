@@ -1,10 +1,12 @@
 'use client'
-import { DailyTargetCard } from "@/components/Analytics/DailyTargetCard";
+
 import Header from "@/components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
 import { useEffect } from "react";
 import { loadUserProfile } from "@/lib/helpers/loadUserProfile";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { StreakCard } from "@/components/Analytics/StreakCard";
+import { DailyTargetCard } from "@/components/Analytics/DailyTargetCard";
 import { WeeklyTargetCard } from "@/components/Analytics/WeeklyTargetCard";
 
 export default function Analytics() {
@@ -32,13 +34,14 @@ useEffect(() => {
       <div className=" flex flex-col gap-4 px-4 py-8 lg:px-6 max-w-7xl mx-auto w-full">
         {/* Stat Cards */}
         <section className="grid grid-cols-1 sm:grid-cols-1  md:grid-cols-1 lg:grid-cols-3 gap-4">
+          <StreakCard className=""/>
           <DailyTargetCard className=""/>
           <WeeklyTargetCard className=""/>
-          <TempCard cardName="Streak" className=""/>
+          
         </section>
 
         {/* Mini Charts */}
-        <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 gap-4">
+        <section className="grid grid-cols-1 sm:grid-cols- md:grid-cols-2 gap-4">
           <TempCard cardName="Apps Per Day" className=""/>
           <TempCard cardName="Status Breakdown" className=""/>
         </section>
