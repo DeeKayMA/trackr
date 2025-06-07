@@ -1,32 +1,44 @@
 // Analytics page on the dashboard
 import Header from "@/components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
-import { TotalAppsCard } from "@/components/Analytics/TotalAppsCard";
-import { TotalInterviewsCard } from "@/components/Analytics/TotalInterviewsCard";
-import { TotalOffersCard } from "@/components/Analytics/TotalOffersCard";
 import { Button } from "@/components/ui/button";
-import { QuoteCard } from "@/components/Analytics/QuoteCard";
-import { QuickLinks } from "@/components/Analytics/QuickLinks";
 
 export default function Analytics() {
   return (
     <div className="flex flex-col w-full">
       <Header title="Home" />
-      <main className=" w-full justify-center grid grid-col-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 auto-rows-[minmax(150px,_auto)] gap-4 my-4 mx-auto px-4">
-        {/* Realtime Stats */}
-        <TotalAppsCard />
-        <TotalInterviewsCard />
-        <TotalOffersCard />
-        {/* <TempCard className="row-span-1" cardName="Quote" /> */}
-        <QuoteCard />
-        <TempCard className="" cardName="Streak" />
-        <QuickLinks/>
-        <TempCard
-          className="lg:col-span-2 lg:row-span-2"
-          cardName="This Months Activity"
-        />
-        <TempCard className="lg:row-span-2 " cardName="Recent Job Applications" />
-      </main>
+      <div className=" flex flex-col gap-4 px-4 py-8 lg:px-6 max-w-7xl mx-auto w-full">
+        {/* Stat Cards */}
+        <section className="grid grid-cols-1 sm:grid-cols-3  md:grid-cols-3 lg:grid-cols-3 gap-4">
+          <TempCard cardName="Apps Today" className=""/>
+          <TempCard cardName="Apps This Week" className=""/>
+          <TempCard cardName="Streak" className=""/>
+        </section>
+
+        {/* Mini Charts */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <TempCard cardName="Apps Per Day" className=""/>
+          <TempCard cardName="Status Breakdown" className=""/>
+        </section>
+
+        {/* Gamified XP & Badges Charts */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <TempCard cardName="XP progress" className=""/>
+          <TempCard cardName="Badges" className=""/>
+        </section>
+
+        {/* Call to Action */}
+        <section className="">
+          <TempCard cardName="CTA - You're X away from keeping your streak alive" className=""/>
+        </section>
+
+        {/* Quick Navigation  */}
+        <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <TempCard cardName="Jobs" className=""/>
+          <TempCard cardName="Analytics" className=""/>
+          <TempCard cardName="Resources" className=""/>
+        </section>
+      </div>
     </div>
   );
 }

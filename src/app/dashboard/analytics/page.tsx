@@ -1,64 +1,59 @@
 // Analytics page on the dashboard
 import Header from "../../../components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
-import { TotalAppsCard } from "../../../components/Analytics/TotalAppsCard";
-import { TotalInterviewsCard } from "../../../components/Analytics/TotalInterviewsCard";
-import { TotalOffersCard } from "../../../components/Analytics/TotalOffersCard";
-import { AverageSalaryCard } from "../../../components/Analytics/AverageSalarayCard";
-import { DaysSinceLastAppCard } from "../../../components/Analytics/DaysSinceLastApp";
-import { ApplicationDistributionCard } from "@/components/Analytics/ApplicationDistributionCard";
-import { ApplicationRankingCard } from "@/components/Analytics/ApplicationRankingCard";
-import { ConversionRatesCard } from "@/components/Analytics/ConversionRates/ConversionRatesCard";
-
-
-
-
-
-
-
 
 export default function Analytics() {
   return (
     <div className="flex flex-col w-full">
       <Header title="Analytics" />
-      <main className=" w-full justify-center grid grid-cols-3 auto-rows-[minmax(150px,_auto)] gap-4 my-4 mx-auto px-4">
-        {/* Realtime Stats */}
-        <TotalAppsCard/>
-        <TotalInterviewsCard/>
-        <TotalOffersCard/>
+      <div className="flex flex-col gap-4 px-4 py-8 lg:px-6 max-w-7xl mx-auto w-full">
+        {/* Summary Stats */}
+        <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <TempCard className="" cardName="Total Applications" />
+          <TempCard className="" cardName="Total Intervies" />
+          <TempCard className="" cardName="Total Offers" />
+          <TempCard className="" cardName="Total Rejections" />
+        </section>
 
-        {/* Status Breakdown - Pie chart or bar chart  - full width of screeen */}
-        {/* <div className="col-span-2">Application Status Breakdown</div> */}
-        <TempCard className="col-span-2 row-span-2" cardName="Application Status breakdown"/>
-        
+        {/* Application Trends */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <TempCard className="" cardName="Weekly Applications Cahrt " />
+          <TempCard className="" cardName="Applications Over Time " />
+        </section>
 
-        {/* Conversion rates - radial charts */}
-        {/* <TempCard className="col-span-1 row-span-2" cardName="Conversion Rates: App -> Int, Int -> Offer, App -> Offer"/> */}
-        <ConversionRatesCard/>
-  
+        {/* Status & Breakdown */}
+        <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <TempCard className="" cardName="Status Pie Chart" />
+          <TempCard className="" cardName="Job Type / Work Model breakdown" />
+        </section>
 
-        {/* Days since last application - Stat card */}
-        {/* <div>Days since last application</div> */}
-        <DaysSinceLastAppCard/>
+        {/*  Goals Progress */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <TempCard className="" cardName="Weekly progress" />
+          <TempCard className="" cardName="Daily streak tracker" />
+        </section>
 
-        {/* Line chart or area chart */}
-        {/* <div>Applications submitted over time, weekly,monthly</div> */}
-        <TempCard className="col-start-2 col-span-2" cardName="Applications submitted over time, weekly,monthly"/>
+        {/* 🎮 Gamification */}
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <TempCard className="" cardName="Badges Earned " />
+          <TempCard className="" cardName="XP & Level progress" />
+        </section>
 
-       
+        {/* Insight Highlights */}
+        <section className="grid grid-cols-1 gap-4">
+          <TempCard
+            className=""
+            cardName="Insights - you get the most offers from x"
+          />
+        </section>
 
-        {/* MEDIUM PRIORITY DATA, maybe put behind show more */}
-
-        {/* Bar chart */}
-        <ApplicationRankingCard/>
-
-        {/* Stat Card */}
-        <AverageSalaryCard/>
-
-        {/* Pie chart */}
-        <ApplicationDistributionCard/>
-        
-      </main>
+        {/* Historical Stats / Filters */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <TempCard className="" cardName="Longest Streak" />
+          <TempCard className="" cardName="Most active week" />
+          <TempCard className="" cardName="Avg apps per week" />
+        </section>
+      </div>
     </div>
   );
 }
