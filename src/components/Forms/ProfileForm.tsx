@@ -42,7 +42,7 @@ export function ProfileForm() {
   const [email, setEmail] = useState<string | null | undefined>(null);
   const [loading, setLoading] = useState(true);
   const { refresh, setRefresh } = useRefreshStore();
-  const { currency, setCurrency } = useUserStore();
+  const { setCurrency, setDailyGoal, setWeeklyGoal } = useUserStore();
   
   // const setCurrency = useUserStore((state) => state.setCurrency);
 
@@ -85,11 +85,9 @@ export function ProfileForm() {
       if (data) {
         form.reset(data); // ✅ Prefill the form
         setCurrency(data.currency.trim().split(" ")[0]); // optional: format symbol
+        setDailyGoal(data.daily_goal || "");
+        setWeeklyGoal(data.weekly_goal || "");
       }
-
-      // if (!error && data) {
-      //   setCurrency(data.currency.trim().split(" ")[0]); // optional: format symbol
-      // }
 
       setLoading(false);
     };
@@ -137,6 +135,9 @@ export function ProfileForm() {
       });
       setRefresh(true)
       setCurrency(values.currency.trim().split(" ")[0]);
+      setDailyGoal(values.daily_goal || "");
+      setWeeklyGoal(values.weekly_goal || "");
+
       
     }
   };

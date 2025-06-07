@@ -49,7 +49,7 @@ const formSchema = z.object({
     .string({ required_error: "Please input a company name" })
     .min(1, "Please input a company name")
     .max(50),
-  location: z.string().min(0).max(50).optional(),
+  location: z.string().min(0).max(100).optional(),
   work_model: z.string().optional(),
   job_type: z.string({
     required_error: "Please select a status for this position",
@@ -333,7 +333,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
           name="frequency"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Frequency</FormLabel>
+              <FormLabel>Payment Terms</FormLabel>
               <Select onValueChange={field.onChange} defaultValue={field.value}>
                 <FormControl>
                   <SelectTrigger className="w-full">
