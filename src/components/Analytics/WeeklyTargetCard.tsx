@@ -11,6 +11,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type StreakCardProps = {
   className: string;
@@ -21,6 +22,7 @@ export const WeeklyTargetCard = ({ className }: StreakCardProps) => {
   const goal = Number(weeklyGoal);
   const [count, setCount] = useState(0);
   const { refresh, setRefresh } = useRefreshStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchCount = async () => {
@@ -64,6 +66,7 @@ export const WeeklyTargetCard = ({ className }: StreakCardProps) => {
       }
 
       setCount(count || 0);
+      setLoading(false);
       setRefresh(false);
     };
 
@@ -71,6 +74,10 @@ export const WeeklyTargetCard = ({ className }: StreakCardProps) => {
   }, [refresh]);
 
   const goalReached = count >= goal;
+
+  if (loading) {
+    return <Skeleton className="h-[180px] w-full rounded-xl" />;
+  }
 
   return (
     <Card className={className}>
@@ -95,7 +102,7 @@ export const WeeklyTargetCard = ({ className }: StreakCardProps) => {
       <CardFooter>
         <p className="text-sm text-muted-foreground">
           {goalReached
-            ? "Great job! You hit your target 🎉"
+            ? "Great job! You hit your weekly target 🎉"
             : `You're ${goal - count} away from your weekly target`}
         </p>
       </CardFooter>

@@ -1,6 +1,5 @@
 "use client";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
-import { useUserStore } from "@/lib/store/useUserStore";
 import { useState, useEffect } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import {
@@ -11,6 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { Badge } from "../ui/badge";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type StreakCardProps = {
   className: string;
@@ -20,6 +20,7 @@ export const StreakCard = ({ className }: StreakCardProps) => {
   const [streak, setStreak] = useState(0);
   const [appliedToday, setAppliedToday] = useState(false);
   const { refresh, setRefresh } = useRefreshStore();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const getStreak = async () => {
@@ -73,6 +74,7 @@ export const StreakCard = ({ className }: StreakCardProps) => {
       }
 
       setStreak(streakCount);
+      setLoading(false);
       setRefresh(false);
     };
 
@@ -93,23 +95,29 @@ export const StreakCard = ({ className }: StreakCardProps) => {
       ? "bg-amber-200/50 text-primary-950"
       : "bg-red-200/50 text-primary-950";
 
+  if (loading) {
+    return <Skeleton className="h-[180px] w-full rounded-xl" />;
+  }
+
   return (
     <Card className={className}>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">Application Streak</CardTitle>
+        <CardTitle className="text-sm font-medium">
+          Application Streak
+        </CardTitle>
         <Badge className={badgeClass}>{badgeLabel}</Badge>
       </CardHeader>
 
       <CardContent>
         <div className="text-3xl font-bold">
-          {appliedToday ? streak + 1 : streak}
+          {streak}
         </div>
       </CardContent>
 
       <CardFooter>
         <p className="text-sm text-muted-foreground">
           {appliedToday && streak > 0
-            ? `You're on a ${streak + 1}-day streak! 🎯`
+            ? `You're on a ${streak}-day streak! 🎯`
             : !appliedToday && streak > 0
             ? `Apply today to keep your ${streak}-day streak alive! 🔥`
             : "Start your streak today 💼"}
