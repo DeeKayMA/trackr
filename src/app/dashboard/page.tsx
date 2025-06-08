@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Header from "@/components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
@@ -8,25 +8,27 @@ import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { StreakCard } from "@/components/Analytics/StreakCard";
 import { DailyTargetCard } from "@/components/Analytics/DailyTargetCard";
 import { WeeklyTargetCard } from "@/components/Analytics/WeeklyTargetCard";
+import { AppsPerDayChart } from "@/components/Analytics/AppsPerDayChart";
 
 export default function Analytics() {
   const { refresh, setRefresh } = useRefreshStore();
 
   useEffect(() => {
-  // Run on initlal load
-  loadUserProfile();
-}, []);
+    // Run on initlal load
+    loadUserProfile();
+  }, []);
 
-useEffect(() => {
-  // Run whenever refresh becomes true
-  if (refresh) {
-    const fetchAndSet = async () => {
-      await loadUserProfile();
-      setRefresh(false);
-    };
-    fetchAndSet();
-  }
-}, [refresh]);
+  useEffect(() => {
+    // Run whenever refresh becomes true
+    if (refresh) {
+      const fetchAndSet = async () => {
+        await loadUserProfile();
+        setRefresh(false);
+      };
+      fetchAndSet();
+    }
+  }, [refresh]);
+
 
   return (
     <div className="flex flex-col w-full">
@@ -34,34 +36,36 @@ useEffect(() => {
       <div className=" flex flex-col gap-4 px-4 py-8 lg:px-6 max-w-7xl mx-auto w-full">
         {/* Stat Cards */}
         <section className="grid grid-cols-1 sm:grid-cols-1  md:grid-cols-1 lg:grid-cols-3 gap-4">
-          <StreakCard className=""/>
-          <DailyTargetCard className=""/>
-          <WeeklyTargetCard className=""/>
-          
+          <StreakCard className="" />
+          <DailyTargetCard className="" />
+          <WeeklyTargetCard className="" />
         </section>
 
         {/* Mini Charts */}
         <section className="grid grid-cols-1 sm:grid-cols- md:grid-cols-2 gap-4">
-          <TempCard cardName="Apps Per Day" className=""/>
-          <TempCard cardName="Status Breakdown" className=""/>
+          <AppsPerDayChart className=""/>
+          <TempCard cardName="Status Breakdown" className="" />
         </section>
 
         {/* Gamified XP & Badges Charts */}
         <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <TempCard cardName="XP progress" className=""/>
-          <TempCard cardName="Badges" className=""/>
+          <TempCard cardName="XP progress" className="" />
+          <TempCard cardName="Badges" className="" />
         </section>
 
         {/* Call to Action */}
         <section className="">
-          <TempCard cardName="CTA - You're X away from keeping your streak alive" className=""/>
+          <TempCard
+            cardName="CTA - You're X away from keeping your streak alive"
+            className=""
+          />
         </section>
 
         {/* Quick Navigation  */}
         <section className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          <TempCard cardName="Jobs" className=""/>
-          <TempCard cardName="Analytics" className=""/>
-          <TempCard cardName="Resources" className=""/>
+          <TempCard cardName="Jobs" className="" />
+          <TempCard cardName="Analytics" className="" />
+          <TempCard cardName="Resources" className="" />
         </section>
       </div>
     </div>

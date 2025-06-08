@@ -3,40 +3,49 @@
 import Header from "@/components/Header/Header";
 import { Job, columns } from "./columns";
 import { DataTable } from "./data-table";
-import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { useJobStore } from "@/lib/store/useJobStore";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function Jobs() {
   const [error, setError] = useState<string | null>(null);
   const [jobs, setJobs] = useState<Job[] | null>(null);
   const { refresh, setRefresh } = useRefreshStore();
-
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchJobs = async () => {
       const { data, error } = await supabaseBrowser
         .from("Job Applications")
-        .select();
-      setRefresh(false);
-
+        .select();  
+       
       if (error) {
         setError("Could not fetch jobs");
         setJobs(null);
         console.log(error);
-      }
-
-      if (data) {
+      } else if (data) {
         setJobs(data as Job[]);
         setError(null);
       }
+
+       setLoading(false);
+       setRefresh(false);
     };
 
     fetchJobs();
   }, [refresh]);
 
-
+  if (loading) {
+    return (
+      <div className="flex flex-col flex-1">
+        <Header title="Jobs" />
+        <div className=" w-full mx-4 h-full flex flex-col items-center jusstify-center gap-4 mt-10">
+          <Skeleton className="h-full w-full rounded-xl p-4 my-8" />
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col flex-1">
