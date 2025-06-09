@@ -103,14 +103,14 @@ export const StreakCard = ({ className }: StreakCardProps) => {
     <Card className={className}>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">
-          Application Streak
+          Streak
         </CardTitle>
         <Badge className={badgeClass}>{badgeLabel}</Badge>
       </CardHeader>
 
       <CardContent>
         <div className="text-3xl font-bold">
-          {streak}
+          {streak} <span className="text-muted-foreground text-lg">days</span>
         </div>
       </CardContent>
 

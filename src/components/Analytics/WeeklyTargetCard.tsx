@@ -90,7 +90,7 @@ export const WeeklyTargetCard = ({ className }: StreakCardProps) => {
               : "bg-amber-200/50 text-priamry-950 "
           }
         >
-          {goalReached ? " 🏆 Goal Achieved" : "🔥 Keep Going"}
+          {goalReached ? " 🏆 Goal Achieved" : count===0? "📋 Get Applying" : "🔥 Keep Going"}
         </Badge>
       </CardHeader>
       <CardContent>

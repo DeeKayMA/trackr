@@ -96,7 +96,7 @@ export default function AppSidebar() {
   
 
   fetchUser();
-}, [refresh, setRefresh]);
+}, [refresh]);
 
 
 console.log(userInfo)
