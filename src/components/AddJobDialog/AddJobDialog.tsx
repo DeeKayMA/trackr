@@ -51,7 +51,7 @@ export const AddJobDialog = ({}: AddJobDialogProps) => {
 
   if (isDesktop) {
     return (
-      <div className="px-4 lg:px-6">
+      <div className="mr-4">
         <Dialog>
           <DialogTrigger asChild>
             <Button>Add Job</Button>
@@ -102,7 +102,7 @@ export const AddJobDialog = ({}: AddJobDialogProps) => {
   } else {
     return (
       <Drawer>
-        <DrawerTrigger asChild>
+        <DrawerTrigger className="mr-4" asChild >
           <Button>Add Job</Button>
         </DrawerTrigger>
         <DrawerContent className="max-h-[90vh] px-4 py-6">

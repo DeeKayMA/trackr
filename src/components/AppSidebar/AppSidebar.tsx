@@ -44,11 +44,11 @@ const items = [
     url: "/dashboard/analytics",
     icon: ChartColumnIncreasing,
   },
-  {
-    title: "Resources",
-    url: "/dashboard/resources",
-    icon: Book,
-  },
+  // {
+  //   title: "Resources",
+  //   url: "/dashboard/resources",
+  //   icon: Book,
+  // },
 ];
 
 export default function AppSidebar() {

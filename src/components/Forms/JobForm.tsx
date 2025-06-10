@@ -44,7 +44,7 @@ const formSchema = z.object({
   position: z
     .string({ required_error: "Please input a job position" })
     .min(1, "Please input a job position")
-    .max(50),
+    .max(100),
   company: z
     .string({ required_error: "Please input a company name" })
     .min(1, "Please input a company name")
