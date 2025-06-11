@@ -131,7 +131,7 @@ export const JobTypeBreakdownChart = ({ className }: JobTypeBreakdownChartProps)
   },[refresh])
 
   if (loading) {
-    return <Skeleton className="h-[405px] w-full rounded-xl" />;
+    return <Skeleton className="h-[420px] w-full rounded-xl" />;
   }
 
     return(

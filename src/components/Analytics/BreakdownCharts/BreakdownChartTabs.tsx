@@ -8,7 +8,7 @@ import { WorkModelBreakdownChart } from "@/components/Analytics/BreakdownCharts/
 
 export const BreakdownChartsTabs = () => {
   return (
-    <Tabs defaultValue="Status" className="w-full">
+    <Tabs defaultValue="Status" className="w-full h-full">
       <TabsList>
         <TabsTrigger value="Status">Status</TabsTrigger>
         <TabsTrigger value="WorkModel">Work Model</TabsTrigger>
@@ -16,13 +16,13 @@ export const BreakdownChartsTabs = () => {
         
       </TabsList>
       <TabsContent value="Status">
-        <StatusBreakdownChart className=""/>
+        <StatusBreakdownChart className="h-full"/>
       </TabsContent>
       <TabsContent value="WorkModel">
-        <WorkModelBreakdownChart className=""/>
+        <WorkModelBreakdownChart className="h-full"/>
       </TabsContent>
       <TabsContent value="JobType">
-        <JobTypeBreakdownChart className=""/>
+        <JobTypeBreakdownChart className="h-full"/>
       </TabsContent>
       
       
