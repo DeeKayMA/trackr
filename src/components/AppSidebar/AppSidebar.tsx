@@ -26,7 +26,7 @@ import {
 import { useEffect, useState } from "react";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
 import NavUser from "../NavUser/NavUser";
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { useRefreshUserDetailsStore } from "@/lib/store/useRefreshUserDetailsStore";
 
 // Menu items.
 const items = [
@@ -60,7 +60,7 @@ export default function AppSidebar() {
     email: "",
     avatar: "",
   });
-  const { refresh, setRefresh } = useRefreshStore();
+  const { refresh, setRefresh } = useRefreshUserDetailsStore();
 
   useEffect(() => {
   const fetchUser = async () => {
@@ -139,7 +139,7 @@ console.log(userInfo)
                 return (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild 
-                  className={isActive ? "bg-cyan-700 hover:bg-cyan-800 text-primary-foreground hover:text-primary-foreground" : ""}
+                  className={isActive ? "bg-primary hover:bg-primary text-primary-foreground hover:text-primary-foreground" : ""}
                   >
                     <Link href={item.url}>
                       <item.icon />

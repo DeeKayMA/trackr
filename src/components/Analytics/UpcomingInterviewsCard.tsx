@@ -26,7 +26,7 @@ export const UpcomingInterviewsCard = ({ className }: StreakCardProps) => {
 
       const { count, error: countError } = await supabaseBrowser
         .from("Job Applications")
-        .select("*", { count: "exact" })
+        .select("", { count: "exact" })
         .eq("status", "Interview");
 
       if (countError) {

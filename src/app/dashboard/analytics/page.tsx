@@ -8,6 +8,7 @@ import { UpcomingInterviewsCard } from "@/components/Analytics/UpcomingInterview
 import { CurrentOffersCard } from "@/components/Analytics/CurrentOffersCard";
 import { AppsPerDayTabs } from "@/components/Analytics/AppsPerDay/AppsPerDayTabs";
 import { BreakdownChartsTabs } from "@/components/Analytics/BreakdownCharts/BreakdownChartTabs";
+import { MostActivityTabs } from "@/components/Analytics/MostActivity/MostActivityTabs";
 
 
 export default function Analytics() {
@@ -36,21 +37,15 @@ export default function Analytics() {
         </section> */}
 
 
-        {/*  Streaks  */}
-        <section className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {/*  Streaks & Activity */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <LongestStreakCard className=""/>
           <StreakCard className="" />
+          <MostActivityTabs/>
         </section>
 
         
-        {/* Historical Stats / Filters */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          {/* <TempCard className="" cardName="Longest Streak" /> */}
-          <TempCard className="" cardName="Most active day, week, month" />
-          <TempCard className="" cardName="Most active day, week, month" />
-          <TempCard className="" cardName="Most active day, week, month" />
-          {/* <TempCard className="" cardName="Avg apps per week" /> */}
-        </section>
+
 
         {/* Insight Highlights */}
         {/* <section className="grid grid-cols-1 gap-4">

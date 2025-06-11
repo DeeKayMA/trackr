@@ -26,8 +26,8 @@ export const TotalAppsStatCard = ({ className }: StreakCardProps) => {
 
       const { count, error: countError } = await supabaseBrowser
         .from("Job Applications")
-        .select("*", { count: "exact" })
-        .eq("status", "Applied");
+        .select("", { count: "exact" })
+        .neq("status", "Saved");
 
       if (countError) {
         console.error("Error fetching today's applications:", countError);

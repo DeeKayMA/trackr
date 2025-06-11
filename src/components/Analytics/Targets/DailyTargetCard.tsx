@@ -48,7 +48,7 @@ export const DailyTargetCard = ({ className }: StreakCardProps) => {
 
       const { count, error: countError } = await supabaseBrowser
         .from("Job Applications")
-        .select("*", { count: "exact", head: true })
+        .select("", { count: "exact", head: true })
         .eq("user_id", user.id)
         .gte("date_applied", startOfDay)
         .lte("date_applied", endOfDay);
@@ -94,7 +94,7 @@ export const DailyTargetCard = ({ className }: StreakCardProps) => {
         <p className="text-sm text-muted-foreground">
           {goalReached
             ? "Great job! You hit your daily target 🎉"
-            : `You're ${goal - count} away from your daily target`}
+            : `You're ${goal - count} away from hitting your daily target`}
         </p>
       </CardFooter>
     </Card>

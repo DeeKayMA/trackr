@@ -23,7 +23,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { useEffect, useState } from "react";
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { useRefreshUserDetailsStore } from "@/lib/store/useRefreshUserDetailsStore";
 import { useUserStore } from "@/lib/store/useUserStore";
 
 
@@ -41,7 +41,7 @@ export function ProfileForm() {
   const [userId, setUserId] = useState<string | null | undefined>(null);
   const [email, setEmail] = useState<string | null | undefined>(null);
   const [loading, setLoading] = useState(true);
-  const { refresh, setRefresh } = useRefreshStore();
+  const { refresh, setRefresh } = useRefreshUserDetailsStore();
   const { setCurrency, setDailyGoal, setWeeklyGoal } = useUserStore();
   
   // const setCurrency = useUserStore((state) => state.setCurrency);
@@ -83,8 +83,8 @@ export function ProfileForm() {
       }
 
       if (data) {
-        form.reset(data); // ✅ Prefill the form
-        setCurrency(data.currency.trim().split(" ")[0]); // optional: format symbol
+        form.reset(data);
+        setCurrency(data.currency.trim().split(" ")[0]);
         setDailyGoal(data.daily_goal || "");
         setWeeklyGoal(data.weekly_goal || "");
       }
