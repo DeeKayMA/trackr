@@ -124,7 +124,7 @@ export const WorkModelBreakdownChart = ({ className }: WorkModelBreakdownChartPr
         <Card className={`flex flex-col ${className}`}>
       <CardHeader className="items-center pb-0">
         <CardTitle>Work Model</CardTitle>
-        <CardDescription>All time work model breakdown</CardDescription>
+        <CardDescription>Breakdown of applications by work model</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 align-center">
         <ChartContainer

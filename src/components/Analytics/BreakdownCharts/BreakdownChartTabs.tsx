@@ -11,18 +11,20 @@ export const BreakdownChartsTabs = () => {
     <Tabs defaultValue="Status" className="w-full">
       <TabsList>
         <TabsTrigger value="Status">Status</TabsTrigger>
-        <TabsTrigger value="JobType">Job Type</TabsTrigger>
         <TabsTrigger value="WorkModel">Work Model</TabsTrigger>
+        <TabsTrigger value="JobType">Job Type</TabsTrigger>
+        
       </TabsList>
       <TabsContent value="Status">
         <StatusBreakdownChart className=""/>
       </TabsContent>
-      <TabsContent value="JobType">
-        <JobTypeBreakdownChart className=""/>
-      </TabsContent>
       <TabsContent value="WorkModel">
         <WorkModelBreakdownChart className=""/>
       </TabsContent>
+      <TabsContent value="JobType">
+        <JobTypeBreakdownChart className=""/>
+      </TabsContent>
+      
       
     </Tabs>
   );

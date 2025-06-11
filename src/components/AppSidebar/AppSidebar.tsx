@@ -7,6 +7,7 @@ import {
   ChartColumnIncreasing,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 import {
   Sidebar,
@@ -52,6 +53,8 @@ const items = [
 ];
 
 export default function AppSidebar() {
+  const pathname = usePathname();
+  
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -130,16 +133,21 @@ console.log(userInfo)
           {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {items.map((item) => {
+                const isActive = pathname === item.url;
+
+                return (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild 
+                  className={isActive ? "bg-cyan-700 hover:bg-cyan-800 text-primary-foreground hover:text-primary-foreground" : ""}
+                  >
                     <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
-              ))}
+              )})}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

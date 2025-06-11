@@ -55,6 +55,10 @@ const chartConfig = {
     label: "Other",
     color: "var(--color-gray-300)",
   },
+  "": {
+    label: "N/A",
+    color: "var(--color-purple-500)",
+  },
 } satisfies ChartConfig
 
 
@@ -134,7 +138,7 @@ export const JobTypeBreakdownChart = ({ className }: JobTypeBreakdownChartProps)
         <Card className={`flex flex-col ${className}`}>
       <CardHeader className="items-center pb-0">
         <CardTitle>Job Type</CardTitle>
-        <CardDescription>All time job type breakdown</CardDescription>
+        <CardDescription>Breakdown of applicationa by Job Type</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 align-center">
         <ChartContainer
@@ -154,7 +158,7 @@ export const JobTypeBreakdownChart = ({ className }: JobTypeBreakdownChartProps)
                 animationBegin={300} 
                 cx="50%"
                 cy="50%"
-                outerRadius={120}
+                outerRadius={100}
               />
             <ChartLegend
               content={<ChartLegendContent nameKey="job_type" />}

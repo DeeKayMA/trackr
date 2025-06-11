@@ -10,7 +10,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "../ui/badge";
+import { Badge } from "../../ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
 type StreakCardProps = {

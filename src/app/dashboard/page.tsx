@@ -5,9 +5,9 @@ import { TempCard } from "@/components/temp/TempCard";
 import { useEffect } from "react";
 import { loadUserProfile } from "@/lib/helpers/loadUserProfile";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { StreakCard } from "@/components/Analytics/StreakCard";
-import { DailyTargetCard } from "@/components/Analytics/DailyTargetCard";
-import { WeeklyTargetCard } from "@/components/Analytics/WeeklyTargetCard";
+import { StreakCard } from "@/components/Analytics/Streaks/StreakCard";
+import { DailyTargetCard } from "@/components/Analytics/Targets/DailyTargetCard";
+import { WeeklyTargetCard } from "@/components/Analytics/Targets/WeeklyTargetCard";
 import { AppsPerDayChart7 } from "@/components/Analytics/AppsPerDay/AppsPerDayChart(7)";
 import { StatusBreakdownChart } from "@/components/Analytics/BreakdownCharts/StatusBreakdownChart";
 import { Button } from "@/components/ui/button";
@@ -17,21 +17,16 @@ import { BriefcaseBusiness, ChartColumnIncreasing, CircleUser } from "lucide-rea
 export default function Dashboard() {
   const { refresh, setRefresh } = useRefreshStore();
 
-  useEffect(() => {
-    // Run on initlal load
-    loadUserProfile();
-  }, []);
-
-  useEffect(() => {
-    // Run whenever refresh becomes true
+useEffect(() => {
+  const fetchAndSet = async () => {
+    await loadUserProfile();
     if (refresh) {
-      const fetchAndSet = async () => {
-        await loadUserProfile();
-        setRefresh(false);
-      };
-      fetchAndSet();
+      setRefresh(false);
     }
-  }, [refresh]);
+  };
+  
+  fetchAndSet();
+}, [refresh]);
 
 
   return (

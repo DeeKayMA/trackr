@@ -9,15 +9,16 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Badge } from "../ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
 
-type StreakCardProps = {
+type LongestStreakCardProps = {
   className: string;
 };
 
-export const StreakCard = ({ className }: StreakCardProps) => {
-  const [streak, setStreak] = useState(0);
+export const LongestStreakCard = ({ className }: LongestStreakCardProps) => {
+  const [longestStreak, setLongestStreak] = useState(0);
+  const [currentStreak, setCurrentStreak] = useState(0);
   const [appliedToday, setAppliedToday] = useState(false);
   const { refresh, setRefresh } = useRefreshStore();
   const [loading, setLoading] = useState(true);
@@ -51,7 +52,7 @@ export const StreakCard = ({ className }: StreakCardProps) => {
             (entry) => new Date(entry.date_applied).toISOString().split("T")[0]
           )
         )
-      );
+      ).sort();
 
       const today = new Date();
       const todayStr = today.toISOString().split("T")[0];
@@ -62,18 +63,47 @@ export const StreakCard = ({ className }: StreakCardProps) => {
       let current = new Date();
       if (!appliedToday) current.setDate(current.getDate() - 1); // start from yesterday
 
-      let streakCount = 0;
+      let currentStreakCount = 0;
       for (let i = 0; i < 365; i++) {
         const dateStr = current.toISOString().split("T")[0];
         if (uniqueDays.includes(dateStr)) {
-          streakCount++;
+          currentStreakCount++;
           current.setDate(current.getDate() - 1);
         } else {
           break;
         }
       }
 
-      setStreak(streakCount);
+      setCurrentStreak(currentStreakCount);
+
+      let maxStreak = 0;
+      let tempStreak = 0;
+      let previousDate: Date | null = null;
+
+
+      for (const dateStr of uniqueDays){
+        const currentDate = new Date(dateStr);
+
+        if (previousDate === null){
+            tempStreak = 1;
+        } else {
+            const daysDiff = (currentDate.getTime() - previousDate.getTime()) / (1000 * 60 * 60 * 24);
+
+            if(daysDiff === 1) {
+                //Consecutive day so increment temp streak 
+                tempStreak++
+            } else {
+                // Gap in days so check higest between max streak and temp streak 
+                maxStreak = Math.max(maxStreak, tempStreak);
+                tempStreak = 1;
+            }
+        }
+        previousDate = currentDate;
+      }
+
+      maxStreak = Math.max(maxStreak, tempStreak);
+
+      setLongestStreak(maxStreak);
       setLoading(false);
       setRefresh(false);
     };
@@ -81,19 +111,19 @@ export const StreakCard = ({ className }: StreakCardProps) => {
     getStreak();
   }, [refresh]);
 
-  const badgeLabel =
-    appliedToday && streak > 0
-      ? "🔥 Streak Active"
-      : !appliedToday && streak > 0
-      ? "⚠️ Don't lose it!"
-      : "🛌 Get Started";
+    const isPersonalBest = currentStreak > 0 && currentStreak === longestStreak;
 
-  const badgeClass =
-    appliedToday && streak > 0
-      ? "bg-lime-200 text-primary-950"
-      : !appliedToday && streak > 0
-      ? "bg-amber-200/50 text-primary-950"
-      : "bg-red-200/50 text-primary-950";
+    const badgeLabel = isPersonalBest
+    ? "🏆 Personal Best"
+    : longestStreak > 0
+    ? "🔥 Keep Going"
+    : "🎯 Start Tracking";
+
+  const badgeClass = isPersonalBest
+    ? "bg-lime-200 text-primary-950"
+    : longestStreak > 0
+    ? "bg-amber-200 text-primary-950"
+    : "bg-gray-200 text-primary-950";
 
   if (loading) {
     return <Skeleton className="h-[180px] w-full rounded-xl" />;
@@ -103,24 +133,30 @@ export const StreakCard = ({ className }: StreakCardProps) => {
     <Card className={className}>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">
-          Streak
+          Longest Streak
         </CardTitle>
         <Badge className={badgeClass}>{badgeLabel}</Badge>
       </CardHeader>
 
-      <CardContent>
+      {/* <CardContent>
         <div className="text-3xl font-bold">
-          {streak} <span className="text-muted-foreground text-lg">days</span>
+          {longestStreak} <span className="text-muted-foreground text-lg">days</span>
+        </div>
+      </CardContent> */}
+
+       <CardContent>
+        <div className="text-3xl font-bold">
+          {longestStreak} <span className="text-muted-foreground text-lg">{longestStreak === 1 ? 'day': 'days'}</span>
         </div>
       </CardContent>
 
       <CardFooter>
         <p className="text-sm text-muted-foreground">
-          {appliedToday && streak > 0
-            ? `You're on a ${streak}-day streak! 🎯`
-            : !appliedToday && streak > 0
-            ? `Apply today to keep your ${streak}-day streak alive! 🔥`
-            : "Start your streak today 💼"}
+          {isPersonalBest
+            ? `You're at your personal best! Keep it up! 🔥`
+            : longestStreak > 0
+            ? `Your record is ${longestStreak} ${longestStreak === 1 ? 'day': 'days'}. Current streak: ${currentStreak} ${currentStreak === 1 ? 'day': 'days'}`
+            : "Start applying daily to build your streak! 💼"}
         </p>
       </CardFooter>
     </Card>

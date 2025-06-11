@@ -131,8 +131,8 @@ export const StatusBreakdownChart = ({ className }: StatusBreakdownChartProps) =
     return(
         <Card className={`flex flex-col ${className}`}>
       <CardHeader className="items-center pb-0">
-        <CardTitle>Status</CardTitle>
-        <CardDescription>All time status breakdown</CardDescription>
+        <CardTitle>Application Status</CardTitle>
+        <CardDescription>Breakdown of applications by status</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 align-center">
         <ChartContainer
