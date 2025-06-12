@@ -2,6 +2,7 @@
 
 import AppSidebar from "../../components/AppSidebar/AppSidebar";
 import { SidebarProvider} from "@/components/ui/sidebar"
+import Header from "@/components/Header/Header";
 
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -9,6 +10,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <SidebarProvider>
         <AppSidebar />
         <main className="w-full flex-1 flex flex-col relative overflow-hidden">
+          <Header/>
           {children}
         </main>
       </SidebarProvider>

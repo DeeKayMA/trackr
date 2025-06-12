@@ -1,6 +1,5 @@
 "use client";
 
-import Header from "@/components/Header/Header";
 import { TempCard } from "@/components/temp/TempCard";
 import { useEffect } from "react";
 import { loadUserProfile } from "@/lib/helpers/loadUserProfile";
@@ -31,7 +30,6 @@ useEffect(() => {
 
   return (
     <div className="flex flex-col w-full">
-      <Header title="Home" />
       <div className=" flex flex-col gap-4 px-4 py-8 lg:px-6 max-w-7xl mx-auto w-full">
         {/* Stat Cards */}
         <section className="grid grid-cols-1 sm:grid-cols-1  md:grid-cols-1 lg:grid-cols-3 gap-4">

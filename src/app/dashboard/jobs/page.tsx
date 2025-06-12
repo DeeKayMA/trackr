@@ -1,6 +1,5 @@
 "use client";
 
-import Header from "@/components/Header/Header";
 import { Job, columns } from "./columns";
 import { DataTable } from "./data-table";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
@@ -39,7 +38,6 @@ export default function Jobs() {
   if (loading) {
     return (
       <div className="flex flex-col flex-1">
-        <Header title="Jobs" />
         <div className=" w-full mx-4 h-full flex flex-col items-center jusstify-center gap-4 mt-10">
           <Skeleton className="h-full w-full rounded-xl p-4 my-8" />
         </div>
@@ -49,7 +47,6 @@ export default function Jobs() {
 
   return (
     <div className="flex flex-col flex-1">
-      <Header title="Jobs" />
       {error && (
         <div className=" w-full flex flex-col items-center jusstify-center gap-4 mt-10">
           <h1 className="font-bold text-2xl">Opps we had an error:</h1>

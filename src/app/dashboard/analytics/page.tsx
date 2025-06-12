@@ -1,6 +1,4 @@
 // Analytics page on the dashboard
-import Header from "@/components/Header/Header";
-import { TempCard } from "@/components/temp/TempCard";
 import { StreakCard } from "@/components/Analytics/Streaks/StreakCard";
 import { LongestStreakCard } from "@/components/Analytics/Streaks/LongestStreakCard";
 import { TotalAppsStatCard } from "@/components/Analytics/TotalAppsStatCard";
@@ -14,7 +12,6 @@ import { MostActivityTabs } from "@/components/Analytics/MostActivity/MostActivi
 export default function Analytics() {
   return (
     <div className="flex flex-col w-full">
-      <Header title="Analytics" />
       <div className="flex flex-col gap-4 px-4 py-8 lg:px-6 max-w-7xl mx-auto w-full">
         {/* Summary Stats */}
         <section className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-3 gap-4">

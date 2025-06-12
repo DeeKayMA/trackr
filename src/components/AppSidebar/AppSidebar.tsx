@@ -119,7 +119,7 @@ console.log(userInfo)
                 {/* <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
                   <Crosshair className="size-4" />
                 </div> */}
-                <span className="text-base font-semibold">Trackr </span>
+                <span className="text-base font-semibold">Jobora </span>
 
               </Link>
             </SidebarMenuButton>

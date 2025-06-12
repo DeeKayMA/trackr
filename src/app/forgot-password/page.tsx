@@ -41,7 +41,7 @@ export default function ForgotPasswordPage() {
           <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
             <Crosshair className="size-4" />
           </div>
-          Trackr
+          Jobora
         </a>
 
         <div className={cn("flex flex-col gap-6")}>
