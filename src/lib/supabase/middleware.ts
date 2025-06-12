@@ -37,25 +37,30 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser()
 
-  // Redirect logged-in users away from public-only pages
+  // Case 1: User is logged in but trying to visit a public-only page
+  // - Prevent access to login, auth, and landing pages when already authenticated
   if (
     user &&
-    //Public pages
-    ['/login', '/check-email', '/auth', '/'].some((path) =>
+    // These are public-only routes (should NOT be accessible to logged-in users)
+    ['/login', '/check-email', '/auth', '/', '/forgot-password', '/reset-password'].some((path) =>
       request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(`${path}/`)
     )) {
+      // Redirect authenticated user to their dashboard
       const url = request.nextUrl.clone()
       url.pathname = '/dashboard'
       return NextResponse.redirect(url)
     }
 
-  // Redirect guests away from protected pages
+
+  // Case 2: User is not logged in but trying to access a protected page
+  // - Only allow unauthenticated users on public pages like login or home
   if (
     !user &&
-    //Public pages
-    !['/login', '/check-email', '/auth', '/' , '/dashboard'].some((path) =>
+    // These are safe for unauthenticated users
+    !['/login', '/check-email', '/auth', '/' , '/dashboard', '/forgot-password' , '/reset-password' ].some((path) =>
       request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(`${path}/`)
   )) {
+    // Redirect guest to login
     const url = request.nextUrl.clone()
     url.pathname = '/login'
     return NextResponse.redirect(url)

@@ -31,6 +31,7 @@ import { useUserStore } from "@/lib/store/useUserStore";
 
 const formSchema = z.object({
   profile_img: z.string().optional(),
+  profile_img_file: z.any().optional(),
   username: z.string().min(0).max(50).optional(),
   daily_goal: z.string().min(0).max(3).optional(),
   weekly_goal: z.string().min(0).max(3).optional(),
@@ -159,7 +160,7 @@ export function ProfileForm() {
                 <FormControl>
                   <Input placeholder="e.g. Job hunter 345" {...field} />
                 </FormControl>
-                <FormDescription>This is your display name.</FormDescription>
+                <FormDescription>What should we call you?</FormDescription>
                 <FormMessage />
               </FormItem>
             )}
@@ -183,6 +184,25 @@ export function ProfileForm() {
               </FormItem>
             )}
           />
+           {/* <FormField
+            control={form.control}
+            name="profile_img_file"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Profile Image</FormLabel>
+                <FormControl>
+                  <Input
+                  type="file"
+                    {...field}
+                  />
+                </FormControl>
+                <FormDescription>
+                  Your profile image must be below 10MB
+                </FormDescription>
+                <FormMessage />
+              </FormItem>
+            )}
+          /> */}
           <FormField
             control={form.control}
             name="daily_goal"
@@ -193,7 +213,7 @@ export function ProfileForm() {
                   <Input type="number" {...field} />
                 </FormControl>
                 <FormDescription>
-                  How many job application do you want to submit per day
+                  How many job application do you want to submit per day?
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -209,7 +229,7 @@ export function ProfileForm() {
                   <Input type="number" {...field} />
                 </FormControl>
                 <FormDescription>
-                  How many job application do you want to submit per week
+                  How many job application do you want to submit per week?
                 </FormDescription>
                 <FormMessage />
               </FormItem>
@@ -245,7 +265,7 @@ export function ProfileForm() {
                   </SelectContent>
                 </Select>
                 <FormDescription>
-                  The currency you want to use on the platform
+                  What currency do you want to use?
                 </FormDescription>
                 <FormMessage />
               </FormItem>
