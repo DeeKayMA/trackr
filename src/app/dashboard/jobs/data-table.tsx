@@ -189,11 +189,11 @@ export function DataTable<TData, TValue>({
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="lg:ml-auto md:ml-auto">
-              <Settings2 /> View
+              <Settings2 /> Customise Columns
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Toggle Columns</DropdownMenuLabel>
+            <DropdownMenuLabel>Visible Columns</DropdownMenuLabel>
             <DropdownMenuSeparator />
             {table
               .getAllColumns()
@@ -202,7 +202,8 @@ export function DataTable<TData, TValue>({
                 if (
                   column.id !== "actions" &&
                   column.id !== "id" &&
-                  column.id !== "salary_max"
+                  column.id !== "salary_max" &&
+                  column.id !== "frequency"
                 ) {
                   return (
                     <DropdownMenuCheckboxItem

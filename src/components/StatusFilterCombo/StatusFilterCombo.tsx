@@ -139,10 +139,10 @@ export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="border-dashed justify-start">
+        <Button variant="outline" className="border-dashed justify-start ">
           <CirclePlus />
           {selectedStatus ? (
-            <div>
+            <div className="flex flex-row">
               Status
               {/* Divider  */}
               <div
@@ -181,7 +181,7 @@ function StatusList({
 }) {
   return (
     <Command>
-      <CommandInput placeholder="Filter status..." />
+      <CommandInput placeholder="Filter by status..." />
       <CommandList>
         <CommandEmpty>No results found.</CommandEmpty>
         <CommandGroup className="">
