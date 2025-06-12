@@ -116,7 +116,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
 
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit ?? (()=> {}))} className="space-y-8">
+      <form onSubmit={form.handleSubmit(onSubmit ?? (()=> {}))} className="space-y-8 overflow-hidden">
         {/* POSITION */}
         <FormField
           control={form.control}
