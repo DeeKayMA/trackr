@@ -8,6 +8,7 @@ import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { AddJobDialog } from "@/components/AddJobDialog/AddJobDialog"
 import { usePathname } from "next/navigation";
+import { ModeToggle } from "@/components/Theme/ModeToggle";
 
 export default function Header() {
   const pathname = usePathname();
@@ -30,6 +31,7 @@ export default function Header() {
         />
         <h1 className="text-base font-medium">{title}</h1>
       </div>
+      <ModeToggle/>
         <AddJobDialog />
       
     </header>
