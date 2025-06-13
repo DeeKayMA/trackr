@@ -5,6 +5,7 @@ import {
   LayoutDashboardIcon,
   BriefcaseBusiness,
   ChartColumnIncreasing,
+  Home
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -29,11 +30,11 @@ import NavUser from "../NavUser/NavUser";
 import { useRefreshUserDetailsStore } from "@/lib/store/useRefreshUserDetailsStore";
 
 // Menu items.
-const items = [
+const menuItems = [
   {
     title: "Home",
     url: "/dashboard",
-    icon: LayoutDashboardIcon,
+    icon: Home,
   },
   {
     title: "Jobs",
@@ -51,6 +52,20 @@ const items = [
   //   icon: Book,
   // },
 ];
+
+// Menu items.
+// const proMenuItems = [
+//   {
+//     title: "AI Recruiter",
+//     url: "/dashboard/AI",
+//     icon: Home,
+//   },
+//   {
+//     title: "Job Board",
+//     url: "/dashboard/listings",
+//     icon: BriefcaseBusiness,
+//   },
+// ];
 
 export default function AppSidebar() {
   const pathname = usePathname();
@@ -115,10 +130,6 @@ console.log(userInfo)
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
               <Link href="/dashboard">
-
-                {/* <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-                  <Crosshair className="size-4" />
-                </div> */}
                 <span className="text-base font-semibold">Jobora </span>
 
               </Link>
@@ -130,10 +141,10 @@ console.log(userInfo)
       {/* Sidebar Content */}
       <SidebarContent>
         <SidebarGroup>
-          {/* <SidebarGroupLabel>Application</SidebarGroupLabel> */}
+          <SidebarGroupLabel>Dashboard</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => {
+              {menuItems.map((item) => {
                 const isActive = pathname === item.url;
 
                 return (
@@ -151,6 +162,30 @@ console.log(userInfo)
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        {/* Pro features - future development */}
+        {/* Check if user is a pro user, then show content. Block user from seeing pro pages if not pro user  */}
+        {/* <SidebarGroup>
+          <SidebarGroupLabel>Pro</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {proMenuItems.map((item) => {
+                const isActive = pathname === item.url;
+
+                return (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild 
+                  className={isActive ? "bg-primary hover:bg-primary text-primary-foreground hover:text-primary-foreground" : ""}
+                  >
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              )})}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup> */}
       </SidebarContent>
 
       {/* Sidebar Footer */}
