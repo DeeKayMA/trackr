@@ -25,9 +25,11 @@ export default function Header() {
   }, []);
 
   const titleMap: Record<string, string> = {
-    "/dashboard": "Dashboard",
+    "/dashboard": "Home",
     "/dashboard/jobs": "Jobs",
+     "/dashboard/analytics": "Analytics",
     "/dashboard/account": "Account",
+    "/dashboard/resources": "Resources",
   };
 
   const title = titleMap[pathname] ?? "Jobora";
