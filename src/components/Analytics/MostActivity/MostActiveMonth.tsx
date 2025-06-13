@@ -98,7 +98,7 @@ export const MostActiveMonth = ({ className }: StreakCardProps) => {
 
       <CardContent>
         <div className="text-3xl font-bold">
-          {mostActive.formatted || "No data"}
+          {mostActive.formatted || <span className="text-sm font-medium text-muted-foreground mt-4">Could be this month?</span>}
         </div>
       </CardContent>
     </Card>

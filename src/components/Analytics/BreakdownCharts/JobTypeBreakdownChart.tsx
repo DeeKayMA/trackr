@@ -141,7 +141,12 @@ export const JobTypeBreakdownChart = ({ className }: JobTypeBreakdownChartProps)
         <CardDescription>Breakdown of applicationa by Job Type</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 align-center">
-        <ChartContainer
+        {chartData.length === 0 ? (
+          <div className="flex flex-col h-full items-center justify-center w-full">
+            <p className="text-primary text-lg font-semibold">I'm glad you're persistent</p>
+            <p className="text-muted-foreground">You'll need that for the job hunt anyway.</p>
+          </div>
+        ) : (<ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[320px]"
         >
@@ -165,7 +170,8 @@ export const JobTypeBreakdownChart = ({ className }: JobTypeBreakdownChartProps)
               className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center mt-4"
             />
           </PieChart>
-        </ChartContainer>
+        </ChartContainer>)}
+        
       </CardContent>
     </Card>
     )

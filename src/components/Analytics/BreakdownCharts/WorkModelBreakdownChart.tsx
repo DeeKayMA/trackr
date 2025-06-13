@@ -127,7 +127,13 @@ export const WorkModelBreakdownChart = ({ className }: WorkModelBreakdownChartPr
         <CardDescription>Breakdown of applications by work model</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 align-center">
-        <ChartContainer
+        {chartData.length === 0 ? (
+          <div className="flex flex-col h-full items-center justify-center w-full">
+            <p className="text-primary text-lg font-semibold">Still nothing to show</p>
+            <p className="text-muted-foreground">You sure you’re not just here for the vibes?</p>
+          </div>
+        ) : (
+          <ChartContainer
           config={chartConfig}
           className="mx-auto aspect-square max-h-[320px]"
         >
@@ -152,6 +158,8 @@ export const WorkModelBreakdownChart = ({ className }: WorkModelBreakdownChartPr
             />
           </PieChart>
         </ChartContainer>
+        )}
+        
       </CardContent>
     </Card>
     )

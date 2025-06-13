@@ -1,6 +1,5 @@
-
-"use client"
-import { Pie, PieChart } from "recharts"
+"use client";
+import { Pie, PieChart } from "recharts";
 import {
   Card,
   CardContent,
@@ -8,7 +7,7 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
+} from "@/components/ui/card";
 import {
   ChartConfig,
   ChartContainer,
@@ -16,20 +15,20 @@ import {
   ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
-} from "@/components/ui/chart"
-import { useState, useEffect } from "react"
+} from "@/components/ui/chart";
+import { useState, useEffect } from "react";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { Skeleton } from "@/components/ui/skeleton";
-import { supabaseBrowser } from "@/lib/supabase/supabase"
+import { supabaseBrowser } from "@/lib/supabase/supabase";
 
-
-export const description = "A pie chart showing the stus breakdown of all the users applications"
+export const description =
+  "A pie chart showing the stus breakdown of all the users applications";
 
 const chartConfig = {
   count: {
     label: "Count",
   },
-   Saved: {
+  Saved: {
     label: "Saved",
     color: "var(--color-gray-300)",
   },
@@ -53,23 +52,23 @@ const chartConfig = {
     label: "Withdrawn",
     color: "var(--color-slate-700)",
   },
-} satisfies ChartConfig
-
+} satisfies ChartConfig;
 
 type StatusBreakdownChartProps = {
   className: string;
 };
 
-export const StatusBreakdownChart = ({ className }: StatusBreakdownChartProps) => {
-
+export const StatusBreakdownChart = ({
+  className,
+}: StatusBreakdownChartProps) => {
   const [loading, setLoading] = useState(true);
   const { refresh, setRefresh } = useRefreshStore();
-  const [chartData, setChartData] = useState<{ status: string; count: number; fill: string }[]>([]);
+  const [chartData, setChartData] = useState<
+    { status: string; count: number; fill: string }[]
+  >([]);
 
-
-  useEffect(()=> {
-    const fetchStatusCount =  async() => {
-
+  useEffect(() => {
+    const fetchStatusCount = async () => {
       const {
         data: { user },
         error,
@@ -83,7 +82,7 @@ export const StatusBreakdownChart = ({ className }: StatusBreakdownChartProps) =
       const { data, error: fetchError } = await supabaseBrowser
         .from("Job Applications")
         .select("status")
-        .eq("user_id", user.id)
+        .eq("user_id", user.id);
 
       if (error || !data) {
         console.error("Error fetching statuses:", error);
@@ -113,55 +112,58 @@ export const StatusBreakdownChart = ({ className }: StatusBreakdownChartProps) =
         };
       });
 
-      
       setChartData(chartData);
-      setLoading(false)
+      setLoading(false);
       setRefresh(false);
+    };
 
-    }
-
-    fetchStatusCount()
-
-  },[refresh])
+    fetchStatusCount();
+  }, [refresh]);
 
   if (loading) {
     return <Skeleton className="h-[420px] w-full rounded-xl" />;
   }
 
-    return(
-        <Card className={`flex flex-col ${className}`}>
+  return (
+    <Card className={`flex flex-col ${className}`}>
       <CardHeader className="items-center pb-0">
         <CardTitle>Application Status</CardTitle>
         <CardDescription>Breakdown of applications by status</CardDescription>
       </CardHeader>
       <CardContent className="flex-1 pb-0 align-center">
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[320px]"
-        >
-          <PieChart className="flex gap-20">
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
-            {/* <Pie data={chartData} dataKey="count" nameKey="status" /> */}
-            <Pie
+        {chartData.length === 0 ? (
+          <div className="flex flex-col h-full items-center justify-center w-full">
+            <p className="text-primary text-lg font-semibold">Nothing to show yet</p>
+            <p className="text-muted-foreground">Add a few jobs, we'll make it pretty.</p>
+          </div>
+        ) : (
+          <ChartContainer
+            config={chartConfig}
+            className="mx-auto aspect-square max-h-[320px]"
+          >
+            <PieChart className="flex gap-20">
+              <ChartTooltip
+                cursor={false}
+                content={<ChartTooltipContent hideLabel />}
+              />
+              <Pie
                 data={chartData}
                 dataKey="count"
                 nameKey="status"
                 isAnimationActive={true}
-                animationBegin={300} 
+                animationBegin={300}
                 cx="50%"
                 cy="50%"
                 outerRadius={120}
               />
-            <ChartLegend
-              content={<ChartLegendContent nameKey="status" />}
-              className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center mt-4"
-            />
-          </PieChart>
-        </ChartContainer>
+              <ChartLegend
+                content={<ChartLegendContent nameKey="status" />}
+                className="-translate-y-2 flex-wrap gap-2 *:basis-1/4 *:justify-center mt-4"
+              />
+            </PieChart>
+          </ChartContainer>
+        )}
       </CardContent>
     </Card>
-    )
-}
+  );
+};

@@ -16,13 +16,13 @@ export const MostActivityTabs = () => {
         
       </TabsList>
       <TabsContent value="Day">
-        <MostActiveDay className=""/>
+        <MostActiveDay className="h-full"/>
       </TabsContent>
       <TabsContent value="Week">
-        <MostActiveWeek className=""/>
+        <MostActiveWeek className="h-full"/>
       </TabsContent>
       <TabsContent value="Month">
-        <MostActiveMonth className=""/>
+        <MostActiveMonth className="h-full"/>
       </TabsContent>
       
       

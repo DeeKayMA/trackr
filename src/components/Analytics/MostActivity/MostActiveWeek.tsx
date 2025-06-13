@@ -135,7 +135,7 @@ export const MostActiveWeek = ({ className }: StreakCardProps) => {
         <div className="text-3xl font-bold">
           {mostActive.startDate && mostActive.endDate
             ? `${mostActive.startDate} - ${mostActive.endDate}`
-            : "No data"}
+            : <span className="text-sm font-medium text-muted-foreground mt-4">Could be this week?</span>}
         </div>
       </CardContent>
     </Card>
