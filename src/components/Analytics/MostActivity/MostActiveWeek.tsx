@@ -3,15 +3,16 @@
 import { useState, useEffect } from "react";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
-import { startOfWeek, endOfWeek, format, getISOWeek, getISOWeekYear } from "date-fns";
+import {
+  startOfWeek,
+  endOfWeek,
+  format,
+  getISOWeek,
+  getISOWeekYear,
+} from "date-fns";
 
 type StreakCardProps = {
   className: string;
@@ -56,7 +57,8 @@ export const MostActiveWeek = ({ className }: StreakCardProps) => {
       }
 
       // Group by ISO week number
-      const counts: Record<string, { count: number; start: Date; end: Date }> = {};
+      const counts: Record<string, { count: number; start: Date; end: Date }> =
+        {};
 
       data.forEach((entry) => {
         const date = new Date(entry.date_applied);
@@ -84,13 +86,30 @@ export const MostActiveWeek = ({ className }: StreakCardProps) => {
         }
       }
 
-      const most = counts[maxKey];
-      setMostActive({
-        week: maxKey,
-        count: most.count,
-        startDate: format(most.start, "MMM d"),
-        endDate: format(most.end, "MMM d"),
-      });
+      // const most = counts[maxKey];
+      // setMostActive({
+      //   week: maxKey,
+      //   count: most.count,
+      //   startDate: format(most.start, "MMM d"),
+      //   endDate: format(most.end, "MMM d"),
+      // });
+
+      if (!maxKey) {
+        setMostActive({
+          week: "",
+          count: 0,
+          startDate: "",
+          endDate: "",
+        });
+      } else {
+        const most = counts[maxKey];
+        setMostActive({
+          week: maxKey,
+          count: most.count,
+          startDate: format(most.start, "MMM d"),
+          endDate: format(most.end, "MMM d"),
+        });
+      }
 
       setLoading(false);
       setRefresh(false);
@@ -114,7 +133,9 @@ export const MostActiveWeek = ({ className }: StreakCardProps) => {
 
       <CardContent>
         <div className="text-3xl font-bold">
-          {mostActive.startDate} – {mostActive.endDate}
+          {mostActive.startDate && mostActive.endDate
+            ? `${mostActive.startDate} - ${mostActive.endDate}`
+            : "No data"}
         </div>
       </CardContent>
     </Card>

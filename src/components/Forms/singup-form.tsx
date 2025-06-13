@@ -30,7 +30,7 @@ export function SignUpForm({
             <div className="grid gap-6">
             {/* LOGIN FORM */}
               <div className="grid gap-6">
-                {/* Name */}
+                {/* Name
                 <div className="grid gap-2">
                   <Label htmlFor="name">Name</Label>
                   <Input
@@ -40,7 +40,7 @@ export function SignUpForm({
                     placeholder="Joe Bloggs"
                     required
                   />
-                </div>
+                </div> */}
                 {/* EMAIL */}
                 <div className="grid gap-2">
                   <Label htmlFor="email">Email</Label>
