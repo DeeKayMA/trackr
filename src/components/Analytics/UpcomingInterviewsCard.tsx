@@ -52,7 +52,7 @@ export const UpcomingInterviewsCard = ({ className }: StreakCardProps) => {
         <CardTitle className="text-sm font-medium">
           Upcoming Interviews
         </CardTitle>
-        <Badge className={ count > 0 ? "bg-lime-200 text-primary-950 border": "bg-amber-200/50 text-priamry-950 "}>
+        <Badge className={ count > 0 ? "bg-lime-300/50 dark:bg-lime-600/50 text-primary-950 border": "bg-amber-200/50 dark:bg-amber-600/50 text-priamry-950 "}>
           {count === 0 ? "💪 Stay strong": "🔥 Keep going"}
         </Badge>
       </CardHeader>

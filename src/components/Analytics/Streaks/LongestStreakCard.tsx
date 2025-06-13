@@ -104,6 +104,7 @@ export const LongestStreakCard = ({ className }: LongestStreakCardProps) => {
       maxStreak = Math.max(maxStreak, tempStreak);
 
       setLongestStreak(maxStreak);
+      // setLongestStreak(0)
       setLoading(false);
       setRefresh(false);
     };
@@ -120,10 +121,10 @@ export const LongestStreakCard = ({ className }: LongestStreakCardProps) => {
     : "🎯 Start Tracking";
 
   const badgeClass = isPersonalBest
-    ? "bg-lime-200 text-primary-950"
-    : longestStreak > 0
-    ? "bg-amber-200 text-primary-950"
-    : "bg-gray-200 text-primary-950";
+  ? "bg-lime-300/50 dark:bg-lime-600/50 text-primary-950"
+  : longestStreak > 0
+  ? "bg-amber-200/50 dark:bg-amber-600/50 text-primary-950"
+  : "bg-gray-200/80 dark:bg-gray-600/50 text-primary-950";
 
   if (loading) {
     return <Skeleton className="h-[180px] w-full rounded-xl" />;

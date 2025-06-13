@@ -90,10 +90,10 @@ export const StreakCard = ({ className }: StreakCardProps) => {
 
   const badgeClass =
     appliedToday && streak > 0
-      ? "bg-lime-200 text-primary-950"
+      ? "bg-lime-300/50 dark:bg-lime-600/50 text-primary-950"
       : !appliedToday && streak > 0
-      ? "bg-amber-200/50 text-primary-950"
-      : "bg-red-200/50 text-primary-950";
+      ? "bg-amber-200/50 dark:bg-amber-600/50 text-primary-950"
+      : "bg-red-200/50 dark:bg-red-400/50 text-primary-950";
 
   if (loading) {
     return <Skeleton className="h-[180px] w-full rounded-xl" />;

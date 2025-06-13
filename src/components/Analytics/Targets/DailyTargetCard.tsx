@@ -79,7 +79,7 @@ export const DailyTargetCard = ({ className }: StreakCardProps) => {
     <Card className={className}>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Daily Target</CardTitle>
-        <Badge className={ goalReached? "bg-lime-200 text-primary-950 border": "bg-amber-200/50 text-priamry-950 "}>
+        <Badge className={ goalReached? "bg-lime-300/50 dark:bg-lime-600/50 text-primary-950 border": "bg-amber-200/50 dark:bg-amber-600/50 text-priamry-950 "}>
           {goalReached ? "🏆 Goal Achieved" : count === 0 ? "📋 Get Applying": "🔥 Keep Going"}
         </Badge>
       </CardHeader>

@@ -91,7 +91,7 @@ export const MostActiveMonth = ({ className }: StreakCardProps) => {
     <Card className={className}>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between space-y-0 pb-2">
         <CardTitle className="text-sm font-medium">Most Active Month</CardTitle>
-        <Badge className="bg-blue-200 text-primary-950">
+        <Badge className="bg-sky-200/50 dark:bg-sky-700/50 text-primary-950">
           🔥 {mostActive.count} Applications
         </Badge>
       </CardHeader>
