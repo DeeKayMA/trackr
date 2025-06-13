@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 type HeaderProps = {
   title: string;
@@ -6,12 +6,23 @@ type HeaderProps = {
 
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { AddJobDialog } from "@/components/AddJobDialog/AddJobDialog"
+// import { AddJobDialog } from "@/components/AddJobDialog/AddJobDialog"
+import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "@/components/Theme/ModeToggle";
+import { useState, useEffect } from "react";
+
+const AddJobDialog = dynamic(() => import("@/components/AddJobDialog/AddJobDialog"), {
+  ssr: false,
+});
 
 export default function Header() {
   const pathname = usePathname();
+  const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const titleMap: Record<string, string> = {
     "/dashboard": "Dashboard",
@@ -22,7 +33,7 @@ export default function Header() {
   const title = titleMap[pathname] ?? "Jobora";
 
   return (
-    <header className=" sticky top-0 z-50 bg-[var(--background)] space-between group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-2 border-b transition-[width,height] ease-linear">
+    <header className=" sticky top-0 z-50 bg-[var(--background)] space-between group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 flex h-12 shrink-0 items-center gap-4 border-b transition-[width,height] ease-linear">
       <div className="flex w-full items-center gap-1 px-4 lg:gap-2">
         <SidebarTrigger className="-ml-1" />
         <Separator
