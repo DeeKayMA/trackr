@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { JobForm } from "@/components/Forms/JobForm";
 import { Button } from "@/components/ui/button";
@@ -30,7 +30,7 @@ import {
 
 type AddJobDialogProps = {};
 
-export const AddJobDialog = ({}: AddJobDialogProps) => {
+const AddJobDialog = ({}: AddJobDialogProps) => {
   const closeRef = useRef<HTMLButtonElement>(null);
   const { refresh, setRefresh } = useRefreshStore();
   const [userId, setUserId] = useState<string | null>(null);
@@ -150,3 +150,5 @@ export const AddJobDialog = ({}: AddJobDialogProps) => {
     );
   }
 };
+
+export default AddJobDialog;
