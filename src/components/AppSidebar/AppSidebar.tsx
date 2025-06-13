@@ -92,23 +92,32 @@ export default function AppSidebar() {
       const user = session?.user;
       if (!user) return;
 
-      // Fetch from Account Details
-      const { data, error } = await supabaseBrowser
+      // Set email immediately
+      setUserInfo((prev) => ({
+        ...prev,
+        email: user.email || "",
+      }));
+
+      // Check if account details exist
+      const { data: accountData, error: accountError } = await supabaseBrowser
         .from("Account Details")
         .select("username, profile_img")
         .eq("user_id", user.id)
-        .single();
+        .maybeSingle(); // 👈 safer than .single()
 
-      if (error) {
-        console.error("Error fetching account details:", error);
+      if (accountError) {
+        console.error("Error fetching account details:", accountError);
         return;
       }
 
-      setUserInfo({
-        name: data?.username || "",
-        email: user.email || "",
-        avatar: data?.profile_img || null,
-      });
+      // Only update if profile is set
+      if (accountData) {
+        setUserInfo((prev) => ({
+          ...prev,
+          name: accountData.username || "",
+          avatar: accountData.profile_img || null,
+        }));
+      }
 
       setRefresh(false);
     };
@@ -129,10 +138,12 @@ export default function AppSidebar() {
               className="data-[slot=sidebar-menu-button]:!p-2.5"
             >
               <Link href="/dashboard">
-                <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent
+                <span
+                  className="text-xl font-bold tracking-tight bg-clip-text text-transparent
                 bg-gradient-to-r from-purple-500 to-purple-700 
                 dark:from-purple-300 dark:to-purple-500 
-      ">
+      "
+                >
                   Jobora
                 </span>
               </Link>
