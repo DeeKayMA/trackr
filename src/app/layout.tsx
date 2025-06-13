@@ -1,12 +1,11 @@
-'use client';
+// Root layout (includes <html> and <body>)
 
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import { ThemeProvider } from "@/components/Theme/theme-provider";
-import dynamic from "next/dynamic";
+import { Toaster } from "@/components/ui/sonner"
+import { ThemeProvider } from "@/components/Theme/theme-provider"
 
-const Toaster = dynamic(() => import("@/components/ui/sonner").then(mod => mod.Toaster), { ssr: false });
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,7 +19,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Jobora - Free Job Application Tracker",
+    default: "Jobora - Free Job Application Tracker ",
     template: "%s | Jobora",
   },
   description: "Your personal job application tracker",
@@ -36,15 +35,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
         <ThemeProvider
-          attribute="class"
-          defaultTheme="system"
-          enableSystem
-          disableTransitionOnChange
-        >
-          {children}
-          <Toaster />
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+        {children}
+        <Toaster />
         </ThemeProvider>
       </body>
     </html>

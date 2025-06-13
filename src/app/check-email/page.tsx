@@ -28,7 +28,15 @@ const emailProviders = [
 
 export default function CheckEmailPage() {
   return (
-    <div className="max-w-md mx-auto mt-16 p-6 text-center">
+    <div className="max-w-md mx-auto mt-16 p-6 text-center gap-4 flex flex-col">
+      <Link href="/dashboard">
+          <span
+            className=" justify-center align-center flex text-3xl font-bold tracking-tight bg-clip-text text-transparent
+                bg-gradient-to-r from-purple-500 to-purple-700 
+                dark:from-purple-400 dark:to-purple-500 ">
+            Jobora
+          </span>
+        </Link>
       <h1 className="text-2xl font-bold">Check your email</h1>
       <p className="mt-2 text-muted-foreground">
         We've sent a confirmation link to your inbox.

@@ -1,11 +1,12 @@
-'use client'
+"use client";
 
 import {
   Book,
   LayoutDashboardIcon,
   BriefcaseBusiness,
   ChartColumnIncreasing,
-  Home
+  Home,
+  Crosshair,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -22,7 +23,6 @@ import {
   SidebarHeader,
   SidebarFooter,
 } from "@/components/ui/sidebar";
-
 
 import { useEffect, useState } from "react";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
@@ -69,7 +69,7 @@ const menuItems = [
 
 export default function AppSidebar() {
   const pathname = usePathname();
-  
+
   const [userInfo, setUserInfo] = useState({
     name: "",
     email: "",
@@ -78,46 +78,45 @@ export default function AppSidebar() {
   const { refresh, setRefresh } = useRefreshUserDetailsStore();
 
   useEffect(() => {
-  const fetchUser = async () => {
-    const { data: { session }, error: sessionError } = await supabaseBrowser.auth.getSession();
+    const fetchUser = async () => {
+      const {
+        data: { session },
+        error: sessionError,
+      } = await supabaseBrowser.auth.getSession();
 
-    if (sessionError) {
-      console.error("Session error:", sessionError);
-      return;
-    }
+      if (sessionError) {
+        console.error("Session error:", sessionError);
+        return;
+      }
 
-    const user = session?.user;
-    if (!user) return;
+      const user = session?.user;
+      if (!user) return;
 
-    // Fetch from Account Details
-    const { data, error } = await supabaseBrowser
-      .from("Account Details")
-      .select("username, profile_img")
-      .eq("user_id", user.id)
-      .single();
+      // Fetch from Account Details
+      const { data, error } = await supabaseBrowser
+        .from("Account Details")
+        .select("username, profile_img")
+        .eq("user_id", user.id)
+        .single();
 
-    if (error) {
-      console.error("Error fetching account details:", error);
-      return;
-    }
+      if (error) {
+        console.error("Error fetching account details:", error);
+        return;
+      }
 
-    setUserInfo({
-      name: data?.username || "",
-      email: user.email || "",
-      avatar: data?.profile_img || null,
-    });
+      setUserInfo({
+        name: data?.username || "",
+        email: user.email || "",
+        avatar: data?.profile_img || null,
+      });
 
-    setRefresh(false); 
+      setRefresh(false);
+    };
 
-  };
+    fetchUser();
+  }, [refresh]);
 
-  
-
-  fetchUser();
-}, [refresh]);
-
-
-console.log(userInfo)
+  console.log(userInfo);
 
   return (
     <Sidebar>
@@ -127,11 +126,15 @@ console.log(userInfo)
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="data-[slot=sidebar-menu-button]:!p-1.5"
+              className="data-[slot=sidebar-menu-button]:!p-2.5"
             >
               <Link href="/dashboard">
-                <span className="text-base font-semibold">Jobora </span>
-
+                <span className="text-xl font-bold tracking-tight bg-clip-text text-transparent
+                bg-gradient-to-r from-purple-500 to-purple-700 
+                dark:from-purple-300 dark:to-purple-500 
+      ">
+                  Jobora
+                </span>
               </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
@@ -148,17 +151,23 @@ console.log(userInfo)
                 const isActive = pathname === item.url;
 
                 return (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild 
-                  className={isActive ? "bg-primary hover:bg-primary text-primary-foreground hover:text-primary-foreground" : ""}
-                  >
-                    <Link href={item.url}>
-                      <item.icon />
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              )})}
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      className={
+                        isActive
+                          ? "bg-primary hover:bg-primary text-primary-foreground hover:text-primary-foreground"
+                          : ""
+                      }
+                    >
+                      <Link href={item.url}>
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
@@ -190,9 +199,7 @@ console.log(userInfo)
 
       {/* Sidebar Footer */}
       <SidebarFooter>
-        <NavUser
-          user={userInfo}
-        />
+        <NavUser user={userInfo} />
       </SidebarFooter>
     </Sidebar>
   );

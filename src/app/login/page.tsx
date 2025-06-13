@@ -1,19 +1,20 @@
-import { Crosshair } from "lucide-react";
 import { LoginForm } from "@/components/Forms/login-form";
 import { SignUpForm } from "@/components/Forms/singup-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import Link from "next/link";
 
 export default function LoginPage() {
   return (
     <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-muted p-6 md:p-10">
       <div className="flex w-full max-w-sm flex-col gap-6">
-        <a href="/" className="flex items-center gap-2 self-center font-medium">
-          <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-            <Crosshair className="size-4" />
-          </div>
-          Jobora
-        </a>
-        
+        <Link href="/dashboard">
+          <span
+            className=" justify-center align-center flex text-3xl font-bold tracking-tight bg-clip-text text-transparent
+                bg-gradient-to-r from-purple-500 to-purple-700 
+                dark:from-purple-400 dark:to-purple-500 ">
+            Jobora
+          </span>
+        </Link>
 
         <Tabs defaultValue="login" className="w-[400px]">
           <TabsList className="w-full">
@@ -27,8 +28,6 @@ export default function LoginPage() {
             <SignUpForm />
           </TabsContent>
         </Tabs>
-
-
       </div>
     </div>
   );
