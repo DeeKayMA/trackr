@@ -6,7 +6,6 @@ type HeaderProps = {
 
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-// import { AddJobDialog } from "@/components/AddJobDialog/AddJobDialog"
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
 import { ModeToggle } from "@/components/Theme/ModeToggle";
