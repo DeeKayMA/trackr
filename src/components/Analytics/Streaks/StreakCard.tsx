@@ -34,33 +34,43 @@ export const StreakCard = ({ className }: StreakCardProps) => {
         return;
       }
 
+      // Get local start and end of today
+      const now = new Date();
+      const localStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
+      const localEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
+      const startOfDayUTC = new Date(localStart.getTime() - localStart.getTimezoneOffset() * 60000);
+      const endOfDayUTC = new Date(localEnd.getTime() - localEnd.getTimezoneOffset() * 60000);
+
+      // Fetch all recent applications (up to 365)
       const { data, error: appError } = await supabaseBrowser
         .from("Job Applications")
         .select("date_applied")
         .eq("user_id", user.id)
-        .order("date_applied", { ascending: false });
+        .order("date_applied", { ascending: false })
+        .limit(365);
 
       if (appError || !data) {
         console.error("Error fetching applications:", appError);
         return;
       }
 
-      const uniqueDays = Array.from(
-        new Set(
-          data.map(
-            (entry) => new Date(entry.date_applied).toISOString().split("T")[0]
-          )
-        )
-      );
+      // Map all applications to date strings (local)
+      const localDateStrings = data.map((entry) => {
+        const local = new Date(entry.date_applied);
+        const y = local.getFullYear();
+        const m = String(local.getMonth() + 1).padStart(2, "0");
+        const d = String(local.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+      });
 
-      const today = new Date();
-      const todayStr = today.toISOString().split("T")[0];
-      const appliedToday = uniqueDays.includes(todayStr);
-      setAppliedToday(appliedToday);
+      const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+      const uniqueDays = Array.from(new Set(localDateStrings));
+      const hasAppliedToday = uniqueDays.includes(todayStr);
+      setAppliedToday(hasAppliedToday);
 
-      // Count streak (excluding today if not applied)
+      // Count streak backwards from today (or yesterday)
       let current = new Date();
-      if (!appliedToday) current.setDate(current.getDate() - 1); // start from yesterday
+      if (!hasAppliedToday) current.setDate(current.getDate() - 1);
 
       let streakCount = 0;
       for (let i = 0; i < 365; i++) {
@@ -102,9 +112,7 @@ export const StreakCard = ({ className }: StreakCardProps) => {
   return (
     <Card className={className}>
       <CardHeader className="flex flex-row flex-wrap items-center justify-between space-y-0 pb-2">
-        <CardTitle className="text-sm font-medium">
-          Current Streak
-        </CardTitle>
+        <CardTitle className="text-sm font-medium">Current Streak</CardTitle>
         <Badge className={badgeClass}>{badgeLabel}</Badge>
       </CardHeader>
 
