@@ -109,10 +109,6 @@ export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position
     }
   });
 
-//   function onSubmit(values: z.infer<typeof formSchema>) {
-//     console.log(values);
-//     //Put a toast here to confirm the submission
-//   }
 
   return (
     <Form {...form}>

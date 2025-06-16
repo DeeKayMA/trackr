@@ -1,4 +1,5 @@
-import '@testing-library/jest-dom/extend-expect';
+
+import "@testing-library/jest-dom";
 
 // Optional: mock matchMedia if your code uses it (e.g., Shadcn, media queries)
 Object.defineProperty(window, 'matchMedia', {
