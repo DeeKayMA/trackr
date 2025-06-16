@@ -36,10 +36,7 @@ export const StreakCard = ({ className }: StreakCardProps) => {
 
       // Get local start and end of today
       const now = new Date();
-      const localStart = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 0, 0, 0);
-      const localEnd = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59, 999);
-      const startOfDayUTC = new Date(localStart.getTime() - localStart.getTimezoneOffset() * 60000);
-      const endOfDayUTC = new Date(localEnd.getTime() - localEnd.getTimezoneOffset() * 60000);
+ 
 
       // Fetch all recent applications (up to 365)
       const { data, error: appError } = await supabaseBrowser
