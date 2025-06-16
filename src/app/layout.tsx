@@ -24,7 +24,7 @@ export const metadata: Metadata = {
   },
   description: "Your personal job application tracker",
   icons: {
-    icon: "/favicon.ico",
+    icon: "/favicon.ico?=v2",
   },
 };
 

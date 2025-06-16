@@ -120,3 +120,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+.clip-diagonal-bl-to-tr {
+  clip-path: polygon(100% 0%, 100% 100%, 0% 100%);
+}
+
+.clip-diagonal-tl-to-br {
+  clip-path: polygon(0% 0%, 0% 100%, 100% 100%);
+}
+@layer utilities {
+  .animate-bounce-slow {
+    animation: bounce 2s infinite;
+  }
+}

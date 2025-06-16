@@ -54,7 +54,7 @@ const AddJobDialog = ({}: AddJobDialogProps) => {
       <div className="mr-4">
         <Dialog>
           <DialogTrigger asChild>
-            <Button>Add Job</Button>
+            <Button className="font-semibold text-white bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 transition-colors duration-200">Add Job</Button>
           </DialogTrigger>
           <DialogContent className="sm:max-w-md max-h-[90vh] w-full max-w-2xl overflow-auto">
             <DialogHeader>
@@ -103,7 +103,7 @@ const AddJobDialog = ({}: AddJobDialogProps) => {
     return (
       <Drawer>
         <DrawerTrigger className="mr-4" asChild >
-          <Button>Add Job</Button>
+          <Button className="font-semibold text-white bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 transition-colors duration-200">Add Job</Button>
         </DrawerTrigger>
         <DrawerContent className="max-h-[90vh] px-4 py-6">
           <DialogHeader className="mt-4">
