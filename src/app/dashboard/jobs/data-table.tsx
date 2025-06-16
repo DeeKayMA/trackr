@@ -31,7 +31,7 @@ import {
 
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { DeleteSelectedJobs } from "@/components/DeleteSelectedJobs/DeleteSelectedJobs";
+import { DeleteSelectedJobs } from "@/components/CRUD/DeleteSelectedJobs/DeleteSelectedJobs";
 
 import {
   Select,

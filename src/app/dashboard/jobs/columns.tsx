@@ -4,8 +4,8 @@
 import { useState, useEffect } from "react";
 
 import { ColumnDef } from "@tanstack/react-table";
-import { UpdateJobDialog } from "@/components/UpdateJobDialog/UpdateJobDialog";
-import { DeleteJobDialog } from "@/components/DeleteJobDialog/DeleteJobDialog";
+import { UpdateJobDialog } from "@/components/CRUD/UpdateJobDialog/UpdateJobDialog";
+import { DeleteJobDialog } from "@/components/CRUD/DeleteJobDialog/DeleteJobDialog";
 import { NotesDialog } from "@/components/NotesDialog/NotesDialog";
 import { useUserStore } from "@/lib/store/useUserStore";
 

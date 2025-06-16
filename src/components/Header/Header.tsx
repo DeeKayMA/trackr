@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import { ModeToggle } from "@/components/Theme/ModeToggle";
 import { useState, useEffect } from "react";
 
-const AddJobDialog = dynamic(() => import("@/components/AddJobDialog/AddJobDialog"), {
+const AddJobDialog = dynamic(() => import("@/components/CRUD/AddJobDialog/AddJobDialog"), {
   ssr: false,
 });
 
