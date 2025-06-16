@@ -197,7 +197,7 @@ function StatusList({
                 setOpen(false);
               }}
             >
-              {/* Checkbox  - Need to connect the checkbox to the filter*/}
+              {/* Checkbox, multi-filter selct - future development*/}
 
               {isStatusKey(status.value) ? (
                 statusMap[status.value].icon
@@ -205,9 +205,8 @@ function StatusList({
                 <LoaderIcon />
               )}
 
-              {/* Icon */}
               {status.label}
-              {/* Count */}
+              {/* Add count here - future development */}
             </CommandItem>
           ))}
         </CommandGroup>
