@@ -1,6 +1,7 @@
 import { supabaseBrowser } from "@/lib/supabase/supabase";
+import { JobApplicationValues } from "@/types"; 
 
-export async function addJob(values: any, userId: string) {
+export async function addJob(values: JobApplicationValues, userId: string) {
   const valuesWithUserId = {
     ...values,
     user_id: userId,
