@@ -112,6 +112,52 @@ function truncate(input: string | null, maxLength: number): string {
   return input.length > maxLength ? input.slice(0, maxLength) + "…" : input;
 }
 
+function SalaryCell({ row }: { row: any }) {
+  const currency = useUserStore((state) => state.currency);
+  const salaryMin = row.original.salary_min;
+  const salaryMax = row.original.salary_max;
+  const frequency = row.original.frequency;
+
+  const format = (value: number | null) => value !== null ? formatSalaryParts(value) : null;
+
+  const minParts = format(salaryMin);
+  const maxParts = format(salaryMax);
+
+  if (minParts && maxParts) {
+    if (minParts.unit === maxParts.unit && minParts.unit) {
+      return (
+        <div>
+          {currency}{minParts.value}–{maxParts.value}{minParts.unit} {frequency}
+        </div>
+      );
+    }
+
+    return (
+      <div>
+        {currency}{minParts.value}{minParts.unit} {frequency} – {currency}{maxParts.value}{maxParts.unit} {frequency}
+      </div>
+    );
+  }
+
+  if (minParts) {
+    return (
+      <div>
+        {currency}{minParts.value}{minParts.unit} {frequency}
+      </div>
+    );
+  }
+
+  if (maxParts) {
+    return (
+      <div>
+        {currency}{maxParts.value}{maxParts.unit} {frequency}
+      </div>
+    );
+  }
+
+  return null;
+}
+
 
 
 
@@ -247,58 +293,7 @@ export const columns: ColumnDef<Job>[] = [
         </Button>
       );
     },
-    cell: ({ row }) => {
-      const currency = useUserStore((state) => state.currency);
-      const salaryMin = row.original.salary_min;
-      const salaryMax = row.original.salary_max;
-      const frequency = row.original.frequency;
-      
-
-
-      if (salaryMin !== null && salaryMax !== null) {
-        const minParts = formatSalaryParts(salaryMin);
-        const maxParts = formatSalaryParts(salaryMax);
-
-        if (minParts.unit === maxParts.unit && minParts.unit) {
-          return (
-            <div>
-              {currency}{minParts.value}–{maxParts.value}
-              {minParts.unit} {frequency}
-            </div>
-          );
-        }
-
-        return (
-          <div>
-            {currency}{minParts.value}
-            {minParts.unit} {frequency} – {currency}{maxParts.value}
-            {maxParts.unit} {frequency}
-          </div>
-        );
-      }
-
-      if (salaryMin !== null) {
-        const minParts = formatSalaryParts(salaryMin);
-        return (
-          <div>
-            {currency}{minParts.value}
-            {minParts.unit} {frequency}
-          </div>
-        );
-      }
-
-      if (salaryMax !== null) {
-        const maxParts = formatSalaryParts(salaryMax);
-        return (
-          <div>
-            {currency}{maxParts.value}
-            {maxParts.unit} {frequency}
-          </div>
-        );
-      }
-
-      return null;
-    },
+    cell: ({ row }) => <SalaryCell row={row} />
   },
   //Status
   {
