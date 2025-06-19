@@ -39,7 +39,7 @@ export default function CheckEmailPage() {
         </Link>
       <h1 className="text-2xl font-bold">Check your email</h1>
       <p className="mt-2 text-muted-foreground">
-        We've sent a confirmation link to your inbox.
+        We&apos;ve sent a confirmation link to your inbox.
       </p>
 
       <div className="mt-6 grid gap-3">
