@@ -1,4 +1,5 @@
-export type JobApplicationValues = {
+export type JobFormData = {
+  id?: string;
   company?: string;
   position?: string;
   status?: string;
@@ -12,4 +13,9 @@ export type JobApplicationValues = {
   frequency?: string;
   notes?: string;
   url?: string;
+};
+
+export type JobFormProps = JobFormData & {
+  submitName?: string;
+  onSubmit?: (values: JobFormData) => void;
 };

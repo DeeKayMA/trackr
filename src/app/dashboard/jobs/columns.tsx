@@ -8,8 +8,6 @@ import { UpdateJobDialog } from "@/components/CRUD/UpdateJobDialog/UpdateJobDial
 import { NotesDialog } from "@/components/NotesDialog/NotesDialog";
 import { useUserStore } from "@/lib/store/useUserStore";
 import { ColumnDef } from "@tanstack/react-table";
-import { JobRowActions } from "@/components/JobRowActions/JobRowActions"
-
 
 import { Button } from "@/components/ui/button";
 import {
@@ -454,8 +452,104 @@ export const columns: ColumnDef<Job>[] = [
   //Actions
   {
     id: "actions",
-    cell: ({ row }) => { <JobRowActions row={row}/>
-     
+    cell: ({ row }) => {
+      //Pass these into the UpdateJob Dialog, then pass them into JobForm as default values if the ID is the same
+      const id = row.getValue<string>("id");
+      const company = row.getValue<string>("company");
+      const position = row.getValue<string>("position");
+      const status = row.getValue<string>("status");
+      const date_applied = row.getValue<string>("date_applied");
+      const closing_date = row.getValue<string>("closing_date");
+      const location = row.getValue<string>("location");
+      const work_model = row.getValue<string>("work_model");
+      const job_type = row.getValue<string>("job_type");
+      const salary_min = row.getValue<number>("salary_min");
+      const salary_max = row.getValue<number>("salary_max");
+      const frequency = row.getValue<string>("frequency");
+      const notes = row.getValue<string>("notes");
+      const url = row.getValue<string>("url");
+
+      const [openNote, setOpenNote] = useState(false);
+      const [openEdit, setOpenEdit] = useState(false);
+      const [openDelete, setOpenDelete] = useState(false);
+
+      return (
+        <>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal className={arrowUpDown} />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuLabel>Actions</DropdownMenuLabel>
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpenNote(true);
+                }}
+              >
+                View Note
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpenEdit(true);
+                }}
+              >
+                Edit
+                {/* Open the edit dialog for the specific job */}
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={() => {
+                  setOpenDelete(true);
+                }}
+              >
+                Delete
+                {/* Delete the specific job with an onclick function 
+               it must call remove on supabase 
+               it must do toast sonner to say that the job has been deleted
+               it must refresh the datatable
+              */}
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <div className="hidden">
+            <NotesDialog
+              note={notes}
+              company={company}
+              position={position}
+              open={openNote}
+              onOpenChange={setOpenNote}
+            />
+            <UpdateJobDialog
+              open={openEdit}
+              onOpenChange={setOpenEdit}
+              id={id}
+              company={company}
+              position={position}
+              status={status}
+              date_applied={date_applied}
+              closing_date={closing_date}
+              location={location}
+              work_model={work_model}
+              job_type={job_type}
+              salary_min={salary_min}
+              salary_max={salary_max}
+              frequency={frequency}
+              notes={notes}
+              url={url}
+            />
+            <DeleteJobDialog
+              open={openDelete}
+              onOpenChange={setOpenDelete}
+              id={id}
+              company={company}
+              position={position}
+            />
+          </div>
+        </>
+      );
     },
-  },
+  }
 ];
