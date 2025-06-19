@@ -51,7 +51,7 @@ export default async function HomePage() {
         <div className="w-full max-w-3xl px-4 sticky top-4 z-50">
           <LandingHeader className="shadow-md" />
         </div>
-        <div className="flex flex-col gap-8 items-center px-4 text-center w-full">
+        <div className="flex flex-col gap-8 items-center px-4 lg:px-20 text-center w-full">
           <h1 className="mt-8 text-neutral-950 text-center text-balance">
             <span className=" lg:text-2xl text-lg">The smartest way to</span>{" "}
             <br />{" "}
@@ -70,7 +70,7 @@ export default async function HomePage() {
             <Link href="/login?tab=signup">Start Tracking Jobs</Link>
           </Button>
 
-          <div className="w-full max-w-[1000px] relative rounded-lg shadow-2xl overflow-visible ">
+          <div className="w-full max-w-[1000px] relative rounded-lg shadow-2xl overflow-visible">
             {/* Browser Topbar */}
             <div className="bg-neutral-800 w-full flex flex-row items-center py-2 px-2 gap-2 rounded-t-lg">
               <div className="rounded-full h-2 w-2 bg-red-500" />
