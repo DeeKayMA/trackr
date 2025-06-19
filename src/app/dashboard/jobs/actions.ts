@@ -8,7 +8,7 @@ export async function addJob(values: JobFormData, userId: string) {
   };
 
   const { data, error } = await supabaseBrowser
-    .from("Job Applications")
+    .from("Job Applications don't ")
     .insert([valuesWithUserId]);
 
   if (error) {
