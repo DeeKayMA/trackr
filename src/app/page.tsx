@@ -8,6 +8,16 @@ import {
   LinkedInLogo,
   GlassdoorLogo,
 } from "@/CompanyLogos/CompanyLogos";
+import Image from "next/image";
+import {
+  Card,
+  CardAction,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 
 export default async function HomePage() {
   const supabase = await createClient();
@@ -22,10 +32,10 @@ export default async function HomePage() {
 
   // Show homepage for guests
   return (
-    <main className="flex min-h-screen flex items-center flex-col">
+    <main className="light flex min-h-screen flex items-center flex-col">
       {/* Hero Section */}
       <section
-        className="w-full flex pt-10 gap-8 items-center flex-col mb-0"
+        className="w-full flex py-10 gap-8 items-center flex-col mb-0"
         style={{
           backgroundColor: "hsla(267,0%,100%,1)",
           backgroundImage: `
@@ -38,111 +48,102 @@ export default async function HomePage() {
          `,
         }}
       >
-        <div className="w-full max-w-3xl px-4">
-          <LandingHeader className="" />
+        <div className="w-full max-w-3xl px-4 sticky top-4 z-50">
+          <LandingHeader className="shadow-md" />
         </div>
-        <div className="flex flex-col gap-8 items-center px-4 text-center">
+        <div className="flex flex-col gap-8 items-center px-4 text-center w-full">
           <h1 className="mt-8 text-neutral-950 text-center text-balance">
-            <span className=" lg:text-2xl text-lg">The smartest way to</span> <br />{" "}
-            <span className="font-bold lg:text-6xl text-4xl">Track Your Job Hunt</span>
+            <span className=" lg:text-2xl text-lg">The smartest way to</span>{" "}
+            <br />{" "}
+            <span className="font-bold lg:text-6xl text-4xl">
+              Track Your Job Hunt
+            </span>
           </h1>
-          <h2 className="font-normal text-neutral-800 text-md lg:text-lg ">
+          <h2 className="font-normal text-neutral-950 text-md lg:text-lg ">
             Your all-in-one job application tracker.
           </h2>
 
           <Button
             asChild
-            className="my-8 animate-bounce-slow outline outline-[2px] outline-dashed outline-white outline-offset-4 text-white font-semibold bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800 transition-colors duration-200"
+            className="my-8 animate-bounce-slow outline outline-[2px] outline-dashed outline-white outline-offset-4 text-white font-semibold bg-gradient-to-r from-emerald-500 to-emerald-700 hover:from-emerald-600 hover:to-emerald-800 transition-colors duration-200"
           >
-            <Link href="/login">Start Tracking Jobs</Link>
+            <Link href="/login?tab=signup">Start Tracking Jobs</Link>
           </Button>
-        </div>
-        {/* Companies  */}
 
-        <div className=" px-4 text-center items-center flex flex-col  gap-2 w-full text-neutral-950">
-          <p className="">Track job applications from</p>
-          <div className="flex flex-row gap-8 w-full items-center justify-center max-w-xl mx-4">
-            <IndeedLogo className="h-10 w-20 " />
-            <LinkedInLogo className="h-10 w-20 " />
-            <GlassdoorLogo className="h-10 w-20 " />
+          <div className="w-full max-w-[1000px] relative rounded-lg shadow-2xl overflow-visible ">
+            {/* Browser Topbar */}
+            <div className="bg-neutral-800 w-full flex flex-row items-center py-2 px-2 gap-2 rounded-t-lg">
+              <div className="rounded-full h-2 w-2 bg-red-500" />
+              <div className="rounded-full h-2 w-2 bg-amber-500" />
+              <div className="rounded-full h-2 w-2 bg-green-500" />
+            </div>
+
+            {/* Screenshot */}
+            <Image
+              src="/Jobora Screenshot.png"
+              alt="Jobora Screenshot"
+              width={2880}
+              height={1558}
+              className="w-full rounded-b-lg"
+              quality={100}
+            />
+
+            {/* Floating Feature Cards */}
+            <Card
+              role="region"
+              aria-label="Track Applications feature"
+              className=" hidden lg:flex absolute border-none gap-2 z-10 top-[50%] -left-6 w-56 p-4 shadow-xl outline outline-[2px] outline-dashed outline-neutral-500 outline-offset-4 text-left bg-gradient-to-r from-neutral-50 to-neutral-200 text-neutral-950 "
+            >
+              <CardTitle className="text-sm font-semibold">
+                ✅ Track Applications
+              </CardTitle>
+              <CardDescription className="text-xs w-full text-neutral-600">
+                Log roles, statuses, and deadlines in one place.
+              </CardDescription>
+            </Card>
+
+            <Card
+              role="region"
+              aria-label="Set goals feature"
+              className=" hidden lg:flex absolute gap-2 z-10 border-none top-[28%] -right-16 w-56 p-4 shadow-xl outline outline-[2px] outline-dashed outline-neutral-500 outline-offset-4 text-left bg-gradient-to-r from-neutral-50 to-neutral-200 text-neutral-950"
+            >
+              <CardTitle className="text-sm font-semibold">🔥 Set Goals</CardTitle>
+              <CardDescription className="text-xs w-full text-neutral-600">
+                Stay consistent and remain accountable with daily or weekly
+                targets.
+              </CardDescription>
+            </Card>
+
+            <Card
+              role="region"
+              aria-label="Analytics feature"
+              className=" hidden lg:flex absolute gap-2 z-10 -bottom-10 left-[45%] w-56 p-4 shadow-xl border-none outline outline-[2px] outline-dashed outline-neutral-500 outline-offset-4 text-left bg-gradient-to-r from-neutral-50 to-neutral-200 text-neutral-950"
+            >
+              <CardTitle className="text-sm font-semibold">
+                📈 Get Analytics
+              </CardTitle>
+              <CardDescription className="text-xs w-full text-neutral-600">
+                See your progress with clean, easy-to-read charts and graphs.
+              </CardDescription>
+            </Card>
+          </div>
+
+          {/* Social Proof  */}
+
+          <div className="mt-20 px-4 text-center items-center flex flex-col  gap-2 w-full text-neutral-950">
+            <p className="">Track job applications from</p>
+            <div className="flex flex-row gap-8 w-full items-center justify-center max-w-xl mx-4">
+              <IndeedLogo className="h-10 w-20 " />
+              <LinkedInLogo className="h-10 w-20 " />
+              <GlassdoorLogo className="h-10 w-20 " />
+            </div>
           </div>
         </div>
+
         {/* Colour Divider */}
-        <div className="w-full h-12 relative overflow-hidden ">
+        {/* <div className="w-full h-12 relative overflow-hidden ">
           <div className="absolute inset-0 bg-background clip-diagonal-bl-to-tr" />
-        </div>
-      </section>
-      {/* Problem Section */}
-      <section className="py-16 px-4 max-w-3xl text-center">
-        <h2 className="text-3xl font-semibold text-neutral-900 mb-6">
-          Job hunting shouldn't feel like this
-        </h2>
-        <ul className="text-neutral-700 space-y-4 text-lg">
-          <li>😩 Lost track of where you applied</li>
-          <li>📅 Forgot to follow up on time</li>
-          <li>📊 No clue how your job hunt is going</li>
-          <li>🧮 Spreadsheets, notes, and tabs everywhere</li>
-        </ul>
-      </section>
-      {/* Key features */}
-      <section className="py-16 px-4 max-w-5xl text-center">
-        <h2 className="text-3xl font-semibold text-neutral-900 mb-10">
-          Everything you need to stay organised
-        </h2>
-        <div className="grid md:grid-cols-3 gap-8 text-left">
-          <div>
-            <h3 className="font-semibold text-lg text-neutral-900">
-              📁 Track applications
-            </h3>
-            <p className="text-neutral-700">
-              Log roles, statuses, notes, and deadlines — all in one place.
-            </p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-lg text-neutral-900">
-              📅 Daily/Weekly goals
-            </h3>
-            <p className="text-neutral-700">
-              Set targets and keep your momentum going.
-            </p>
-          </div>
-          <div>
-            <h3 className="font-semibold text-lg text-neutral-900">
-              📊 Visual analytics
-            </h3>
-            <p className="text-neutral-700">
-              See your streaks, activity, and response rates over time.
-            </p>
-          </div>
-        </div>
-      </section>
-      {/* Images */}
-      <section>Screenshot</section>
-      {/* Testimoial */}
-      <section className="py-16 px-4 max-w-3xl text-center">
-        <h2 className="text-2xl font-semibold mb-8">Loved by early users</h2>
-        <blockquote className="text-neutral-800 italic">
-          “I finally stopped using Google Sheets. This is exactly what I
-          needed.”
-          <footer className="mt-4 text-sm text-neutral-500">
-            – Early Beta User
-          </footer>
-        </blockquote>
-      </section>
-      {/* Final CTA */}
-      <section className="py-20 px-4 bg-purple-50 w-full text-center">
-        <h2 className="text-3xl font-bold mb-4 text-neutral-900">
-          Ready to take control of your job search?
-        </h2>
-        <p className="text-neutral-700 mb-6">
-          Track your progress, stay motivated, and get hired faster.
-        </p>
-        <Button
-          asChild
-          className="text-white font-semibold bg-gradient-to-r from-purple-500 to-purple-700 hover:from-purple-600 hover:to-purple-800"
-        >
-          <Link href="/login">Start Tracking for Free</Link>
-        </Button>
+        </div> */}
       </section>
     </main>
   );
