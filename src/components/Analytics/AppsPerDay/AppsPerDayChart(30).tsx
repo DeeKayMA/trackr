@@ -1,9 +1,9 @@
 "use client";
-import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
-import { useEffect, useState } from "react";
-import { supabaseBrowser } from "@/lib/supabase/supabase";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
+import { useEffect, useState } from "react";
+import { Area, AreaChart, CartesianGrid, XAxis } from "recharts";
 
 import {
   Card,

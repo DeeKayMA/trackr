@@ -1,9 +1,9 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { StatusBreakdownChart } from "@/components/Analytics/BreakdownCharts/StatusBreakdownChart";
 import { JobTypeBreakdownChart } from "@/components/Analytics/BreakdownCharts/JobTypeBreakdownChart";
+import { StatusBreakdownChart } from "@/components/Analytics/BreakdownCharts/StatusBreakdownChart";
 import { WorkModelBreakdownChart } from "@/components/Analytics/BreakdownCharts/WorkModelBreakdownChart";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 
 export const BreakdownChartsTabs = () => {

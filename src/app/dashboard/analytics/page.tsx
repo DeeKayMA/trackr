@@ -1,12 +1,12 @@
 // Analytics page on the dashboard
-import { StreakCard } from "@/components/Analytics/Streaks/StreakCard";
-import { LongestStreakCard } from "@/components/Analytics/Streaks/LongestStreakCard";
-import { TotalAppsStatCard } from "@/components/Analytics/TotalAppsStatCard";
-import { UpcomingInterviewsCard } from "@/components/Analytics/UpcomingInterviewsCard";
-import { CurrentOffersCard } from "@/components/Analytics/CurrentOffersCard";
 import { AppsPerDayTabs } from "@/components/Analytics/AppsPerDay/AppsPerDayTabs";
 import { BreakdownChartsTabs } from "@/components/Analytics/BreakdownCharts/BreakdownChartTabs";
+import { CurrentOffersCard } from "@/components/Analytics/CurrentOffersCard";
 import { MostActivityTabs } from "@/components/Analytics/MostActivity/MostActivityTabs";
+import { LongestStreakCard } from "@/components/Analytics/Streaks/LongestStreakCard";
+import { StreakCard } from "@/components/Analytics/Streaks/StreakCard";
+import { TotalAppsStatCard } from "@/components/Analytics/TotalAppsStatCard";
+import { UpcomingInterviewsCard } from "@/components/Analytics/UpcomingInterviewsCard";
 
 
 export default function Analytics() {

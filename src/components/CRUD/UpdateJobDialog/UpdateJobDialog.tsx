@@ -2,13 +2,12 @@
 
 import { JobForm } from "@/components/Forms/JobForm";
 import { Button } from "@/components/ui/button";
-import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
-import { useRef, useEffect, useState, use } from "react";
-import { useParams } from "next/navigation";
-import { toast } from "sonner"
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { useMediaQuery } from "@react-hook/media-query";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
 import { convertToUTC } from "@/lib/utils/dateutils";
+import { useMediaQuery } from "@react-hook/media-query";
+import { useRef } from "react";
+import { toast } from "sonner";
 
 
 import {
@@ -16,13 +15,11 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
-  DialogTitle,
-  DialogTrigger,
+  DialogTitle
 } from "@/components/ui/dialog";
 
-import { Drawer, DrawerContent, DrawerTrigger, DrawerClose } from "@/components/ui/drawer";
+import { Drawer, DrawerClose, DrawerContent, DrawerTrigger } from "@/components/ui/drawer";
 
 
 

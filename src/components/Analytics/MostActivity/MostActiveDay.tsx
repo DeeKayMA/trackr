@@ -1,17 +1,16 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabaseBrowser } from "@/lib/supabase/supabase";
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
+import { useEffect, useState } from "react";
 
 type StreakCardProps = {
   className: string;

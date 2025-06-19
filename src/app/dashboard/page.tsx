@@ -1,17 +1,13 @@
 "use client";
 
-import { TempCard } from "@/components/temp/TempCard";
-import { useEffect } from "react";
-import { loadUserProfile } from "@/lib/helpers/loadUserProfile";
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { AppsPerDayChart7 } from "@/components/Analytics/AppsPerDay/AppsPerDayChart(7)";
+import { StatusBreakdownChart } from "@/components/Analytics/BreakdownCharts/StatusBreakdownChart";
 import { StreakCard } from "@/components/Analytics/Streaks/StreakCard";
 import { DailyTargetCard } from "@/components/Analytics/Targets/DailyTargetCard";
 import { WeeklyTargetCard } from "@/components/Analytics/Targets/WeeklyTargetCard";
-import { AppsPerDayChart7 } from "@/components/Analytics/AppsPerDay/AppsPerDayChart(7)";
-import { StatusBreakdownChart } from "@/components/Analytics/BreakdownCharts/StatusBreakdownChart";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
-import { BriefcaseBusiness, ChartColumnIncreasing, CircleUser } from "lucide-react";
+import { loadUserProfile } from "@/lib/helpers/loadUserProfile";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { useEffect } from "react";
 
 
 export default function Dashboard() {

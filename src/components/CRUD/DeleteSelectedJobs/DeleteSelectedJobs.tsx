@@ -4,19 +4,18 @@ import { Button } from "@/components/ui/button";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
   DialogTitle,
-  DialogClose,
-  DialogFooter,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
 import { toast } from "sonner";
 
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
 import { useJobStore } from "@/lib/store/useJobStore";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
 
 import { Trash2 } from "lucide-react";
 

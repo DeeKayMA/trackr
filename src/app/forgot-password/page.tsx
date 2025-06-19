@@ -1,7 +1,5 @@
 "use client";
 
-import { useState } from "react";
-import { Crosshair } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -10,11 +8,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils/utils";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/lib/supabase/supabase";
+import { cn } from "@/lib/utils/utils";
 import Link from "next/link";
+import { useState } from "react";
 
 export default function ForgotPasswordPage() {
   const [email, setEmail] = useState("");

@@ -2,22 +2,22 @@
 "use client";
 import * as React from "react";
 
-import { useEffect } from "react";
+import { StausFilterCombo } from "@/components/StatusFilterCombo/StatusFilterCombo";
 import { useJobStore } from "@/lib/store/useJobStore";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { StausFilterCombo } from "@/components/StatusFilterCombo/StatusFilterCombo";
+import { useEffect } from "react";
 
 import {
   ColumnDef,
   ColumnFiltersState,
   flexRender,
-  SortingState,
-  VisibilityState,
   getCoreRowModel,
-  useReactTable,
+  getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  getFilteredRowModel,
+  SortingState,
+  useReactTable,
+  VisibilityState,
 } from "@tanstack/react-table";
 
 import {
@@ -29,9 +29,9 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+import { DeleteSelectedJobs } from "@/components/CRUD/DeleteSelectedJobs/DeleteSelectedJobs";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { DeleteSelectedJobs } from "@/components/CRUD/DeleteSelectedJobs/DeleteSelectedJobs";
 
 import {
   Select,
@@ -45,22 +45,20 @@ import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
-  DropdownMenuTrigger,
-  DropdownMenuSeparator,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
 import { Input } from "@/components/ui/input";
 
 import {
-  Columns2,
-  Eye,
-  Settings2,
-  ChevronRightIcon,
-  ChevronsRightIcon,
   ChevronLeftIcon,
+  ChevronRightIcon,
   ChevronsLeftIcon,
-  X,
+  ChevronsRightIcon,
+  Settings2,
+  X
 } from "lucide-react";
 
 interface DataTableProps<TData, TValue> {

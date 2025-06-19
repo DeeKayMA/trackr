@@ -2,30 +2,28 @@
 
 import { JobForm } from "@/components/Forms/JobForm";
 import { Button } from "@/components/ui/button";
-import { supabase, supabaseBrowser } from "@/lib/supabase/supabase";
-import { useRef } from "react";
-import { toast } from "sonner";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { useEffect, useState } from "react";
-import { useMediaQuery } from "@react-hook/media-query";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
 import { convertToUTC } from "@/lib/utils/dateutils";
+import { useMediaQuery } from "@react-hook/media-query";
+import { useEffect, useRef, useState } from "react";
+import { toast } from "sonner";
 
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
 
 import {
   Drawer,
+  DrawerClose,
   DrawerContent,
   DrawerTrigger,
-  DrawerClose,
 } from "@/components/ui/drawer";
 
 type AddJobDialogProps = {};

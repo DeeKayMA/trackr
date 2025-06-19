@@ -1,5 +1,4 @@
 // Resource page on the dashboard
-import Header from "@/components/Header/Header";
 import { ProfileForm } from "@/components/Forms/ProfileForm";
 
 export default function Analytics() {

@@ -1,6 +1,5 @@
 import { signup } from '@/app/login/actions'
 
-import { cn } from "@/lib/utils/utils"
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -11,6 +10,7 @@ import {
 } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils/utils"
 
 export function SignUpForm({
   className,

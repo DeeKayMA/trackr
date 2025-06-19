@@ -1,23 +1,19 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import LandingHeader from "@/components/Header/LandingHeader";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import {
+  GlassdoorLogo,
   IndeedLogo,
   LinkedInLogo,
-  GlassdoorLogo,
 } from "@/CompanyLogos/CompanyLogos";
-import Image from "next/image";
+import LandingHeader from "@/components/Header/LandingHeader";
+import { Button } from "@/components/ui/button";
 import {
   Card,
-  CardAction,
-  CardContent,
   CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card";
+import { createClient } from "@/lib/supabase/server";
+import Image from "next/image";
+import Link from "next/link";
+import { redirect } from "next/navigation";
 
 export default async function HomePage() {
   const supabase = await createClient();

@@ -1,11 +1,11 @@
 'use client'
 
-import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
 import { LoginForm } from "@/components/Forms/login-form";
 import { SignUpForm } from "@/components/Forms/singup-form";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
+import { useMemo } from "react";
 
 export default function LoginPage() {
   const searchParams = useSearchParams();

@@ -1,10 +1,9 @@
 "use client";
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MostActiveDay } from "@/components/Analytics/MostActivity/MostActiveDay";
-import { MostActiveWeek } from "@/components/Analytics/MostActivity/MostActiveWeek";
 import { MostActiveMonth } from "@/components/Analytics/MostActivity/MostActiveMonth";
-
+import { MostActiveWeek } from "@/components/Analytics/MostActivity/MostActiveWeek";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export const MostActivityTabs = () => {
   return (
@@ -13,19 +12,16 @@ export const MostActivityTabs = () => {
         <TabsTrigger value="Day">Day</TabsTrigger>
         <TabsTrigger value="Week">Week</TabsTrigger>
         <TabsTrigger value="Month">Month</TabsTrigger>
-        
       </TabsList>
       <TabsContent value="Day">
-        <MostActiveDay className="h-full"/>
+        <MostActiveDay className="h-full" />
       </TabsContent>
       <TabsContent value="Week">
-        <MostActiveWeek className="h-full"/>
+        <MostActiveWeek className="h-full" />
       </TabsContent>
       <TabsContent value="Month">
-        <MostActiveMonth className="h-full"/>
+        <MostActiveMonth className="h-full" />
       </TabsContent>
-      
-      
     </Tabs>
   );
 };

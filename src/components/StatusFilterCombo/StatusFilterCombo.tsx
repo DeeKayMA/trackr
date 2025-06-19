@@ -4,7 +4,6 @@ import * as React from "react";
 
 import { useMediaQuery } from "@react-hook/media-query";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 import {
   CirclePlus,

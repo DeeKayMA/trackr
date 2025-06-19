@@ -1,11 +1,11 @@
 "use client";
 
-import { Job, columns } from "./columns";
-import { DataTable } from "./data-table";
+import { Skeleton } from "@/components/ui/skeleton";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
 import { useEffect, useState } from "react";
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Job, columns } from "./columns";
+import { DataTable } from "./data-table";
 
 export default function Jobs() {
   const [error, setError] = useState<string | null>(null);

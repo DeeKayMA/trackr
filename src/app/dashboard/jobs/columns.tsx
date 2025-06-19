@@ -1,13 +1,13 @@
 // (client component) will contain our column definitions.
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
-import { ColumnDef } from "@tanstack/react-table";
-import { UpdateJobDialog } from "@/components/CRUD/UpdateJobDialog/UpdateJobDialog";
 import { DeleteJobDialog } from "@/components/CRUD/DeleteJobDialog/DeleteJobDialog";
+import { UpdateJobDialog } from "@/components/CRUD/UpdateJobDialog/UpdateJobDialog";
 import { NotesDialog } from "@/components/NotesDialog/NotesDialog";
 import { useUserStore } from "@/lib/store/useUserStore";
+import { ColumnDef } from "@tanstack/react-table";
 
 
 import { Button } from "@/components/ui/button";
@@ -24,15 +24,14 @@ import { Badge } from "@/components/ui/badge";
 
 import {
   ArrowUpDown,
-  ExternalLink,
-  CheckCircle2Icon,
-  LoaderIcon,
-  PhoneCallIcon,
-  HandshakeIcon,
-  XCircleIcon,
   BookmarkIcon,
+  CheckCircle2Icon,
+  HandshakeIcon,
+  LoaderIcon,
   MoreHorizontal,
+  PhoneCallIcon,
   Undo,
+  XCircleIcon
 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";

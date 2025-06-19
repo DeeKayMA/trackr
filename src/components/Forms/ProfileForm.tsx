@@ -1,8 +1,5 @@
 "use client";
-import { supabaseBrowser } from "@/lib/supabase/supabase";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -12,6 +9,7 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
@@ -19,12 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
-import { useEffect, useState } from "react";
 import { useRefreshUserDetailsStore } from "@/lib/store/useRefreshUserDetailsStore";
 import { useUserStore } from "@/lib/store/useUserStore";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+import { z } from "zod";
 
 
 

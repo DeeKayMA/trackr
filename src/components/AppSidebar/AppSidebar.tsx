@@ -1,12 +1,9 @@
 "use client";
 
 import {
-  Book,
-  LayoutDashboardIcon,
   BriefcaseBusiness,
   ChartColumnIncreasing,
-  Home,
-  Crosshair,
+  Home
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -14,20 +11,20 @@ import { usePathname } from "next/navigation";
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarHeader,
-  SidebarFooter,
 } from "@/components/ui/sidebar";
 
-import { useEffect, useState } from "react";
-import { supabaseBrowser } from "@/lib/supabase/supabase";
-import NavUser from "../NavUser/NavUser";
 import { useRefreshUserDetailsStore } from "@/lib/store/useRefreshUserDetailsStore";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
+import { useEffect, useState } from "react";
+import NavUser from "../NavUser/NavUser";
 
 // Menu items.
 const menuItems = [

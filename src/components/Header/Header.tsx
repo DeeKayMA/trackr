@@ -4,12 +4,12 @@ type HeaderProps = {
   title: string;
 };
 
+import { ModeToggle } from "@/components/Theme/ModeToggle";
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import dynamic from "next/dynamic";
 import { usePathname } from "next/navigation";
-import { ModeToggle } from "@/components/Theme/ModeToggle";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const AddJobDialog = dynamic(() => import("@/components/CRUD/AddJobDialog/AddJobDialog"), {
   ssr: false,

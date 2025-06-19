@@ -1,26 +1,25 @@
 
 "use client"
-import { Pie, PieChart } from "recharts"
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
-  CardTitle,
+  CardTitle
 } from "@/components/ui/card"
 import {
   ChartConfig,
   ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
   ChartLegend,
   ChartLegendContent,
+  ChartTooltip,
+  ChartTooltipContent,
 } from "@/components/ui/chart"
-import { useState, useEffect } from "react"
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { Skeleton } from "@/components/ui/skeleton";
+import { Skeleton } from "@/components/ui/skeleton"
+import { useRefreshStore } from "@/lib/store/useRefreshStore"
 import { supabaseBrowser } from "@/lib/supabase/supabase"
+import { useEffect, useState } from "react"
+import { Pie, PieChart } from "recharts"
 
 
 export const description = "A pie chart showing the work model breakdown of all the users applications"

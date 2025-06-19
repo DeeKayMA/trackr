@@ -1,11 +1,11 @@
 'use client'
 
-import { JobForm } from "@/components/JobForm/JobForm";
+import { JobForm } from "@/components/Forms/JobForm";
 import { Button } from "@/components/ui/button";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { supabase } from "@/lib/supabase/supabase";
 import { useRef } from "react";
-import { toast } from "sonner"
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { toast } from "sonner";
 
 
 
@@ -14,10 +14,9 @@ import {
   DialogClose,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
+  DialogTrigger
 } from "@/components/ui/dialog";
 
 type AddJobDialogProps = {

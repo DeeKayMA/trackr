@@ -1,8 +1,5 @@
 "use client";
 
-import { usePathname } from "next/navigation";
-import { ModeToggle } from "@/components/Theme/ModeToggle";
-import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 

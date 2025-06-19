@@ -1,17 +1,17 @@
 "use client";
 
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
 
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogClose,
-  DialogFooter,
 } from "@/components/ui/dialog";
-import { toast } from "sonner"
+import { toast } from "sonner";
 
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { supabase } from "@/lib/supabase/supabase";

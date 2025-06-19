@@ -1,18 +1,18 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { supabaseBrowser } from "@/lib/supabase/supabase";
-import { useRefreshStore } from "@/lib/store/useRefreshStore";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useRefreshStore } from "@/lib/store/useRefreshStore";
+import { supabaseBrowser } from "@/lib/supabase/supabase";
 import {
-  startOfWeek,
   endOfWeek,
   format,
   getISOWeek,
   getISOWeekYear,
+  startOfWeek,
 } from "date-fns";
+import { useEffect, useState } from "react";
 
 type StreakCardProps = {
   className: string;
