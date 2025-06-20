@@ -63,7 +63,7 @@ export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, sta
           <div className="mt-4">
             <JobForm 
             submitName="Update Job"
-            id={id}
+            // id={id}
             company={company}
             position={position}
             status={status}
@@ -133,7 +133,7 @@ export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, sta
           <div className="mt-8 overflow-auto">
             <JobForm 
             submitName="Update Job"
-            id={id}
+            // id={id}
             company={company}
             position={position}
             status={status}
