@@ -60,7 +60,7 @@ export const LongestStreakCard = ({ className }: LongestStreakCardProps) => {
       setAppliedToday(appliedToday);
 
       // Count streak (excluding today if not applied)
-      let current = new Date();
+      const current = new Date();
       if (!appliedToday) current.setDate(current.getDate() - 1); // start from yesterday
 
       let currentStreakCount = 0;

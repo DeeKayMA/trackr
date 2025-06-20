@@ -65,10 +65,12 @@ const formSchema = z.object({
   notes: z.string().optional(),
 });
 
+type JobFormData = z.infer<typeof formSchema>;
+
 type JobFormProps = {
   submitName?: string;
-  onSubmit?: (values: any) => void;
-  id?: string;
+  onSubmit?: (values: JobFormData) => void;
+  // id?: string;
   company?: string;
   position?: string;
   status?: string;
@@ -84,7 +86,7 @@ type JobFormProps = {
   url?: string;
 };
 
-export const JobForm = ({ submitName = "Submit", onSubmit, id, company, position, status, date_applied, closing_date, frequency, location, work_model, job_type, salary_min, salary_max, notes, url }: JobFormProps) => {
+export const JobForm = ({ submitName = "Submit", onSubmit, company, position, status, date_applied, closing_date, frequency, location, work_model, job_type, salary_min, salary_max, notes, url }: JobFormProps) => {
 
   
   const form = useForm<z.infer<typeof formSchema>>({

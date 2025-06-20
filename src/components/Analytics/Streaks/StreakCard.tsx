@@ -66,7 +66,7 @@ export const StreakCard = ({ className }: StreakCardProps) => {
       setAppliedToday(hasAppliedToday);
 
       // Count streak backwards from today (or yesterday)
-      let current = new Date();
+      const current = new Date();
       if (!hasAppliedToday) current.setDate(current.getDate() - 1);
 
       let streakCount = 0;

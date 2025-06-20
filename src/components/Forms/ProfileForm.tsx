@@ -42,7 +42,7 @@ export function ProfileForm() {
   const [userId, setUserId] = useState<string | null | undefined>(null);
   const [email, setEmail] = useState<string | null | undefined>(null);
   const [loading, setLoading] = useState(true);
-  const { refresh, setRefresh } = useRefreshUserDetailsStore();
+  const { setRefresh } = useRefreshUserDetailsStore();
   const { setCurrency, setDailyGoal, setWeeklyGoal } = useUserStore();
   
   // const setCurrency = useUserStore((state) => state.setCurrency);

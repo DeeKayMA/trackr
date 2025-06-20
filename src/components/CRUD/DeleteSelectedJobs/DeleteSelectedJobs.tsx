@@ -24,18 +24,13 @@ type DeleteSelectedJobs = {
 };
 
 export const DeleteSelectedJobs = ({ ids }: DeleteSelectedJobs) => {
-  const { refresh, setRefresh } = useRefreshStore();
-  const { selectedJobIds, setSelectedJobIds } = useJobStore();
-  const clearSelectedJobIds = useJobStore((state) => state.clearSelectedJobIds);
+  const { setRefresh } = useRefreshStore();
+  const { setSelectedJobIds } = useJobStore();
 
   return (
     <Dialog>
       <DialogTrigger asChild>
         {ids.length === 0 ? (
-          //Button disabled until ids > 0
-          // <Button disabled variant="secondary">
-          //   Delete
-          // </Button>
           <Button
             className=" hidden bg-red-500/10 hover:bg-red-500/30 text-red-500 transition-all duration-150 ease-in-out"
             size="icon"

@@ -46,7 +46,7 @@ type UpdateJobDialogProps = {
 
 export const UpdateJobDialog = ({ open, onOpenChange, id, company, position, status, date_applied, closing_date, location, work_model, job_type, salary_min, salary_max, frequency, notes, url }: UpdateJobDialogProps) => {
     const closeRef = useRef<HTMLButtonElement>(null);
-    const { refresh, setRefresh } = useRefreshStore();
+    const { setRefresh } = useRefreshStore();
     const isDesktop = useMediaQuery("(min-width: 768px)");
 
     if (isDesktop) {
