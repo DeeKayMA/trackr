@@ -57,7 +57,7 @@ export async function updateSession(request: NextRequest) {
   if (
     !user &&
     // These are safe for unauthenticated users
-    !['/login', '/check-email', '/auth', '/' , '/dashboard', '/forgot-password' , '/reset-password' ].some((path) =>
+    !['/login', '/check-email', '/auth', '/', '/forgot-password' , '/reset-password' ].some((path) =>
       request.nextUrl.pathname === path || request.nextUrl.pathname.startsWith(`${path}/`)
   )) {
     // Redirect guest to login
