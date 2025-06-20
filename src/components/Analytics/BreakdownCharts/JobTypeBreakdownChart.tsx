@@ -90,8 +90,8 @@ export const JobTypeBreakdownChart = ({ className }: JobTypeBreakdownChartProps)
         .select("job_type")
         .eq("user_id", user.id)
 
-      if (error || !data) {
-        console.error("Error fetching statuses:", error);
+      if (fetchError || !data) {
+        console.error("Error fetching statuses:", fetchError);
         return;
       }
 
@@ -142,8 +142,8 @@ export const JobTypeBreakdownChart = ({ className }: JobTypeBreakdownChartProps)
       <CardContent className="flex-1 pb-0 align-center">
         {chartData.length === 0 ? (
           <div className="flex flex-col h-full items-center justify-center w-full">
-            <p className="text-primary text-lg font-semibold">I'm glad you're persistent</p>
-            <p className="text-muted-foreground">You'll need that for the job hunt anyway.</p>
+            <p className="text-primary text-lg font-semibold">I&apos;m glad you&apos;re persistent</p>
+            <p className="text-muted-foreground">You&apos;ll need that for the job hunt anyway.</p>
           </div>
         ) : (<ChartContainer
           config={chartConfig}

@@ -83,8 +83,8 @@ export const StatusBreakdownChart = ({
         .select("status")
         .eq("user_id", user.id);
 
-      if (error || !data) {
-        console.error("Error fetching statuses:", error);
+      if (fetchError || !data) {
+        console.error("Error fetching statuses:", fetchError);
         return;
       }
 
@@ -133,7 +133,7 @@ export const StatusBreakdownChart = ({
         {chartData.length === 0 ? (
           <div className="flex flex-col h-full items-center justify-center w-full">
             <p className="text-primary text-lg font-semibold">Nothing to show yet</p>
-            <p className="text-muted-foreground">Add a few jobs, we'll make it pretty.</p>
+            <p className="text-muted-foreground">Add a few jobs, we&apos;ll make it pretty.</p>
           </div>
         ) : (
           <ChartContainer
