@@ -155,7 +155,9 @@ export const LongestStreakCard = ({ className }: LongestStreakCardProps) => {
 
       <CardFooter>
         <p className="text-sm text-muted-foreground">
-          {isPersonalBest
+          {isPersonalBest && !appliedToday
+            ? `Apply today to extend your personal best 💪` :
+            isPersonalBest && appliedToday
             ? `You're at your personal best! Keep it up! 🔥`
             : longestStreak > 0
             ? `Your record is ${longestStreak} ${
@@ -163,7 +165,7 @@ export const LongestStreakCard = ({ className }: LongestStreakCardProps) => {
               }. Current streak: ${currentStreak} ${
                 currentStreak === 1 ? "day" : "days"
               }`
-            : "Start applying daily to build your streak! 💼"}
+             :"Start applying daily to build your streak! 💼"}
         </p>
       </CardFooter>
     </Card>
