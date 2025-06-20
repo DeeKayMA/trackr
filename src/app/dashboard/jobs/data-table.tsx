@@ -137,7 +137,7 @@ export function DataTable<TData, TValue>({
   useEffect(() => {
     const selectedIDs = table
       .getSelectedRowModel()
-      .rows.map((row) => Number((row.original as any).id))
+      .rows.map((row) => Number((row.original as { id: string | number }).id))
       .filter((id) => !isNaN(id));
 
     setSelectedJobIds(selectedIDs);
