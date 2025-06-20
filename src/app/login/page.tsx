@@ -1,13 +1,10 @@
-// This stays server-side — NO 'use client'
-import LoginTabs from "./LoginTabs";
-import { LoginForm } from "@/components/Forms/login-form";
-import { SignUpForm } from "@/components/Forms/singup-form";
+import { Suspense } from "react";
+import LoginTabs from "./LoginTabs"; // client component
 
 export default function LoginPage() {
   return (
-    <LoginTabs 
-      loginForm={<LoginForm />} 
-      signupForm={<SignUpForm />} 
-    />
+    <Suspense fallback={<div className="text-center">Loading...</div>}>
+      <LoginTabs />
+    </Suspense>
   );
 }

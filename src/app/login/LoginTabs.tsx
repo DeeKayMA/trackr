@@ -1,16 +1,14 @@
+// /app/login/LoginTabs.tsx
 'use client'
 
 import { useSearchParams } from 'next/navigation';
 import { useMemo } from 'react';
 import Link from 'next/link';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { LoginForm } from '@/components/Forms/login-form';
+import { SignUpForm } from '@/components/Forms/singup-form';
 
-type LoginTabsProps = {
-  loginForm: React.ReactNode;
-  signupForm: React.ReactNode;
-};
-
-export default function LoginTabs({ loginForm, signupForm }: LoginTabsProps) {
+export default function LoginTabs() {
   const searchParams = useSearchParams();
 
   const initialTab = useMemo(() => {
@@ -32,8 +30,12 @@ export default function LoginTabs({ loginForm, signupForm }: LoginTabsProps) {
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="signup">Sign up</TabsTrigger>
           </TabsList>
-          <TabsContent value="login">{loginForm}</TabsContent>
-          <TabsContent value="signup">{signupForm}</TabsContent>
+          <TabsContent value="login">
+            <LoginForm />
+          </TabsContent>
+          <TabsContent value="signup">
+            <SignUpForm />
+          </TabsContent>
         </Tabs>
       </div>
     </div>
