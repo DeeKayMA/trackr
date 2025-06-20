@@ -68,7 +68,7 @@ export default async function HomePage() {
 
           <div className="w-full max-w-[1000px] relative rounded-lg shadow-2xl overflow-visible">
             {/* Browser Topbar */}
-            <div className="bg-neutral-800 w-full flex flex-row items-center py-2 px-2 gap-2 rounded-t-lg">
+            <div className="bg-neutral-800 w-full flex flex-row items-center p-1.5 sm:p-2 md:p-2 lg:p-2 gap-1.5 sm:gap-2 md:gap-2 lg:gap-2 rounded-t-lg">
               <div className="rounded-full h-2 w-2 bg-red-500" />
               <div className="rounded-full h-2 w-2 bg-amber-500" />
               <div className="rounded-full h-2 w-2 bg-green-500" />
