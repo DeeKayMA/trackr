@@ -26,11 +26,10 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 
-type AddJobDialogProps = {};
 
-const AddJobDialog = ({}: AddJobDialogProps) => {
+const AddJobDialog = () => {
   const closeRef = useRef<HTMLButtonElement>(null);
-  const { refresh, setRefresh } = useRefreshStore();
+  const { setRefresh } = useRefreshStore();
   const [userId, setUserId] = useState<string | null>(null);
   const isDesktop = useMediaQuery("(min-width: 768px)");
 
