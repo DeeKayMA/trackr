@@ -1,8 +1,5 @@
 'use client'
 
-type HeaderProps = {
-  title: string;
-};
 
 import { ModeToggle } from "@/components/Theme/ModeToggle";
 import { Separator } from "@/components/ui/separator";
@@ -20,8 +17,11 @@ export default function Header() {
   const [mounted, setMounted] = useState(false);
 
     useEffect(() => {
+      
     setMounted(true);
   }, []);
+
+  if (!mounted) return <div>Loading...</div>;
 
   const titleMap: Record<string, string> = {
     "/dashboard": "Home",
