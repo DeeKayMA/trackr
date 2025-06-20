@@ -39,7 +39,7 @@ export const NotesDialog = ({
         {note ? (
           <p className={"my-4"}>{note}</p>
         ) : (
-           <p className="my-4 text-sm"> <span className="text-lg mb-2 font-semibold">No notes yet.</span><br/> You can add notes by clicking <span className="font-medium">"Edit Job"</span> and filling in the <span className="font-medium">"Notes"</span> field.</p>
+           <p className="my-4 text-sm"> <span className="text-lg mb-2 font-semibold">No notes yet.</span><br/> You can add notes by clicking <span className="font-medium">&quot;Edit Job&quot;</span> and filling in the <span className="font-medium">&quot;Notes&quot;</span> field.</p>
         )}
 
         {/* <p className={'my-4'}>{note || "No notes for this role"}</p> */}
