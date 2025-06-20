@@ -106,7 +106,7 @@ export function DataTable<TData, TValue>({
 
   const [rowSelection, setRowSelection] = React.useState({});
 
-  const [globalFilter, setGlobalFilter] = React.useState<any>([]);
+  const [globalFilter, setGlobalFilter] = React.useState<string>("");
   const { refresh } = useRefreshStore();
 
   const table = useReactTable({
@@ -132,6 +132,7 @@ export function DataTable<TData, TValue>({
 
   const setSelectedJobIds = useJobStore((state) => state.setSelectedJobIds);
   const ids = useJobStore((state) => state.selectedJobIds);
+  const selectedRows = table.getSelectedRowModel().rows
 
   useEffect(() => {
     const selectedIDs = table
@@ -140,7 +141,7 @@ export function DataTable<TData, TValue>({
       .filter((id) => !isNaN(id));
 
     setSelectedJobIds(selectedIDs);
-  }, [table.getSelectedRowModel().rows, setSelectedJobIds]);
+  }, [selectedRows, setSelectedJobIds]);
 
   useEffect(() => {
     if (refresh) {
