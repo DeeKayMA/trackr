@@ -26,7 +26,7 @@ type DeleteJobDialogProps = {
 };
 
 export const DeleteJobDialog = ({ open, onOpenChange, id, company, position}: DeleteJobDialogProps) => {
-    const { refresh, setRefresh } = useRefreshStore();
+    const { setRefresh } = useRefreshStore();
     const closeRef = useRef<HTMLButtonElement>(null);
 
   return (
