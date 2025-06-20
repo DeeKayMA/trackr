@@ -25,7 +25,7 @@ export default function LoginTabs() {
           </span>
         </Link>
 
-        <Tabs defaultValue={initialTab} className="w-[400px]">
+        <Tabs defaultValue={initialTab} className="w-full max-w-sm">
           <TabsList className="w-full">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="signup">Sign up</TabsTrigger>
