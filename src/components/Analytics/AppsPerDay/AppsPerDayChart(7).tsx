@@ -140,7 +140,10 @@ export const AppsPerDayChart7 = ({ className }: AppsPerDayChartProps) => {
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3) + " " + value.slice(5, 7) }
+              tickFormatter={(value) => {
+                const [weekday, day, month] = value.replace(",", "").split(" ");
+                return `${weekday} ${day}`;
+              }}
             />
             <ChartTooltip
               cursor={false}
