@@ -129,7 +129,7 @@ export const AppsPerDayChart30 = ({ className }: AppsPerWeekChartProps) => {
               axisLine={false}
               tickMargin={8}
               tickFormatter={(value) => {
-                const [weekday, day, month] = value.replace(",", "").split(" ");
+                const [weekday, day] = value.replace(",", "").split(" ");
                 return `${weekday} ${day}`;
               }}
             />
