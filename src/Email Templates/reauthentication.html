@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Confirm Reauthentication</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+      background: #f9fafb;
+      color: #111827;
+      margin: 0;
+      padding: 0;
+    }
+
+    .wrapper {
+      padding: 40px 24px;
+    }
+
+    .container {
+      max-width: 560px;
+      width: 100%;
+      margin: 0 auto;
+      padding: 40px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+      box-sizing: border-box;
+    }
+
+    h2 {
+      color: #111827;
+    }
+
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .kbd-token {
+      display: inline-block;
+      font-size: 18px;
+      font-weight: 600;
+      background: #f3f4f6;
+      border: 1px dashed #d8b4fe;
+      border-radius: 8px;
+      padding: 8px 16px;
+      letter-spacing: 2px;
+      color: #6b21a8;
+      margin: 16px 0;
+    }
+
+    .jobora {
+      color: #ad46ff;
+      font-weight: 600;
+    }
+
+    .footer {
+      margin-top: 40px;
+      padding: 16px;
+      font-size: 13px;
+      color: #6b7280;
+      background: #f5f5f5;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      border: dashed 1px #6b72804f;
+      border-radius: 12px;
+      gap: 8px;
+    }
+
+    .footer p,
+    .footer h3 {
+      margin: 0;
+    }
+
+    .footer h3 {
+      font-size: 20px;
+    }
+
+    .footer a {
+      text-decoration: none;
+      color: #6b7280;
+    }
+
+    .footer a:hover {
+      color: #ad46ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="container">
+      <h2>Authenticate with <span class="jobora">Jobora</span> 🔒</h2>
+      <p>You're signing in to your Jobora account. Use the code below to continue:</p>
+      <p><kbd class="kbd-token">{{ .Token }}</kbd></p>
+      <p>If you didn’t request this, you can ignore this email.</p>
+      <div class="footer">
+        <h3 class="jobora">Jobora</h3>
+        <p>The smartest way to track your job search</p>
+        <a href="https://www.jobora.app">www.jobora.app</a>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
