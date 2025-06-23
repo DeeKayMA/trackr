@@ -283,59 +283,9 @@ export function DataTable<TData, TValue>({
         </div>
 
         {/* Pagination Right Content */}
-        <div className="flex flex-col-reverse lg:flex-row w-full items-stretch gap-4 lg:gap-8 lg:w-fit">
-          {/* Pagination controls */}
-          <div className="flex w-full items-center justify-between lg:justify-center lg:w-fit gap-4">
-            {/* Page x of x */}
-            <div className="flex w-fit items-center justify-center text-sm font-medium">
-              Page {table.getState().pagination.pageIndex + 1} of{" "}
-              {table.getPageCount()}
-            </div>
-            {/* Back and next page buttons */}
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                className="hidden h-8 w-8 p-0 lg:flex"
-                onClick={() => table.setPageIndex(0)}
-                disabled={!table.getCanPreviousPage()}
-              >
-                <span className="sr-only">Go to first page</span>
-                <ChevronsLeftIcon />
-              </Button>
-              <Button
-                variant="outline"
-                className="size-8"
-                size="icon"
-                onClick={() => table.previousPage()}
-                disabled={!table.getCanPreviousPage()}
-              >
-                <span className="sr-only">Go to previous page</span>
-                <ChevronLeftIcon />
-              </Button>
-              <Button
-                variant="outline"
-                className="size-8"
-                size="icon"
-                onClick={() => table.nextPage()}
-                disabled={!table.getCanNextPage()}
-              >
-                <span className="sr-only">Go to next page</span>
-                <ChevronRightIcon />
-              </Button>
-              <Button
-                variant="outline"
-                className="hidden size-8 lg:flex"
-                size="icon"
-                onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-                disabled={!table.getCanNextPage()}
-              >
-                <span className="sr-only">Go to last page</span>
-                <ChevronsRightIcon />
-              </Button>
-            </div>
-          </div>
+        <div className="flex w-full items-center gap-8 lg:w-fit">
           {/* Rows per page */}
-          <div className="flex items-center gap-2 w-full lg:w-auto">
+          <div className="flex items-center gap-2">
             <Label htmlFor="rows-per-page" className="text-sm font-medium">
               Rows per page
             </Label>
@@ -345,7 +295,7 @@ export function DataTable<TData, TValue>({
                 table.setPageSize(Number(value));
               }}
             >
-              <SelectTrigger className="w-full lg:w-20" id="rows-per-page">
+              <SelectTrigger className="w-20" id="rows-per-page">
                 <SelectValue
                   placeholder={table.getState().pagination.pageSize}
                 />
@@ -358,6 +308,54 @@ export function DataTable<TData, TValue>({
                 ))}
               </SelectContent>
             </Select>
+          </div>
+
+          {/* Page x of x  */}
+          <div className="flex w-fit items-center justify-center text-sm font-medium">
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </div>
+          {/* Back and next page buttons  */}
+          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+            <Button
+              variant="outline"
+              className="hidden h-8 w-8 p-0 lg:flex"
+              onClick={() => table.setPageIndex(0)}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Go to first page</span>
+              <ChevronsLeftIcon />
+            </Button>
+            <Button
+              variant="outline"
+              className="size-8"
+              size="icon"
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              <span className="sr-only">Go to previous page</span>
+              <ChevronLeftIcon />
+            </Button>
+            <Button
+              variant="outline"
+              className="size-8"
+              size="icon"
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Go to next page</span>
+              <ChevronRightIcon />
+            </Button>
+            <Button
+              variant="outline"
+              className="hidden size-8 lg:flex"
+              size="icon"
+              onClick={() => table.setPageIndex(table.getPageCount() - 1)}
+              disabled={!table.getCanNextPage()}
+            >
+              <span className="sr-only">Go to last page</span>
+              <ChevronsRightIcon />
+            </Button>
           </div>
         </div>
       </div>
