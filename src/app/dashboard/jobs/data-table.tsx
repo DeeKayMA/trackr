@@ -309,7 +309,7 @@ export function DataTable<TData, TValue>({
               </SelectContent>
             </Select>
           </div>
-          <div className="ml-0 sm:ml-auto md:ml-auto lg:ml-0 flex">
+          <div className="ml-0 sm:ml-auto md:ml-auto lg:ml-0 flex gap-4">
             {/* Page x of x  */}
             <div className=" flex w-fit items-center justify-center text-sm font-medium">
               Page {table.getState().pagination.pageIndex + 1} of{" "}
