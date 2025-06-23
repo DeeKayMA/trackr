@@ -283,7 +283,7 @@ export function DataTable<TData, TValue>({
         </div>
 
         {/* Pagination Right Content */}
-        <div className="flex w-full items-center gap-8 lg:w-fit">
+        <div className="flex w-full flex-wrap items-center gap-8 lg:w-fit">
           {/* Rows per page */}
           <div className="flex flex-1 items-center gap-2">
             <Label htmlFor="rows-per-page" className="text-sm font-medium">
