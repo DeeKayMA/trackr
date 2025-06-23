@@ -283,7 +283,7 @@ export function DataTable<TData, TValue>({
         </div>
 
         {/* Pagination Right Content */}
-        <div className="flex w-full items-center gap-8 lg:w-fit">
+        <div className="flex flex-wrap w-full items-center gap-8 lg:w-fit">
           {/* Rows per page */}
           <div className="flex items-center gap-2">
             <Label htmlFor="rows-per-page" className="text-sm font-medium">
@@ -311,7 +311,7 @@ export function DataTable<TData, TValue>({
           </div>
 
           {/* Page x of x  */}
-          <div className="ml-auto flex w-fit items-center justify-center text-sm font-medium">
+          <div className="ml-auto lg:ml-0 flex w-fit items-center justify-center text-sm font-medium">
             Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </div>
