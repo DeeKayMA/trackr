@@ -311,12 +311,12 @@ export function DataTable<TData, TValue>({
           </div>
 
           {/* Page x of x  */}
-          <div className="flex w-fit items-center justify-center text-sm font-medium">
+          <div className="ml-auto flex w-fit items-center justify-center text-sm font-medium">
             Page {table.getState().pagination.pageIndex + 1} of{" "}
             {table.getPageCount()}
           </div>
           {/* Back and next page buttons  */}
-          <div className="ml-auto flex items-center gap-2 lg:ml-0">
+          <div className="flex items-center gap-2">
             <Button
               variant="outline"
               className="hidden h-8 w-8 p-0 lg:flex"
