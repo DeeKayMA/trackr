@@ -66,22 +66,20 @@ export function SignUpForm({
                       Forgot your password?
                     </a> */}
                   </div>
-                  <Tooltip>
-                     <TooltipTrigger>
-                        <Input id="password" type="password" name="password" required />
-                     </TooltipTrigger>
-                     <TooltipContent>
-                        <p>Password requirements:</p>
-                        <ul className="list-disc pl-5">
-                          {passwordRequirements.map((req, index) => (
-                            <li key={index} className="text-sm">
-                              <CircleSmall className="inline mr-1" />
-                              {req}
-                            </li>
-                          ))}
-                        </ul>
-                     </TooltipContent>
-                  </Tooltip>
+
+                    <Input id="password" type="password" name="password" required />
+                    <div className='mt-2 text-sm text-muted-foreground border  border-neutral-200 rounded border-dashed p-2 w-full' >
+                      <p>Password requirements:</p>
+                      <ul className="list-disc pl-5">
+                        {passwordRequirements.map((req, index) => (
+                          <li key={index}>
+                            {req}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                    
+   
                 </div>
                 {/* BUTTON */}
                 <Button formAction={signup} className="w-full">
