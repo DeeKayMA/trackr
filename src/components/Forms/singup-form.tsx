@@ -11,6 +11,11 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils/utils"
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip"
 
 export function SignUpForm({
   className,
@@ -28,7 +33,7 @@ export function SignUpForm({
         <CardContent>
           <form>
             <div className="grid gap-6">
-            {/* LOGIN FORM */}
+            {/* SIGN UP FORM */}
               <div className="grid gap-6">
                 {/* EMAIL */}
                 <div className="grid gap-2">
@@ -52,7 +57,17 @@ export function SignUpForm({
                       Forgot your password?
                     </a> */}
                   </div>
-                  <Input id="password" type="password" name="password" required />
+                  <Tooltip>
+                     <TooltipTrigger>
+                        <Input id="password" type="password" name="password" required />
+                     </TooltipTrigger>
+                     <TooltipContent>
+                        <p>Password requirements:</p>
+                        <ul>
+                          <li> At least 8 characters</li>
+                        </ul>
+                     </TooltipContent>
+                  </Tooltip>
                 </div>
                 {/* BUTTON */}
                 <Button formAction={signup} className="w-full">
