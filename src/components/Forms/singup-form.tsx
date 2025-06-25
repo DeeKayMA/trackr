@@ -16,6 +16,15 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { CircleSmall } from 'lucide-react';
+
+const passwordRequirements = [
+  "At least 8 characters",
+  "At least one uppercase letter",
+  "At least one lowercase letter",
+  "At least one number",
+  "At least one special character",
+]
 
 export function SignUpForm({
   className,
@@ -63,8 +72,13 @@ export function SignUpForm({
                      </TooltipTrigger>
                      <TooltipContent>
                         <p>Password requirements:</p>
-                        <ul>
-                          <li> At least 8 characters</li>
+                        <ul className="list-disc pl-5">
+                          {passwordRequirements.map((req, index) => (
+                            <li key={index} className="text-sm">
+                              <CircleSmall className="inline mr-1" />
+                              {req}
+                            </li>
+                          ))}
                         </ul>
                      </TooltipContent>
                   </Tooltip>
