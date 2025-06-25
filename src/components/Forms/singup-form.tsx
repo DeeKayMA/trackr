@@ -62,8 +62,8 @@ export function SignUpForm({
                   </div>
 
                     <Input id="password" type="password" name="password" required />
-                    <div className='mt-2 text-sm text-muted-foreground border  border-neutral-200 rounded border-dashed p-2 w-full' >
-                      <p>Password requirements:</p>
+                    <div className='mt-2 text-sm text-muted-foreground border  border-neutral-500 rounded border-dashed p-2 w-full' >
+                      <p className='font-semibold'>Password requirements:</p>
                       <ul className="list-disc pl-5">
                         {passwordRequirements.map((req, index) => (
                           <li key={index}>
