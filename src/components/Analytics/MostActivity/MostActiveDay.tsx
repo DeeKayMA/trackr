@@ -37,7 +37,8 @@ export const MostActiveDay = ({ className }: StreakCardProps) => {
         .from("Job Applications")
         .select("date_applied, status")
         .eq("user_id", user.id)
-        .eq("status", "applied")
+        .eq("status", "Applied")
+        .not("date_applied", "is", null);
 
       if (appError || !data) {
         console.error("Error fetching applications:", appError);
@@ -47,8 +48,10 @@ export const MostActiveDay = ({ className }: StreakCardProps) => {
       // Group by date and count applications
       const counts: Record<string, number> = {};
       data.forEach((entry) => {
+        if (entry.date_applied) {
           const date = new Date(entry.date_applied).toISOString().split("T")[0];
           counts[date] = (counts[date] || 0) + 1;
+        }
       });
 
       // Find the most active day

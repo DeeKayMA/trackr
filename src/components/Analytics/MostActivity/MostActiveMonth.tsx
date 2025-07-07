@@ -42,7 +42,7 @@ export const MostActiveMonth = ({ className }: StreakCardProps) => {
         .from("Job Applications")
         .select("date_applied, status")
         .eq("user_id", user.id)
-        .eq("status", "applied")
+        .eq("status", "Applied")
         .not("date_applied", "is", null);
 
       if (appError || !data) {
