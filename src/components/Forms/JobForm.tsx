@@ -63,7 +63,13 @@ const formSchema = z.object({
   frequency: z.string().optional(),
   url: z.string().optional(),
   notes: z.string().optional(),
-});
+}).refine(
+  (data) => data.status !== "Applied" || !!data.date_applied,
+  {
+    message: "Date applied is required when status is Applied",
+    path: ["date_applied"],
+  }
+);
 
 type JobFormData = z.infer<typeof formSchema>;
 
@@ -109,6 +115,8 @@ export const JobForm = ({ submitName = "Submit", onSubmit, company, position, st
       notes: notes ?? "",
     }
   });
+
+  const watchedStatus = form.watch("status");
 
 
   return (
@@ -182,12 +190,16 @@ export const JobForm = ({ submitName = "Submit", onSubmit, company, position, st
           )}
         />
         {/* DATE */}
+        {watchedStatus === "Applied" && (
         <FormField
           control={form.control}
           name="date_applied"
           render={({ field }) => (
             <FormItem className="flex flex-col ">
-              <FormLabel>Date Applied</FormLabel>
+              <div className="flex items-center justify-between">
+                <FormLabel>Date Applied</FormLabel>
+                <p className="text-xs text-muted-foreground"> Required</p>
+              </div>
               <Popover modal>
                 <PopoverTrigger asChild>
                   <FormControl>
@@ -223,7 +235,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, company, position, st
               <FormMessage />
             </FormItem>
           )}
-        />
+        />)}
         {/* JOB TYPE */}
         <FormField
           control={form.control}
