@@ -47,10 +47,8 @@ export const MostActiveDay = ({ className }: StreakCardProps) => {
       // Group by date and count applications
       const counts: Record<string, number> = {};
       data.forEach((entry) => {
-        if (entry.date_applied) {
           const date = new Date(entry.date_applied).toISOString().split("T")[0];
           counts[date] = (counts[date] || 0) + 1;
-        }
       });
 
       // Find the most active day
