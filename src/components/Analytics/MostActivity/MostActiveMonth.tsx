@@ -1,12 +1,7 @@
 "use client";
 
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useRefreshStore } from "@/lib/store/useRefreshStore";
 import { supabaseBrowser } from "@/lib/supabase/supabase";
@@ -45,8 +40,10 @@ export const MostActiveMonth = ({ className }: StreakCardProps) => {
 
       const { data, error: appError } = await supabaseBrowser
         .from("Job Applications")
-        .select("date_applied")
-        .eq("user_id", user.id);
+        .select("date_applied, status")
+        .eq("user_id", user.id)
+        .eq("status", "applied")
+        .not("date_applied", "is", null);
 
       if (appError || !data) {
         console.error("Error fetching applications:", appError);
@@ -57,9 +54,11 @@ export const MostActiveMonth = ({ className }: StreakCardProps) => {
       const counts: Record<string, number> = {};
 
       data.forEach((entry) => {
-        const date = new Date(entry.date_applied);
-        const key = format(date, "yyyy-MM");
-        counts[key] = (counts[key] || 0) + 1;
+        if (entry.date_applied) {
+          const date = new Date(entry.date_applied);
+          const key = format(date, "yyyy-MM");
+          counts[key] = (counts[key] || 0) + 1;
+        }
       });
 
       // Find the month with the most applications
@@ -73,7 +72,9 @@ export const MostActiveMonth = ({ className }: StreakCardProps) => {
         }
       }
 
-      const formatted = maxKey ? format(new Date(`${maxKey}-01`), "MMMM yyyy") : "";
+      const formatted = maxKey
+        ? format(new Date(`${maxKey}-01`), "MMMM yyyy")
+        : "";
 
       setMostActive({ monthKey: maxKey, count: maxCount, formatted });
       setLoading(false);
@@ -98,7 +99,11 @@ export const MostActiveMonth = ({ className }: StreakCardProps) => {
 
       <CardContent>
         <div className="text-3xl font-bold">
-          {mostActive.formatted || <span className="text-sm font-medium text-muted-foreground mt-4">Could be this month?</span>}
+          {mostActive.formatted || (
+            <span className="text-sm font-medium text-muted-foreground mt-4">
+              Could be this month?
+            </span>
+          )}
         </div>
       </CardContent>
     </Card>

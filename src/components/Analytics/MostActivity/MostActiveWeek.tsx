@@ -48,8 +48,10 @@ export const MostActiveWeek = ({ className }: StreakCardProps) => {
 
       const { data, error: appError } = await supabaseBrowser
         .from("Job Applications")
-        .select("date_applied")
-        .eq("user_id", user.id);
+        .select("date_applied, status")
+        .eq("user_id", user.id)
+        .eq("status", "applied")
+        .not("date_applied", "is", null);
 
       if (appError || !data) {
         console.error("Error fetching applications:", appError);
@@ -61,18 +63,20 @@ export const MostActiveWeek = ({ className }: StreakCardProps) => {
         {};
 
       data.forEach((entry) => {
-        const date = new Date(entry.date_applied);
-        const weekNum = getISOWeek(date);
-        const year = getISOWeekYear(date);
-        const key = `${year}-W${weekNum}`;
+        if (entry.date_applied) {
+          const date = new Date(entry.date_applied);
+          const weekNum = getISOWeek(date);
+          const year = getISOWeekYear(date);
+          const key = `${year}-W${weekNum}`;
 
-        const start = startOfWeek(date, { weekStartsOn: 1 });
-        const end = endOfWeek(date, { weekStartsOn: 1 });
+          const start = startOfWeek(date, { weekStartsOn: 1 });
+          const end = endOfWeek(date, { weekStartsOn: 1 });
 
-        if (!counts[key]) {
-          counts[key] = { count: 0, start, end };
+          if (!counts[key]) {
+            counts[key] = { count: 0, start, end };
+          }
+          counts[key].count += 1;
         }
-        counts[key].count += 1;
       });
 
       // Find the week with the max applications
@@ -133,9 +137,13 @@ export const MostActiveWeek = ({ className }: StreakCardProps) => {
 
       <CardContent>
         <div className="text-3xl font-bold">
-          {mostActive.startDate && mostActive.endDate
-            ? `${mostActive.startDate} - ${mostActive.endDate}`
-            : <span className="text-sm font-medium text-muted-foreground mt-4">Could be this week?</span>}
+          {mostActive.startDate && mostActive.endDate ? (
+            `${mostActive.startDate} - ${mostActive.endDate}`
+          ) : (
+            <span className="text-sm font-medium text-muted-foreground mt-4">
+              Could be this week?
+            </span>
+          )}
         </div>
       </CardContent>
     </Card>
