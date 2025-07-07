@@ -38,7 +38,6 @@ export const MostActiveDay = ({ className }: StreakCardProps) => {
         .select("date_applied, status")
         .eq("user_id", user.id)
         .eq("status", "applied")
-        .not("date_applied", "is", null);
 
       if (appError || !data) {
         console.error("Error fetching applications:", appError);
