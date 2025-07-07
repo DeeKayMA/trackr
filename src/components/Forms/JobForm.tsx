@@ -66,7 +66,7 @@ const formSchema = z.object({
 }).refine(
   (data) => data.status !== "Applied" || !!data.date_applied,
   {
-    message: "Date applied is required when status is Applied",
+    message: "Date applied is required when status is &apos;Applied&apos;",
     path: ["date_applied"],
   }
 );
