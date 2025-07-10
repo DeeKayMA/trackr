@@ -97,11 +97,32 @@ type StausFilterComboProps = {
 };
 
 export function StausFilterCombo({ setColumnFilter }: StausFilterComboProps) {
+  // Load from localStorage if available
+  const [selectedStatus, setSelectedStatus] = useState<Status | null>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("jobs_selectedStatus");
+      if (saved) {
+        try {
+          return JSON.parse(saved);
+        } catch {
+          return null;
+        }
+      }
+    }
+    return null;
+  });
+
+  // Save to localStorage whenever it changes
+  React.useEffect(() => {
+    if (selectedStatus) {
+      localStorage.setItem("jobs_selectedStatus", JSON.stringify(selectedStatus));
+    } else {
+      localStorage.removeItem("jobs_selectedStatus");
+    }
+  }, [selectedStatus]);
+
   const [open, setOpen] = useState(false);
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [selectedStatus, setSelectedStatus] = useState<Status | null>(
-    null
-  );
 
   if (isDesktop) {
     return (

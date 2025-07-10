@@ -87,7 +87,16 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-    []
+    () => {
+      if (typeof window !== "undefined") {
+        try {
+          return JSON.parse(localStorage.getItem("jobs_columnFilters") || "[]");
+        } catch {
+          return [];
+        }
+      }
+      return [];
+    }
   );
   const [columnVisibility, setColumnVisibility] =
     React.useState<VisibilityState>({
@@ -105,9 +114,24 @@ export function DataTable<TData, TValue>({
     });
 
   const [rowSelection, setRowSelection] = React.useState({});
+    const { refresh } = useRefreshStore();
 
-  const [globalFilter, setGlobalFilter] = React.useState<string>("");
-  const { refresh } = useRefreshStore();
+  const [globalFilter, setGlobalFilter] = React.useState<string>(() => {
+    // Load from localStorage if available
+    if (typeof window !== "undefined") {
+      return localStorage.getItem("jobs_globalFilter") || "";
+    }
+    return "";
+  });
+
+  // Save filters to localStorage whenever they change
+  React.useEffect(() => {
+    localStorage.setItem("jobs_globalFilter", globalFilter);
+  }, [globalFilter]);
+
+  React.useEffect(() => {
+    localStorage.setItem("jobs_columnFilters", JSON.stringify(columnFilters));
+  }, [columnFilters]);
 
   const table = useReactTable({
     data,
