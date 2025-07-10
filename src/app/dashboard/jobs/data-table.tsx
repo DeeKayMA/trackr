@@ -98,8 +98,27 @@ export function DataTable<TData, TValue>({
       return [];
     }
   );
-  const [columnVisibility, setColumnVisibility] =
-    React.useState<VisibilityState>({
+  const [columnVisibility, setColumnVisibility] = React.useState<VisibilityState>(() => {
+    if (typeof window !== "undefined") {
+      try {
+        return JSON.parse(localStorage.getItem("jobs_columnVisibility") || "{}");
+      } catch {
+        return {
+          company: true,
+          position: true,
+          location: true,
+          job_type: false,
+          work_model: false,
+          salary: true,
+          status: true,
+          date_applied: false,
+          closing_date: true,
+          url: true,
+          notes: true,
+        };
+      }
+    }
+    return {
       company: true,
       position: true,
       location: true,
@@ -111,7 +130,8 @@ export function DataTable<TData, TValue>({
       closing_date: true,
       url: true,
       notes: true,
-    });
+    };
+  });
 
   const [rowSelection, setRowSelection] = React.useState({});
     const { refresh } = useRefreshStore();
@@ -125,13 +145,18 @@ export function DataTable<TData, TValue>({
   });
 
   // Save filters to localStorage whenever they change
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("jobs_globalFilter", globalFilter);
   }, [globalFilter]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem("jobs_columnFilters", JSON.stringify(columnFilters));
   }, [columnFilters]);
+
+  // Save column visibility to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem("jobs_columnVisibility", JSON.stringify(columnVisibility));
+  }, [columnVisibility]);
 
   const table = useReactTable({
     data,
