@@ -65,8 +65,8 @@ const statuses: Status[] = [
     label: "Withdrawn",
   },
   {
-    value: "Archived",
-    label: "Archived",
+    value: "archive",
+    label: "archive",
   },
 ];
 
@@ -89,7 +89,7 @@ const statusMap = {
   Withdrawn: {
     icon: <Undo />,
   },
-  Archived: {
+  archive: {
     icon: <Archive />,
   },
 };
