@@ -14,7 +14,8 @@ import {
   BookmarkIcon,
   LoaderIcon,
   Undo,
-  ListFilter
+  ListFilter, 
+  Archive
 } from "lucide-react";
 import {
   Command,
@@ -63,6 +64,10 @@ const statuses: Status[] = [
     value: "Withdrawn",
     label: "Withdrawn",
   },
+  {
+    value: "Archived",
+    label: "Archived",
+  },
 ];
 
 const statusMap = {
@@ -83,6 +88,9 @@ const statusMap = {
   },
   Withdrawn: {
     icon: <Undo />,
+  },
+  Archived: {
+    icon: <Archive />,
   },
 };
 
