@@ -31,7 +31,8 @@ import {
   MoreHorizontal,
   PhoneCallIcon,
   Undo,
-  XCircleIcon
+  XCircleIcon,
+  Archive
 } from "lucide-react";
 
 import { Checkbox } from "@/components/ui/checkbox";
@@ -76,6 +77,9 @@ const statusMap = {
   },
   Withdrawn: {
     icon: <Undo className="text-red-500 dark:text-red-400" />,
+  },
+  Archived: {
+    icon: <Archive className="text-gray-500 dark:text-gray-400" />,
   },
 };
 
