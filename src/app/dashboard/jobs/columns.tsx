@@ -78,7 +78,7 @@ const statusMap = {
   Withdrawn: {
     icon: <Undo className="text-red-500 dark:text-red-400" />,
   },
-  Archive: {
+  Archived: {
     icon: <Archive className="text-gray-500 dark:text-gray-400" />,
   },
 };
