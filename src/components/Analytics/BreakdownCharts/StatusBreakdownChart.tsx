@@ -52,7 +52,7 @@ const chartConfig = {
     color: "var(--color-slate-700)",
   },
   Archived: {
-    label: "Withdrawn",
+    label: "Archived",
     color: "var(--color-slate-400)",
   },
 } satisfies ChartConfig;
