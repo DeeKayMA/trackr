@@ -65,8 +65,8 @@ const statuses: Status[] = [
     label: "Withdrawn",
   },
   {
-    value: "archive",
-    label: "archive",
+    value: "Archived",
+    label: "Archived",
   },
 ];
 

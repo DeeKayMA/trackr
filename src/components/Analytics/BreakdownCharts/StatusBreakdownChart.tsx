@@ -51,6 +51,10 @@ const chartConfig = {
     label: "Withdrawn",
     color: "var(--color-slate-700)",
   },
+  Archived: {
+    label: "Withdrawn",
+    color: "var(--color-slate-400)",
+  },
 } satisfies ChartConfig;
 
 type StatusBreakdownChartProps = {
