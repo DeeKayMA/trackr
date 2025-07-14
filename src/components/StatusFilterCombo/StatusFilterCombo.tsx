@@ -89,7 +89,7 @@ const statusMap = {
   Withdrawn: {
     icon: <Undo />,
   },
-  archive: {
+  Archived: {
     icon: <Archive />,
   },
 };
