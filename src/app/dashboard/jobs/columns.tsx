@@ -469,7 +469,18 @@ export const columns: ColumnDef<Job>[] = [
   //Notes
   {
     accessorKey: "notes",
-    header: "Notes",
+     header: ({ column }) => {
+      return (
+        <Button
+          variant="ghost"
+          onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+          className={sortButton}
+        >
+          <p>Notes</p>
+          <ArrowUpDown className={arrowUpDown} />
+        </Button>
+      );
+    },
     cell: ({ row }) => {
       const notes = row.getValue<string>("notes");
       return notes ? <span>{truncate(notes, 40)}</span> : <span></span>;
