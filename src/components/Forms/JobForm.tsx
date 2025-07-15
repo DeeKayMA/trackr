@@ -252,7 +252,7 @@ export const JobForm = ({ submitName = "Submit", onSubmit, company, position, st
                 </FormControl>
                 <SelectContent>
                   <SelectItem value="Full-time">Full-time</SelectItem>
-                  <SelectItem value="Parrt-time">Part-time</SelectItem>
+                  <SelectItem value="Part-time">Part-time</SelectItem>
                   <SelectItem value="Contract">Contract</SelectItem>
                   <SelectItem value="Internship">Internship</SelectItem>
                   <SelectItem value="Freelance">Freelance</SelectItem>
